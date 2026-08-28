@@ -37,7 +37,7 @@ function App() {
     }
     if (bootstrapStatus !== 'ready' && bootstrapStatus !== 'degraded') return undefined
 
-    const timer = window.setTimeout(() => setScreen(user ? 'home' : 'signin'), 2000)
+    const timer = window.setTimeout(() => setScreen(user ? 'home' : 'signin'), 2500)
     return () => window.clearTimeout(timer)
   }, [bootstrapStatus, user])
 

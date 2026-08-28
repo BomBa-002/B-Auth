@@ -29,10 +29,11 @@ input, textarea, select, [contenteditable="true"] { user-select: text; -webkit-u
 .splash-brand, .auth-brand { display: grid; place-items: center; inline-size: 6em; block-size: 6em; color: var(--color-py); }
 .splash-brand svg, .auth-brand svg { inline-size: 100%; block-size: 100%; }
 .boot-ring { display: grid; place-items: center; inline-size: min(37.2vw, 9em); aspect-ratio: 1; border-radius: var(--border-radius-full); background: var(--color-py); box-shadow: var(--shadow-md); }
-.boot-ring-center { display: flex; flex-direction: column; align-items: center; justify-content: center; inline-size: calc(100% - 1em); block-size: calc(100% - 1em); border-radius: var(--border-radius-full); background: var(--color-surface); color: var(--color-surface-f); }
-.terminal-logs, .form-card, .info-card, .settings-panel { inline-size: 100%; padding: var(--spacing-md); border: 0.0625em solid var(--color-border); border-radius: var(--border-radius-lg); background: var(--color-surface); box-shadow: var(--shadow-md); }
+.boot-ring-center { display: flex; flex-direction: column; align-items: center; justify-content: center; inline-size: calc(100% - 0.3em); block-size: calc(100% - 0.3em); border-radius: var(--border-radius-full); background: var(--color-bg); color: var(--color-bg-f); }
+.boot-ring-center strong { font-size: 200%; font-weight: var(--font-weight-semibold); }
+.terminal-logs, .form-card, .info-card, .settings-panel { inline-size: 100%; padding: var(--spacing-md); border: 0.0625em solid var(--color-border); border-radius: var(--border-radius-lg); background: var(--color-bg); box-shadow: var(--shadow-md); }
 .terminal-row { display: flex; align-items: center; gap: var(--spacing-sm); min-block-size: 2.75em; color: var(--color-md-f); font-family: var(--font-family-mono); font-size: var(--font-size-sm); text-align: start; }
-.terminal-row[data-state="done"], .terminal-arrow, .terminal-indicator { color: var(--color-py); }
+.terminal-row[data-state="done"], .terminal-arrow, .terminal-indicator { color: inherit; }
 .terminal-row[data-state="active"] { color: var(--color-surface-f); font-weight: var(--font-weight-bold); }
 .terminal-label { flex: 1; overflow-wrap: anywhere; }
 .screen-body { flex: 1; align-items: center; gap: var(--spacing-lg); padding: var(--spacing-lg) var(--spacing-sm) var(--spacing-2xl); text-align: center; }

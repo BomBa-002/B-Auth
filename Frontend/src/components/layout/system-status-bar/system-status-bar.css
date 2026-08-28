@@ -1,4 +1,4 @@
-.status-bar { background: var(--color-bg); position: relative; z-index: var(--z-sticky); display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: var(--spacing-sm); min-block-size: 2.75em; padding: var(--spacing-xs) var(--spacing-sm); border: 0.0625em solid var(--color-border); border-radius: var(--border-radius); background: var(--color-surface); color: var(--color-surface-f); box-shadow: var(--shadow-md); }
+.status-bar { position: relative; z-index: var(--z-sticky); display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: var(--spacing-sm); min-block-size: 2.75em; padding: var(--spacing-xs) var(--spacing-sm); border: 0.0625em solid var(--color-border); border-radius: var(--border-radius); background: var(--color-bg); color: var(--color-bg-f); box-shadow: var(--shadow-md); }
 .status-bar-zone { display: flex; align-items: center; min-inline-size: 0; gap: var(--spacing-sm); }
 .status-bar-start { justify-content: flex-start; }
 .status-bar-center { justify-content: center; }
@@ -11,7 +11,7 @@
 .status-bar-pulse-error { background: var(--color-err); }
 .status-bar-version, .status-bar-brand { color: var(--color-md-f); font-size: var(--font-size-xs); }
 .status-bar-environment { padding: var(--spacing-xs) var(--spacing-sm); border-radius: var(--border-radius-sm); background: var(--color-hover); color: var(--color-py); font-size: var(--font-size-xs); font-weight: var(--font-weight-bold); }
-.status-bar-icon-button { display: grid; place-items: center; min-inline-size: 2.75em; min-block-size: 2.75em; padding: 0; border: 0.0625em solid var(--color-border); border-radius: var(--border-radius); background: var(--color-surface); color: var(--color-surface-f); cursor: pointer; transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast); }
+.status-bar-icon-button { display: grid; place-items: center; min-inline-size: 1.65em; min-block-size: 1.65em; padding: 0; border: 0.0625em solid var(--color-border); border-radius: var(--border-radius); background: var(--color-surface); color: var(--color-surface-f); cursor: pointer; transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast); }
 .status-bar-icon-button:hover { border-color: var(--color-py); background: var(--color-hover); color: var(--color-py); }
 .status-bar-clock { padding: var(--spacing-xs); font-family: var(--font-family-mono); font-size: var(--font-size-xs); cursor: pointer; }
 .status-bar-tooltip { z-index: var(--z-tooltip); display: grid; gap: var(--spacing-xs); max-inline-size: 16em; padding: var(--spacing-sm); border: 0.0625em solid var(--color-border); border-radius: var(--border-radius); background: var(--color-surface); color: var(--color-surface-f); box-shadow: var(--shadow-lg); }
