@@ -1,18 +1,46 @@
-.oi-root { display: grid; gap: var(--spacing-xs); inline-size: 100%; }
-.oi-control { position: relative; display: flex; align-items: center; inline-size: 100%; }
-.oi-input { inline-size: 100%; min-block-size: 2.75em; padding: 0.75em; border: 0.0625em solid var(--color-border); outline: none; border-radius: var(--border-radius); background-color: var(--color-bg); backdrop-filter: blur(0.75em); -webkit-backdrop-filter: blur(0.75em); color: var(--color-surface-f); font-size: var(--font-size-md); user-select: text; -webkit-user-select: text; transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast), transform var(--transition-fast); }
-.oi-control:has(.oi-end-icon) .oi-input { padding-inline-end: 3em; }
+/**
+ * @file        : packages/design-system/styles/outlined-input.css
+ * @description : تنسيقات SmartInput المتجاوبة مع الثيم والاتجاهين.
+ * @updated     : [{ "date": "29/08/2026", "version": "2.0.0", "by": ["v0"], "comment": "إعادة بناء تنسيقات الحقل" }]
+ */
+
+.oi-root { position: relative; display: grid; gap: var(--spacing-xs); inline-size: 100%; min-inline-size: 0; }
+.oi-control { position: relative; display: flex; align-items: center; inline-size: 100%; min-inline-size: 0; border-block-end: 0.0625em solid var(--color-border); transition: border-color var(--transition-fast), box-shadow var(--transition-fast); }
+.oi-control:focus-within { border-block-end-color: var(--color-border-focus); box-shadow: 0 0.125em 0 var(--color-border-focus); }
+.oi-input { inline-size: 100%; min-block-size: 2.75em; min-inline-size: 0; padding-block: 0.875em 0.5em; padding-inline: 0.25em; border: 0; outline: 0; background: transparent; color: var(--color-bg-f); font-size: var(--font-size-md); user-select: text; -webkit-user-select: text; transition: background-color var(--transition-fast), color var(--transition-fast); }
 .oi-input::placeholder { color: transparent; }
-.oi-input:hover:not(:disabled):not(:focus) { border-color: var(--color-py); }
-.oi-input:focus { border-color: var(--color-border-focus); background-color: var(--color-bg); backdrop-filter: blur(0.75em); -webkit-backdrop-filter: blur(0.75em); box-shadow: 0 0 0 0.125em var(--color-surface), 0 0 0 0.25em var(--color-border-focus); transform: translateY(-0.0625em); }
-.oi-input:disabled { cursor: not-allowed; opacity: 0.6; background-color: var(--color-surface-alt); }
-.oi-label { position: absolute; inset-inline-start: 0.75em; inset-block-start: 50%; max-inline-size: calc(100% - 1.5em); padding-inline: 0.25em; overflow: hidden; color: var(--color-md-f); font-size: var(--font-size-sm); pointer-events: none; text-overflow: ellipsis; transform: translateY(-50%); transition: inset-block-start var(--transition-fast), font-size var(--transition-fast), color var(--transition-fast), background-color var(--transition-fast); white-space: nowrap; }
-.oi-input:focus + .oi-label, .oi-input:not(:placeholder-shown) + .oi-label { inset-block-start: 0; background-color: var(--color-bg); backdrop-filter: blur(0.75em); -webkit-backdrop-filter: blur(0.75em); color: var(--color-py); font-size: var(--font-size-xs); }
+.oi-input:focus { background: var(--color-hover); }
+.oi-input:disabled { cursor: not-allowed; opacity: 0.6; }
+.oi-input:-webkit-autofill { -webkit-text-fill-color: var(--color-bg-f); -webkit-box-shadow: 0 0 0 100em var(--color-bg) inset; transition: background-color 99999s ease-out; }
+.oi-label { position: absolute; inset-block-start: 50%; inset-inline-start: 0.25em; max-inline-size: calc(100% - 0.5em); overflow: hidden; color: var(--color-md-f); font-size: var(--font-size-md); pointer-events: none; text-overflow: ellipsis; transform: translateY(-50%); transform-origin: inline-start; transition: inset-block-start var(--transition-fast), color var(--transition-fast), font-size var(--transition-fast); white-space: nowrap; }
+.oi-input:focus + .oi-label, .oi-input:not(:placeholder-shown) + .oi-label { inset-block-start: 0.125em; color: var(--color-py); font-size: var(--font-size-xs); transform: translateY(0); }
 .oi-input:disabled + .oi-label { opacity: 0.6; }
-.oi-root[data-error="true"] .oi-input { border-color: var(--color-err); }
-.oi-root[data-error="true"] .oi-input:focus { box-shadow: 0 0 0 0.125em var(--color-surface), 0 0 0 0.25em var(--color-err); }
+.oi-prefix-icon { display: inline-flex; flex: 0 0 auto; align-items: center; justify-content: center; margin-inline-end: var(--spacing-xs); color: var(--color-md-f); }
+.oi-actions { display: inline-flex; flex: 0 0 auto; align-items: center; gap: 0.125em; }
+.oi-action { display: inline-flex; align-items: center; justify-content: center; min-block-size: 2.75em; min-inline-size: 2.75em; padding: 0.25em; border: 0; background: transparent; color: var(--color-md-f); cursor: pointer; transition: color var(--transition-fast), background-color var(--transition-fast); }
+.oi-action:hover:not(:disabled) { border-radius: var(--border-radius-sm); background: var(--color-hover); color: var(--color-py); }
+.oi-action:focus-visible { outline: 0.125em solid var(--color-border-focus); outline-offset: 0.125em; }
+.oi-action:disabled { cursor: not-allowed; opacity: 0.6; }
+.oi-validation-icon { display: inline-flex; align-items: center; justify-content: center; min-block-size: 2.75em; min-inline-size: 2.75em; color: var(--color-ok); font-weight: var(--font-weight-bold); }
+.oi-root[data-error="true"] .oi-control { border-block-end-color: var(--color-err); }
+.oi-root[data-error="true"] .oi-control:focus-within { box-shadow: 0 0.125em 0 var(--color-err); }
 .oi-root[data-error="true"] .oi-label, .oi-root[data-error="true"] .oi-helper { color: var(--color-err); }
-.oi-end-icon { position: absolute; inset-inline-end: 0.5em; inset-block-start: 50%; display: inline-flex; align-items: center; justify-content: center; min-block-size: 2.75em; min-inline-size: 2.75em; padding: 0.25em; border: 0; border-radius: var(--border-radius-full); background: transparent; color: var(--color-md-f); cursor: pointer; transform: translateY(-50%); transition: color var(--transition-fast), background-color var(--transition-fast); }
-.oi-end-icon:hover:not(:disabled) { background-color: var(--color-hover); color: var(--color-py); }
-.oi-end-icon:disabled { cursor: not-allowed; opacity: 0.6; }
-.oi-helper { margin: 0; padding-inline-start: var(--spacing-xs); color: var(--color-md-f); font-size: var(--font-size-xs); }
+.oi-root[data-validation="success"] .oi-control { border-block-end-color: var(--color-ok); }
+.oi-helper { margin: 0; padding-inline-start: var(--spacing-xs); color: var(--color-md-f); font-size: var(--font-size-xs); line-height: var(--line-height-normal); }
+.oi-suggestions { position: absolute; inset-block-start: calc(100% + var(--spacing-xs)); inset-inline: 0; z-index: var(--z-above); display: grid; max-block-size: 14em; margin: 0; padding: var(--spacing-xs) 0; overflow-y: auto; border: 0.0625em solid var(--color-border); border-radius: var(--border-radius); background: var(--color-surface); box-shadow: var(--shadow-md); list-style: none; }
+.oi-suggestion, .oi-no-results { padding: var(--spacing-sm) var(--spacing-md); color: var(--color-surface-f); font-size: var(--font-size-sm); line-height: var(--line-height-normal); }
+.oi-suggestion { cursor: pointer; }
+.oi-suggestion:hover, .oi-suggestion[aria-selected="true"] { background: var(--color-hover); color: var(--color-py); }
+.oi-no-results { color: var(--color-md-f); }
+[data-group] + [data-group] { margin-block-start: calc(var(--spacing-xs) * -1); }
+@media (max-width: 30em) { .oi-input { font-size: var(--font-size-sm); } .oi-action { min-block-size: 2.5em; min-inline-size: 2.5em; } }
+@media (prefers-reduced-motion: reduce) { .oi-control, .oi-input, .oi-label, .oi-action { transition-duration: 1ms; } }
+.oi-input:focus-visible { outline: 0.125em solid var(--color-border-focus); outline-offset: 0.125em; }
+
+/**
+ * @file        : packages/design-system/styles/outlined-input.css
+ * @description : Tooltip CSS hook للحالات التي تحتاج شرحاً مختصراً.
+ */
+[data-oi-tooltip] { position: relative; }
+[data-oi-tooltip]::after { position: absolute; inset-block-end: calc(100% + var(--spacing-xs)); inset-inline-start: 50%; z-index: var(--z-tooltip); max-inline-size: 20em; padding: var(--spacing-xs) var(--spacing-sm); border-radius: var(--border-radius-sm); background: var(--color-bg-f); color: var(--color-bg); content: attr(data-oi-tooltip); font-size: var(--font-size-xs); opacity: 0; pointer-events: none; transform: translateX(-50%); transition: opacity var(--transition-fast); }
+[data-oi-tooltip]:hover::after, [data-oi-tooltip]:focus-within::after { opacity: 1; }
