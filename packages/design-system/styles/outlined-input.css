@@ -4,7 +4,7 @@
 .oi-control:has(.oi-end-icon) .oi-input { padding-inline-end: 3em; }
 .oi-input::placeholder { color: transparent; }
 .oi-input:hover:not(:disabled):not(:focus) { border-color: var(--color-py); }
-.oi-input:focus { border-color: var(--color-border-focus); background-color: var(--color-bg); backdrop-filter: blur(0.75em); -webkit-backdrop-filter: blur(0.75em); box-shadow: 0 0 0 0.125em var(--color-surface), 0 0 0 0.25em var(--color-border-focus); outline: none; transform: translateY(-0.0625em); }
+.oi-input:focus { border-color: var(--color-border-focus); background-color: var(--color-bg); backdrop-filter: blur(0.75em); -webkit-backdrop-filter: blur(0.75em); box-shadow: 0 0 0 0.125em var(--color-surface), 0 0 0 0.25em var(--color-border-focus); transform: translateY(-0.0625em); }
 .oi-input:disabled { cursor: not-allowed; opacity: 0.6; background-color: var(--color-surface-alt); }
 .oi-label { position: absolute; inset-inline-start: 0.75em; inset-block-start: 50%; max-inline-size: calc(100% - 1.5em); padding-inline: 0.25em; overflow: hidden; color: var(--color-md-f); font-size: var(--font-size-sm); pointer-events: none; text-overflow: ellipsis; transform: translateY(-50%); transition: inset-block-start var(--transition-fast), font-size var(--transition-fast), color var(--transition-fast), background-color var(--transition-fast); white-space: nowrap; }
 .oi-input:focus + .oi-label, .oi-input:not(:placeholder-shown) + .oi-label { inset-block-start: 0; background-color: var(--color-bg); backdrop-filter: blur(0.75em); -webkit-backdrop-filter: blur(0.75em); color: var(--color-py); font-size: var(--font-size-xs); }
