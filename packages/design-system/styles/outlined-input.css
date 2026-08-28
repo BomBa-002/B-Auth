@@ -1,6 +1,6 @@
 .oi-root { display: grid; gap: var(--spacing-xs); inline-size: 100%; }
 .oi-control { position: relative; display: flex; align-items: center; inline-size: 100%; }
-.oi-input { inline-size: 100%; min-block-size: 2.75em; padding: 0.75em; border: 0.0625em solid var(--color-border); border-radius: var(--border-radius); background-color: var(--color-bg); backdrop-filter: blur(0.75em); -webkit-backdrop-filter: blur(0.75em); color: var(--color-surface-f); font-size: var(--font-size-md); user-select: text; -webkit-user-select: text; transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast), transform var(--transition-fast); }
+.oi-input { inline-size: 100%; min-block-size: 2.75em; padding: 0.75em; border: 0.0625em solid var(--color-border); outline: none; border-radius: var(--border-radius); background-color: var(--color-bg); backdrop-filter: blur(0.75em); -webkit-backdrop-filter: blur(0.75em); color: var(--color-surface-f); font-size: var(--font-size-md); user-select: text; -webkit-user-select: text; transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast), transform var(--transition-fast); }
 .oi-control:has(.oi-end-icon) .oi-input { padding-inline-end: 3em; }
 .oi-input::placeholder { color: transparent; }
 .oi-input:hover:not(:disabled):not(:focus) { border-color: var(--color-py); }
