@@ -1,0 +1,28 @@
+{
+  "name": "@b-auth/design-system",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Tailwind v4 CSS-first design tokens for B-Auth, generated from @b-auth/theme. Deviates from the ASCII spec's tailwind.config.ts — see docs/design-system.md.",
+  "type": "module",
+  "main": "./styles/globals.css",
+  "exports": {
+    "./tokens.css": "./styles/tokens.css",
+    "./globals.css": "./styles/globals.css",
+    "./outlined-input.css": "./styles/outlined-input.css",
+    "./icon-registry": "./icon-registry.ts",
+    "./components/outlined-input": "./components/outlined-input.tsx"
+  },
+  "scripts": {
+    "generate:tokens": "node scripts/generate-tokens.mjs"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.5"
+  },
+  "dependencies": {
+    "lucide-react": "^0.475.0"
+  }
+}

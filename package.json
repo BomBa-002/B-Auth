@@ -1,0 +1,33 @@
+{
+  "name": "b-auth",
+  "private": true,
+  "version": "1.0.0",
+  "description": "B-Auth — Universal Modular Architecture (Backend + Frontend monorepo)",
+  "workspaces": [
+    "Backend",
+    "Frontend",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently -n BACKEND,FRONTEND -c blue,magenta \"pnpm --filter @b-auth/backend dev\" \"pnpm --filter @b-auth/frontend dev\"",
+    "dev:backend": "pnpm --filter @b-auth/backend dev",
+    "dev:frontend": "pnpm --filter @b-auth/frontend dev",
+    "build": "pnpm --filter @b-auth/backend build && pnpm --filter @b-auth/frontend build",
+    "build:backend": "pnpm --filter @b-auth/backend build",
+    "build:frontend": "pnpm --filter @b-auth/frontend build",
+    "typecheck": "pnpm --filter @b-auth/backend typecheck && pnpm --filter @b-auth/frontend typecheck",
+    "lint": "pnpm --filter @b-auth/backend lint && pnpm --filter @b-auth/frontend lint",
+    "test": "pnpm --filter @b-auth/backend test",
+    "seed": "pnpm --filter @b-auth/backend seed",
+    "docker:up": "docker compose up --build",
+    "docker:down": "docker compose down -v"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "concurrently": "^9.1.0",
+    "tailwindcss": "^4.3.3"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
