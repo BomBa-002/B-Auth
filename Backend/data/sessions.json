@@ -51,6 +51,15 @@
     "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
     "createdAt": "2026-08-29T20:42:21.368Z",
     "expiresAt": "2026-08-30T20:42:21.368Z",
+    "revokedAt": "2026-08-29T21:01:08.811Z"
+  },
+  {
+    "id": "z-Le2dhsiIhj9faBxrkiD",
+    "userId": "ba295af1-8213-4bf0-8ff6-cc2e547cb721",
+    "rememberMe": false,
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+    "createdAt": "2026-08-29T21:01:08.813Z",
+    "expiresAt": "2026-08-30T21:01:08.813Z",
     "revokedAt": null
   }
 ]
