@@ -1,18 +1,3 @@
-# AI Session — 29/08/2026 (SmartInput)
-
-## اتعمل
-- تحويل `OutlinedInput` إلى `SmartInput` مع label عائم، clear، إظهار/إخفاء كلمة المرور، search callback، validation states، grouping، واقتراحات WAI-ARIA.
-- إعادة بناء تنسيقات الحقل بإطار سفلي فقط، دعم RTL/LTR وLight/Dark، anti-autofill، tooltip hook، وحالات reduced motion.
-- تحديث شاشة المصادقة والتصديرات المركزية، مع الحفاظ على عدم تعديل ملفات `dist`.
-
-## التحقق
-- `pnpm typecheck` ✅
-- `pnpm lint` ✅
-- `pnpm build` ✅
-- مراجعة شاشة تسجيل الدخول في المتصفح وحفظ screenshot خارج المشروع ✅
-
----
-
 # AI Session — 28/08/2026 (التدقيق الشامل للـ Design Tokens)
 
 ## اتعمل
@@ -132,7 +117,7 @@
 - تم فك أرشيف `b-auth-03.zip` ونقل محتواه كاملاً إلى الجذر (باستثناء `dist/` و
   `node_modules` و `package-lock.json`).
 - تم تشغيل `pnpm install` بنجاح (513 حزمة عبر lockfile الموجود بدون تعديله).
-- تم الت��قق من `pnpm typecheck` و `pnpm lint` و `pnpm build` — كل الأوامر نجحت
+- تم التحقق من `pnpm typecheck` و `pnpm lint` و `pnpm build` — كل الأوامر نجحت
   بدون أي مخالفة على المشروع كما استُعيد.
 - تم تشغيل `pnpm dev` فعلياً (Backend:4000 + Frontend/Vite:3000) واختبار المسار
   الأساسي في متصفح حقيقي: تسجيل دخول admin ناجح وظهور شاشة الترحيب بالهوية والدور.
