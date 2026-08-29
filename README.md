@@ -20,6 +20,10 @@ B-Auth هو نظام مصادقة وإدارة صلاحيات مبني كـ mono
 
 ![شعار B-Auth](docs/references/images/Logo-favicon.svg)
 
+![مرجع واجهة تسجيل الدخول وهوية B-Auth](docs/references/images/auth-login-reference.png)
+
+> مرجع بصري لشاشة تسجيل الدخول: تخطيط split-screen، لون ذهبي للهوية، خلفية grid، وكارت دخول بسيط. الصورة محفوظة داخل `docs/references/images/auth-login-reference.png` ومصدرها [رابط الصورة الأصلي](https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-ZwzojLo9fzJPnKv55RJxfFt7TQjTwh.png).
+
 ## التقنيات المستخدمة
 
 - Frontend: Vite 6، React 19، TypeScript، Tailwind CSS 4.

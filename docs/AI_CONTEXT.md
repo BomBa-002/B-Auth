@@ -66,6 +66,12 @@ packages/{aliases,design-system,theme,utils}
 - تم ربط README بصورة مرجع شاشة الإقلاع والشعار المحفوظين داخل `docs/references/images/`.
 - نقطة التوقف المعتمدة: استكمال تحسينات Splash/Auth لاحقاً طبقاً للخطة النشطة، مع تحديث ملفات الاستمرارية بعد كل جلسة.
 
+## 11. مرفق مرجع واجهة تسجيل الدخول — 29/08/2026
+- تم حفظ الصورة المرفقة داخل `docs/references/images/auth-login-reference.png`.
+- الصورة بتعرض تصور شاشة تسجيل الدخول وهوية B-Auth: تخطيط split-screen، شعار BM، لون ذهبي أساسي، خلفية grid هادئة، وكارت دخول بسيط.
+- مصدر الصورة الأصلي: `https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-ZwzojLo9fzJPnKv55RJxfFt7TQjTwh.png`.
+- الصورة مرجع بصري فقط؛ أي تنفيذ لاحق لازم يحافظ على منطق المصادقة الحالي ودعم RTL/LTR والثيمات.
+
 ## 9. مراجعة المشروع والخطة — 27/08/2026
 - الجذر Monorepo فعلياً: `Backend`, `Frontend`, و`packages`، و`pnpm-workspace.yaml` هو مصدر تعريف الـ workspaces.
 - Backend يستخدم Express وموديولات `auth`, `users`, `roles`, `storage`, `health`، مع JSON repositories حالياً وليس قاعدة SQL.

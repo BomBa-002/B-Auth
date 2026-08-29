@@ -1,3 +1,22 @@
+# AI Session — 29/08/2026 (إضافة مرجع واجهة تسجيل الدخول)
+
+## اتعمل
+- تم حفظ الصورة المرفقة باسم `docs/references/images/auth-login-reference.png`.
+- الصورة بتوثّق تصور بصري لشاشة تسجيل الدخول وهوية B-Auth، وبتستخدم كمرجع لتطوير Splash/Auth.
+- تم تسجيل مصدر الصورة داخل توثيق المشروع.
+
+## الملفات المتأثرة
+- `docs/references/images/auth-login-reference.png`
+- `README.md`
+- `docs/AI_CONTEXT.md`
+- `docs/AI_SESSION.md`
+- `docs/TODO.md`
+
+## نقطة الاستكمال
+- إعادة تصميم Splash/Auth طبقاً للمرجع مع الحفاظ على منطق الجلسة، الترجمة، RTL/LTR، والثيم الداكن.
+
+---
+
 # AI Session — 29/08/2026 (مراجعة الجودة وتجهيز الـ Pull Request)
 
 ## اتعمل
