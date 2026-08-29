@@ -1,5 +1,33 @@
 # Changelog
 
+## 2.0.0 — 29/08/2026
+
+### Changed
+- توسعة SmartInput حسب PRD مع suggestions، grouping، highlight، keyboard navigation، password visibility، clear/search controls، validation tones وARIA.
+- تحويل تصميم SmartInput إلى underline-only وربطه بـ design tokens مع حماية autofill وselection.
+- إزالة `user-select: none` العام المتعارض مع تحديد النص.
+
+### Verified
+- `pnpm typecheck` ناجح.
+- `pnpm --filter @b-auth/frontend lint` ناجح.
+- اختبار متصفح فعلي لشاشة Signin في الوضع الداكن ناجح.
+
+
+## 1.7.0 — 29/08/2026
+
+### Added
+- إضافة `SmartInput` بوسم عائم وحالات تحقق وتحميل ووصول محسّن.
+- إضافة stylesheet وexports الخاصة بالمكوّن في حزمة `@b-auth/design-system`.
+
+### Changed
+- نقل حقول تسجيل الدخول والتسجيل من `OutlinedInput` إلى `SmartInput` مع الحفاظ على السلوك الحالي.
+- الإبقاء على `OutlinedInput` وتصديراته للتوافق.
+
+### Verified
+- `pnpm typecheck` و`pnpm lint` و`pnpm test` و`pnpm build` نجحوا.
+- التحقق البصري في الوضع الداكن نجح، مع ظهور floating label وfocus ring بشكل صحيح.
+- فحص `git diff --check` غير متاح لأن أمر `git` غير مثبت في بيئة التنفيذ الحالية.
+
 ## 1.6.0 — 29/08/2026
 
 ### Documentation
