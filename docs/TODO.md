@@ -30,7 +30,7 @@
 ## 3. الخطة النشطة: إعادة تصميم Splash/Auth
 - [x] 🔴 HIGH — توحيد i18n وتطبيق `lang` و`dir` على مستوى المستند.
 - [x] 🔴 HIGH — إزالة النصوص الثابتة من Splash/Auth/System.
-- [ ] 🟡 MED — إعادة تصميم Splash/Auth مع الحفاظ على منطق المصادقة وStatusBar.
+- [x] 🟡 MED — إضافة SmartInput وإعادة استخدامه في حقول المصادقة مع الحفاظ على منطق المصادقة وStatusBar.
 - [ ] 🟡 MED — اختبار English/LTR وArabic/RTL في المتصفح.
 - [ ] 🟢 LOW — تحديث screenshots أو مراجع التصميم بعد اعتماد الشكل النهائي.
 

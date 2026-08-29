@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.7.0 — 29/08/2026
+
+### Added
+- إضافة `SmartInput` بوسم عائم وحالات تحقق وتحميل ووصول محسّن.
+- إضافة stylesheet وexports الخاصة بالمكوّن في حزمة `@b-auth/design-system`.
+
+### Changed
+- نقل حقول تسجيل الدخول والتسجيل من `OutlinedInput` إلى `SmartInput` مع الحفاظ على السلوك الحالي.
+- الإبقاء على `OutlinedInput` وتصديراته للتوافق.
+
+### Verified
+- `pnpm typecheck` و`pnpm lint` و`pnpm test` و`pnpm build` نجحوا.
+- التحقق البصري في الوضع الداكن نجح، مع ظهور floating label وfocus ring بشكل صحيح.
+- فحص `git diff --check` غير متاح لأن أمر `git` غير مثبت في بيئة التنفيذ الحالية.
+
 ## 1.6.0 — 29/08/2026
 
 ### Documentation
