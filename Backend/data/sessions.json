@@ -34,5 +34,14 @@
     "createdAt": "2026-08-28T21:19:22.262Z",
     "expiresAt": "2026-08-29T21:19:22.262Z",
     "revokedAt": null
+  },
+  {
+    "id": "EEKCQQBad0lERGJY3n9oW",
+    "userId": "ba295af1-8213-4bf0-8ff6-cc2e547cb721",
+    "rememberMe": false,
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36",
+    "createdAt": "2026-08-29T13:36:24.306Z",
+    "expiresAt": "2026-08-30T13:36:24.306Z",
+    "revokedAt": null
   }
 ]

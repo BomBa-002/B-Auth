@@ -61,6 +61,11 @@ packages/{aliases,design-system,theme,utils}
 ## 8. مرفقات الجلسة
 - لم توجد ملفات مرفقة جديدة داخل `user_read_only_context` أثناء هذه الجلسة؛ تم حفظ لقطات الاختبار خارج المشروع داخل `/tmp/agent-browser/` حسب سياسة أدوات المتصفح.
 
+## 10. حالة التوثيق — 29/08/2026
+- تم إنشاء `README.md` في جذر المشروع ليشرح الملخص، التقنيات، البدء، الاستخدام، الترخيص، المساهمة، والاتصال.
+- تم ربط README بصورة مرجع شاشة الإقلاع والشعار المحفوظين داخل `docs/references/images/`.
+- نقطة التوقف المعتمدة: استكمال تحسينات Splash/Auth لاحقاً طبقاً للخطة النشطة، مع تحديث ملفات الاستمرارية بعد كل جلسة.
+
 ## 9. مراجعة المشروع والخطة — 27/08/2026
 - الجذر Monorepo فعلياً: `Backend`, `Frontend`, و`packages`، و`pnpm-workspace.yaml` هو مصدر تعريف الـ workspaces.
 - Backend يستخدم Express وموديولات `auth`, `users`, `roles`, `storage`, `health`، مع JSON repositories حالياً وليس قاعدة SQL.

@@ -34,7 +34,12 @@
 - [ ] 🟡 MED — اختبار English/LTR وArabic/RTL في المتصفح.
 - [ ] 🟢 LOW — تحديث screenshots أو مراجع التصميم بعد اعتماد الشكل النهائي.
 
-## 4. آخر تعديلات معتمدة
+## 4. نقطة الاستكمال القادمة
+- [ ] استكمال العمل لاحقاً من خطة `v0_plans/calm-spec.md`.
+- [ ] تشغيل التحقق الكامل بعد أي تعديل جديد: `pnpm typecheck` و`pnpm lint` و`pnpm test` و`pnpm build`.
+- [ ] اختبار المسارات باللغتين English/LTR وArabic/RTL بعد استكمال Splash/Auth.
+
+## 5. آخر تعديلات معتمدة
 - [x] ضبط `.console-card` في `ScreenLayout` إلى `max-width: 48.0625em` و`min-width: 16em`.
 - [x] توثيق تغييرات StatusBar وSplash والتاريخ المترجم.
 - [x] حفظ الشعار المرفق داخل `docs/references/images/`.
