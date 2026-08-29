@@ -14,7 +14,7 @@ import { AppBackground } from '@components/app-background'
 import '@styles/globals.css'
 
 configureHttp({ getAccessToken: () => useAuthStore.getState().accessToken, clearSession: () => useAuthStore.getState().clearSession(), setAccessToken: (token) => useAuthStore.getState().setAccessToken(token) })
-applySettingsToDocument(useSettingsStore.getState().theme, useSettingsStore.getState().language)
+applySettingsToDocument(useSettingsStore.getState().theme, useSettingsStore.getState().language, useSettingsStore.getState().showFocusRing)
 
 function App() {
   const { bootstrapStatus, retry } = useBootstrap()
@@ -25,10 +25,11 @@ function App() {
   const navigate = (nextScreen: string) => setScreen(nextScreen === 'home' && !user ? 'signin' : nextScreen)
   const theme = useSettingsStore((state) => state.theme)
   const language = useSettingsStore((state) => state.language)
+  const showFocusRing = useSettingsStore((state) => state.showFocusRing)
 
   React.useEffect(() => {
-    applySettingsToDocument(theme, language)
-  }, [theme, language])
+    applySettingsToDocument(theme, language, showFocusRing)
+  }, [theme, language, showFocusRing])
 
   React.useEffect(() => {
     if (bootstrapStatus === 'error') {
