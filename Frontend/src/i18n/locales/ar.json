@@ -1,6 +1,9 @@
 {
   "app": {
     "name": "بي-أوث",
+    "brand": "بي-ليرنينج",
+    "version": "الإصدار 1.1.0",
+    "environment": "إنتاج",
     "tagline": "منصة الهوية والتحكم بالوصول"
   },
   "splash": {
@@ -65,6 +68,7 @@
     "session_label": "الجلسة",
     "session_persistent": "دائمة (تم تفعيل تذكرني)",
     "session_temporary": "تنتهي عند إغلاق المتصفح",
+    "default_operator": "المستخدم",
     "no_permissions": "لا توجد صلاحيات مخصصة"
   },
   "nav": {

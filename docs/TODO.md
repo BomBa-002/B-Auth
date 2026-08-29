@@ -28,8 +28,8 @@
 - [x] 🟢 LOW — تشغيل preview واختبار المسار الأساسي.
 
 ## 3. الخطة النشطة: إعادة تصميم Splash/Auth
-- [ ] 🔴 HIGH — توحيد i18n وتطبيق `lang` و`dir` على مستوى المستند.
-- [ ] 🔴 HIGH — إزالة النصوص الثابتة من Splash/Auth/System.
+- [x] 🔴 HIGH — توحيد i18n وتطبيق `lang` و`dir` على مستوى المستند.
+- [x] 🔴 HIGH — إزالة النصوص الثابتة من Splash/Auth/System.
 - [ ] 🟡 MED — إعادة تصميم Splash/Auth مع الحفاظ على منطق المصادقة وStatusBar.
 - [ ] 🟡 MED — اختبار English/LTR وArabic/RTL في المتصفح.
 - [ ] 🟢 LOW — تحديث screenshots أو مراجع التصميم بعد اعتماد الشكل النهائي.
@@ -47,3 +47,22 @@
 ## 5. ملاحظات المراجعة
 - لا توجد حالياً مهمة Database أو migration.
 - لا يتم إضافة Router أو Redis أو Queue بدون قرار معماري موثق.
+
+## 6. مراجعة الجودة — 29/08/2026
+- [x] TypeScript وESLint والاختبارات وBuild ناجحين.
+- [x] Preview متراجع على desktop وmobile.
+- [x] RTL/LTR والثيم الداكن متراجعان في المتصفح.
+- [x] Backend health endpoint متراجع ويرجع `success: true`.
+- [x] التحقق من عدم وجود أخطاء Console أو whitespace errors.
+- [x] تجهيز التوثيق للـ Pull Request.
+
+## 8. توثيق مرجع واجهة تسجيل الدخول — 29/08/2026
+- [x] حفظ الصورة المرفقة داخل `docs/references/images/auth-login-reference.png`.
+- [x] إضافة الصورة إلى `README.md`.
+- [x] توثيق وصف الصورة ومصدرها في `AI_CONTEXT.md` و`AI_SESSION.md`.
+- [ ] استخدام المرجع عند استكمال إعادة تصميم Splash/Auth.
+
+## 7. بنود مستقبلية
+- [ ] 🟡 MED — استكمال إعادة تصميم Splash/Auth حسب الخطة النشطة.
+- [ ] 🟡 MED — إضافة Database خارجية فقط بعد اعتماد قرار معماري وتكامل مناسب.
+- [ ] 🟢 LOW — تفعيل S3 عند الحاجة الفعلية لتخزين الملفات.

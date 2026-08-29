@@ -1,4 +1,4 @@
-.status-bar { position: relative; z-index: var(--z-sticky); display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: var(--spacing-sm); min-block-size: 2.75em; padding: var(--spacing-xs) var(--spacing-sm); border: 0.0625em solid var(--color-border); border-radius: var(--border-radius); background: var(--color-bg); color: var(--color-bg-f); box-shadow: var(--shadow-md); }
+.status-bar { position: relative; z-index: var(--z-sticky); display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: var(--spacing-sm); min-block-size: 2.75em; padding: var(--spacing-xs) var(--spacing-sm); border: 0.0625em solid var(--color-border); border-radius: var(--border-radius); color: var(--color-bg-f); box-shadow: var(--shadow-md); backdrop-filter: blur(0.75em); -webkit-backdrop-filter: blur(0.75em); }
 .status-bar-zone { display: flex; align-items: center; min-inline-size: 0; gap: var(--spacing-sm); }
 .status-bar-start { justify-content: flex-start; }
 .status-bar-center { justify-content: center; }
