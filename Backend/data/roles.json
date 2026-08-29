@@ -1,0 +1,30 @@
+[
+  {
+    "id": "68dbc6e3-4841-4986-9ec7-f364c6cebb5d",
+    "name": "Admin",
+    "description": "Full access to all resources and settings",
+    "permissionIds": [
+      "1d1b32d9-14ae-4629-bd75-ee87fd5c5948",
+      "677d9cef-304f-47a1-985f-711bde3b7fa5",
+      "c8acbf82-ab4b-4be1-9c85-bbe0fbfc3f52",
+      "d1a2a9ec-1295-4742-94c0-c0574c206ed6",
+      "1b44b721-cf97-4f4f-af35-3c1cd202f3ad",
+      "3c87b58a-8077-4f7b-a67a-9a9b1188a9bc"
+    ],
+    "isSystem": true,
+    "createdAt": "2026-08-28T02:37:55.003Z",
+    "updatedAt": "2026-08-28T02:37:55.003Z"
+  },
+  {
+    "id": "655bae36-6354-4856-bd32-752e742f1c69",
+    "name": "User",
+    "description": "Standard account with read-only access",
+    "permissionIds": [
+      "1d1b32d9-14ae-4629-bd75-ee87fd5c5948",
+      "1b44b721-cf97-4f4f-af35-3c1cd202f3ad"
+    ],
+    "isSystem": true,
+    "createdAt": "2026-08-28T02:37:55.003Z",
+    "updatedAt": "2026-08-28T02:37:55.003Z"
+  }
+]

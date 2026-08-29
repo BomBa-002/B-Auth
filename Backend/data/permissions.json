@@ -1,0 +1,32 @@
+[
+  {
+    "id": "1d1b32d9-14ae-4629-bd75-ee87fd5c5948",
+    "key": "users:read",
+    "description": "View user accounts"
+  },
+  {
+    "id": "677d9cef-304f-47a1-985f-711bde3b7fa5",
+    "key": "users:write",
+    "description": "Create and edit user accounts"
+  },
+  {
+    "id": "c8acbf82-ab4b-4be1-9c85-bbe0fbfc3f52",
+    "key": "users:delete",
+    "description": "Delete user accounts"
+  },
+  {
+    "id": "d1a2a9ec-1295-4742-94c0-c0574c206ed6",
+    "key": "roles:manage",
+    "description": "Create, edit, and assign roles and permissions"
+  },
+  {
+    "id": "1b44b721-cf97-4f4f-af35-3c1cd202f3ad",
+    "key": "storage:read",
+    "description": "View stored files"
+  },
+  {
+    "id": "3c87b58a-8077-4f7b-a67a-9a9b1188a9bc",
+    "key": "storage:write",
+    "description": "Upload and delete stored files"
+  }
+]

@@ -1,0 +1,12 @@
+{
+  "name": "@b-auth/theme",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Central design tokens (light/dark) for B-Auth — source of truth for the design-system CSS.",
+  "type": "module",
+  "main": "./theme.config.ts",
+  "types": "./theme.config.ts",
+  "exports": {
+    ".": "./theme.config.ts"
+  }
+}

@@ -1,0 +1,24 @@
+.status-bar { position: relative; z-index: var(--z-sticky); display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: var(--spacing-sm); min-block-size: 2.75em; padding: var(--spacing-xs) var(--spacing-sm); border: 0.0625em solid var(--color-border); border-radius: var(--border-radius); background: var(--color-bg); color: var(--color-bg-f); box-shadow: var(--shadow-md); }
+.status-bar-zone { display: flex; align-items: center; min-inline-size: 0; gap: var(--spacing-sm); }
+.status-bar-start { justify-content: flex-start; }
+.status-bar-center { justify-content: center; }
+.status-bar-end { justify-content: flex-end; gap: var(--spacing-xs); }
+.online-badge, .status-bar-clock { display: inline-flex; align-items: center; gap: var(--spacing-xs); border: 0.0625em solid var(--color-border); border-radius: var(--border-radius); background: var(--color-surface-alt); color: var(--color-surface-f); }
+.online-badge { padding: var(--spacing-xs) var(--spacing-sm); font-size: var(--font-size-xs); font-weight: var(--font-weight-bold); }
+.status-bar-pulse { inline-size: 0.5em; block-size: 0.5em; flex-shrink: 0; border-radius: var(--border-radius-full); animation: status-bar-pulse-beat 2.4s ease-in-out infinite; }
+.status-bar-pulse-ready { background: var(--color-ok); }
+.status-bar-pulse-busy { background: var(--color-war); }
+.status-bar-pulse-error { background: var(--color-err); }
+.status-bar-version, .status-bar-brand { color: var(--color-md-f); font-size: var(--font-size-xs); }
+.status-bar-environment { padding: var(--spacing-xs) var(--spacing-sm); border-radius: var(--border-radius-sm); background: var(--color-hover); color: var(--color-sy); font-size: var(--font-size-xs); font-weight: var(--font-weight-bold); }
+.status-bar-icon-button { display: grid; place-items: center; min-inline-size: 1.65em; min-block-size: 1.65em; padding: 0; border: 0.0625em solid var(--color-border); border-radius: var(--border-radius); background: var(--color-bg); backdrop-filter: blur(0.75em); -webkit-backdrop-filter: blur(0.75em); color: var(--color-surface-f); cursor: pointer; transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast); }
+.status-bar-icon-button:hover { border-color: var(--color-py); background: var(--color-hover); color: var(--color-py); }
+.status-bar-clock { padding: var(--spacing-xs); font-family: var(--font-family-mono); font-size: var(--font-size-xs); cursor: pointer; }
+.status-bar-tooltip { z-index: var(--z-tooltip); display: grid; gap: var(--spacing-xs); max-inline-size: 16em; padding: var(--spacing-sm); border: 0.0625em solid var(--color-border); border-radius: var(--border-radius); background: var(--color-bg); backdrop-filter: blur(0.75em); -webkit-backdrop-filter: blur(0.75em); color: var(--color-surface-f); box-shadow: var(--shadow-lg); }
+.status-bar-control-tooltip { display: block; min-inline-size: max-content; font-size: var(--font-size-xs); font-weight: var(--font-weight-bold); line-height: var(--line-height-normal); }
+.status-bar-tooltip-row { margin: 0; color: var(--color-surface-f); font-size: var(--font-size-xs); line-height: var(--line-height-normal); }
+.status-bar-tooltip-row strong { color: var(--color-py); }
+.status-bar-tooltip-arrow { fill: var(--color-surface); }
+@keyframes status-bar-pulse-beat { 50% { opacity: 0.45; } }
+@media (max-width: 43.75em) { .status-bar { grid-template-columns: minmax(0, 1fr) auto; } .status-bar-center, .status-bar-version { display: none; } }
+@media (prefers-reduced-motion: reduce) { .status-bar-pulse { animation: none; } }
