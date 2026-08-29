@@ -5,7 +5,7 @@
 :root { background: var(--color-bg); color: var(--color-bg-f); font-family: var(--font-family-ar); font-synthesis: none; text-rendering: optimizeLegibility; }
 html, body, #root { min-block-size: 100%; margin: 0; }
 body { overflow-x: hidden; background: var(--color-bg); color: var(--color-bg-f); }
-* { box-sizing: border-box; user-select: none; -webkit-user-select: none; }
+* { box-sizing: border-box; }
 button, input, textarea, select { font: inherit; }
 input, textarea, select, [contenteditable="true"] { user-select: text; -webkit-user-select: text; }
   :focus-visible { outline: none; box-shadow: 0 0 0 0.125em var(--color-bg), 0 0 0 0.25em var(--color-border-focus); }
