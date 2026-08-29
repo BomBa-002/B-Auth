@@ -72,6 +72,7 @@ export const SmartInput = React.forwardRef<HTMLInputElement, SmartInputProps>(fu
   const [open, setOpen] = React.useState(false)
   const [activeIndex, setActiveIndex] = React.useState(-1)
   const [showPassword, setShowPassword] = React.useState(false)
+  const [autofillGuard, setAutofillGuard] = React.useState(true)
   const rootRef = React.useRef<HTMLDivElement>(null)
   const currentValue = value === undefined ? innerValue : String(value)
   const filtered = suggestions.filter((item) => item.label.toLocaleLowerCase().includes(currentValue.toLocaleLowerCase()))
@@ -83,11 +84,15 @@ export const SmartInput = React.forwardRef<HTMLInputElement, SmartInputProps>(fu
   const active = activeIndex >= 0 ? filtered[activeIndex] : undefined
 
   React.useEffect(() => {
+    const timer = window.setTimeout(() => setAutofillGuard(false), 350)
     const handlePointerDown = (event: PointerEvent) => {
       if (!rootRef.current?.contains(event.target as Node)) setOpen(false)
     }
     document.addEventListener('pointerdown', handlePointerDown)
-    return () => document.removeEventListener('pointerdown', handlePointerDown)
+    return () => {
+      window.clearTimeout(timer)
+      document.removeEventListener('pointerdown', handlePointerDown)
+    }
   }, [])
 
   function update(next: string) {
@@ -125,7 +130,7 @@ export const SmartInput = React.forwardRef<HTMLInputElement, SmartInputProps>(fu
       select(active)
       return
     }
-    if (event.key === 'Enter' && searchable) {
+    if (event.key === 'Enter' && searchable && (event.ctrlKey || !active)) {
       event.preventDefault()
       onSearch?.(currentValue)
     }
@@ -151,21 +156,25 @@ export const SmartInput = React.forwardRef<HTMLInputElement, SmartInputProps>(fu
           type={type === 'password' && showPassword ? 'text' : type}
           value={currentValue}
           disabled={disabled}
+          readOnly={autofillGuard || props.readOnly}
           placeholder=" "
           autoComplete={props.autoComplete ?? 'off'}
           aria-invalid={validation === 'error' || undefined}
           aria-describedby={descriptionId}
           aria-autocomplete={suggestions.length ? 'list' : undefined}
+          aria-haspopup={suggestions.length ? 'listbox' : undefined}
+          aria-expanded={suggestions.length ? open : undefined}
+          role={suggestions.length ? 'combobox' : undefined}
           aria-controls={open && suggestions.length ? listId : undefined}
           aria-activedescendant={active ? `${listId}-${active.id}` : undefined}
-          onFocus={(event) => { onFocus?.(event); if (suggestions.length) setOpen(true) }}
+          onFocus={(event) => { setAutofillGuard(false); onFocus?.(event); if (suggestions.length) setOpen(true) }}
           onChange={(event) => { update(event.target.value); onChange?.(event) }}
           onKeyDown={handleKeyDown}
         />
         <label htmlFor={inputId}>{label}</label>
-        {clearable && currentValue ? <button type="button" className="smart-input-action" aria-label={`Clear ${label}`} tabIndex={-1} onClick={handleClear}>×</button> : null}
-        {type === 'password' ? <button type="button" className="smart-input-action" aria-label={showPassword ? 'Hide password' : 'Show password'} tabIndex={-1} onClick={() => setShowPassword((state) => !state)}>{showPassword ? '◉' : '◌'}</button> : null}
-        {searchable ? <button type="button" className="smart-input-action" aria-label={`Search ${label}`} tabIndex={-1} onClick={() => onSearch?.(currentValue)}>⌕</button> : null}
+        {clearable && currentValue ? <button type="button" className="smart-input-action" aria-label={`Clear ${label}`} tabIndex={-1} disabled={disabled} onClick={handleClear}>×</button> : null}
+        {type === 'password' ? <button type="button" className="smart-input-action" aria-label={showPassword ? 'Hide password' : 'Show password'} tabIndex={-1} disabled={disabled} onClick={() => setShowPassword((state) => !state)}>{showPassword ? '◉' : '◌'}</button> : null}
+        {searchable ? <button type="button" className="smart-input-action" aria-label={`Search ${label}`} tabIndex={-1} disabled={disabled} onClick={() => onSearch?.(currentValue)}>⌕</button> : null}
       </div>
       {open && suggestions.length ? (
         <div id={listId} className="smart-input-list" role="listbox" aria-label={`${label} suggestions`}>
