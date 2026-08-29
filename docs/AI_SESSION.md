@@ -1,3 +1,27 @@
+# AI Session — 29/08/2026 (مراجعة الجودة وتجهيز الـ Pull Request)
+
+## اتعمل
+- راجعنا حالة Git والهيكل الحالي للـ Backend والـ Frontend.
+- شغّلنا TypeScript وESLint والاختبارات وBuild بدون أخطاء.
+- اختبرنا Preview في الوضع الداكن على سطح المكتب، وعلى شاشة صغيرة في LTR وRTL.
+- راجعنا Backend فعلياً عبر `/api/health`؛ طبقة البيانات المحلية شغالة، وS3 غير مفعّل اختيارياً.
+- اتأكدنا إن الواجهة بتستخدم Backend الحقيقي عبر API، ومفيش احتياج لإضافة Database خارجية بدون قرار معماري.
+- راجعنا `git diff --check` ومفيش whitespace errors.
+
+## التحقق
+- `pnpm typecheck` ناجح.
+- `pnpm lint` ناجح.
+- `pnpm test` ناجح: 16 اختباراً.
+- `pnpm build` ناجح.
+- Preview شغال على `http://localhost:3000` بدون أخطاء في Console، مع نجاح RTL/LTR وresponsive.
+- `/api/health` رجّع `success: true`.
+
+## ملاحظات للمراجعة
+- التخزين الحالي JSON محلي ومقصود للنسخة الحالية، وليس Database خارجية.
+- تخزين الملفات S3 اختياري وغير متوصل حالياً، وده لا يمنع تشغيل مسار المصادقة.
+
+---
+
 # AI Session — 29/08/2026 (تحسين الترجمة في Splash/Auth)
 
 ## اتعمل
