@@ -66,4 +66,6 @@ input, textarea, select, [contenteditable="true"] { user-select: text; -webkit-u
 @keyframes blink { 50% { opacity: 1; } }
 @media (min-width: 40em) { .splash-screen, .screen-body { padding-inline: var(--spacing-xl); } .home-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 1ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; } }
+[dir="rtl"] body, [dir="rtl"] button, [dir="rtl"] input, [dir="rtl"] select, [dir="rtl"] textarea { font-family: var(--font-family-ar); }
 [dir="rtl"] .terminal-row, [dir="rtl"] .form-card { text-align: right; }
+[dir="rtl"] .terminal-row, [dir="rtl"] .console-kicker, [dir="rtl"] .eyebrow, [dir="rtl"] .status-bar { font-family: var(--font-family-ar); }

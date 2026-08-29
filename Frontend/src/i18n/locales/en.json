@@ -1,6 +1,9 @@
 {
   "app": {
     "name": "B-Auth",
+    "brand": "B-Learning",
+    "version": "v1.1.0",
+    "environment": "PROD",
     "tagline": "Identity & access console"
   },
   "splash": {
@@ -65,6 +68,7 @@
     "session_label": "Session",
     "session_persistent": "Persistent (remember me)",
     "session_temporary": "Ends when you close the browser",
+    "default_operator": "Operator",
     "no_permissions": "No permissions assigned"
   },
   "nav": {

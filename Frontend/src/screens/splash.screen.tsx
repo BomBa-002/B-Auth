@@ -13,7 +13,7 @@ export function SplashScreen({ status }: { status: BootstrapStatus }) {
   const progress = status === 'ready' || status === 'degraded' ? 100 : status === 'running' ? 68 : 46
 
   return (
-    <ScreenLayout statusLabel={t('splash.status_starting')} statusTone="busy" version="v1.1.0" brand="B-Learning" environment="PROD">
+    <ScreenLayout statusLabel={t('splash.status_starting')} statusTone="busy" version={t('app.version')} brand={t('app.brand')} environment={t('app.environment')}>
       <div className="splash-screen" aria-labelledby="splash-title">
         <div className="splash-identity">
           <div className="splash-brand"><Logo aria-label={t('app.name')} /></div>

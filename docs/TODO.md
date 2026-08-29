@@ -28,8 +28,8 @@
 - [x] 🟢 LOW — تشغيل preview واختبار المسار الأساسي.
 
 ## 3. الخطة النشطة: إعادة تصميم Splash/Auth
-- [ ] 🔴 HIGH — توحيد i18n وتطبيق `lang` و`dir` على مستوى المستند.
-- [ ] 🔴 HIGH — إزالة النصوص الثابتة من Splash/Auth/System.
+- [x] 🔴 HIGH — توحيد i18n وتطبيق `lang` و`dir` على مستوى المستند.
+- [x] 🔴 HIGH — إزالة النصوص الثابتة من Splash/Auth/System.
 - [ ] 🟡 MED — إعادة تصميم Splash/Auth مع الحفاظ على منطق المصادقة وStatusBar.
 - [ ] 🟡 MED — اختبار English/LTR وArabic/RTL في المتصفح.
 - [ ] 🟢 LOW — تحديث screenshots أو مراجع التصميم بعد اعتماد الشكل النهائي.
