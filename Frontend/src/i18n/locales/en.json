@@ -88,6 +88,7 @@
     "time_12": "12-hour",
     "time_24": "24-hour",
     "settings_title": "Display settings",
+    "focus_ring": "Show focus outline",
     "online_tooltip": "System status",
     "online_ready": "All services are operating",
     "online_error": "Unable to reach the server",
