@@ -100,6 +100,28 @@
   --shadow-lg: 0 0.5em 1.5em hsla(40 0% 0% / 0.5);
   --shadow-xl: 0 1em 2.5em hsla(40 0% 0% / 0.6);
 }
+
+/* SmartInput tokens — القيم دي مركزية عشان الحقل يفضل متناسق في الثيمين. */
+:root,
+[data-theme="light"] {
+  --input-min-height: 2.75em;
+  --input-padding-block: 0.75em;
+  --input-padding-inline: 0.25em;
+  --input-border-width: 0.0625em;
+  --input-focus-ring: 0.25em;
+  --input-focus-offset: 0em;
+  --focus-outline-width: 0.125em;
+  --focus-outline-offset: 0.125em;
+  --transition-input: 200ms ease;
+  --list-max-height: 22em;
+  --list-radius: var(--border-radius);
+  --color-selection: hsla(40 80% 60% / 0.35);
+  --color-selection-f: var(--color-bg-f);
+}
+[data-theme="dark"], .dark {
+  --color-selection: hsla(40 80% 30% / 0.65);
+  --color-selection-f: var(--color-bg-f);
+}
 @theme inline {
   --color-background: var(--color-bg);
   --color-foreground: var(--color-bg-f);

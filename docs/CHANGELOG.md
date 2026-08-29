@@ -1,5 +1,18 @@
 # Changelog
 
+## 2.0.0 — 29/08/2026
+
+### Changed
+- توسعة SmartInput حسب PRD مع suggestions، grouping، highlight، keyboard navigation، password visibility، clear/search controls، validation tones وARIA.
+- تحويل تصميم SmartInput إلى underline-only وربطه بـ design tokens مع حماية autofill وselection.
+- إزالة `user-select: none` العام المتعارض مع تحديد النص.
+
+### Verified
+- `pnpm typecheck` ناجح.
+- `pnpm --filter @b-auth/frontend lint` ناجح.
+- اختبار متصفح فعلي لشاشة Signin في الوضع الداكن ناجح.
+
+
 ## 1.7.0 — 29/08/2026
 
 ### Added

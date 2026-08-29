@@ -1,3 +1,17 @@
+# AI Session — 29/08/2026 (توسعة SmartInput حسب PRD)
+
+## اتعمل
+- توسعة SmartInput لدعم الاقتراحات، grouping، highlight، keyboard navigation، clear/password/search controls، validation tones، وARIA combobox/listbox.
+- إعادة بناء CSS ليستخدم underline-only input، tokens مركزية، autofill safeguards، selection styling، وبدون keyframes للمكوّن.
+- إزالة user-select العام من design-system وFrontend مع الإبقاء على تحديد النص الطبيعي.
+
+## التحقق
+- `pnpm typecheck` ناجح.
+- `pnpm --filter @b-auth/frontend lint` ناجح.
+- تم اختبار شاشة Signin في المتصفح بالوضع الداكن، وظهر floating label وclear/password controls بشكل صحيح.
+
+---
+
 # AI Session — 29/08/2026 (إضافة SmartInput للمصادقة)
 
 ## اتعمل
