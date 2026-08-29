@@ -20,8 +20,11 @@
 .smart-input-control label { position: absolute; inset-inline-start: 0.25em; inset-block-start: 50%; color: var(--color-md-f); pointer-events: none; transform: translateY(-50%); transition: inset-block-start 150ms ease, color 150ms ease, font-size 150ms ease; }
 .smart-input-control input:focus + label, .smart-input-control input:not(:placeholder-shown) + label { inset-block-start: 0.35em; color: var(--smart-focus); font-size: var(--font-size-xs); }
 .smart-input-prefix { display: inline-flex; color: var(--color-md-f); }
-.smart-input-action { display: inline-grid; place-items: center; min-inline-size: 2.25em; min-block-size: 2.25em; border: 0; background: transparent; color: var(--color-md-f); cursor: pointer; }
-.smart-input-action:hover { color: var(--smart-focus); }
+.smart-input-action { display: inline-grid; place-items: center; min-inline-size: 2.75em; min-block-size: 2.75em; border: 0; border-radius: var(--border-radius-sm); background: transparent; color: var(--color-md-f); cursor: pointer; transition: color 150ms ease, background-color 150ms ease; }
+.smart-input-action:hover { background: var(--color-hover); color: var(--smart-focus); }
+.smart-input-action:focus-visible { outline: 0.125em solid var(--smart-focus); outline-offset: 0.125em; }
+.smart-input[data-disabled="true"] .smart-input-control { opacity: 0.6; }
+.smart-input[data-disabled="true"] .smart-input-action { cursor: not-allowed; }
 .smart-input[data-validation="error"] { --smart-focus: var(--color-err); }
 .smart-input[data-validation="success"] { --smart-focus: var(--color-ok); }
 .smart-input[data-validation="default"] { --smart-focus: var(--color-py); }
