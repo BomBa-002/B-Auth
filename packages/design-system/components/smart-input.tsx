@@ -141,9 +141,9 @@ export const SmartInput = React.forwardRef<HTMLInputElement, SmartInputProps>(fu
   const isInvalid = validation === 'error' || Boolean(error)
   const descriptionText = error ?? helperText
   const actionVisible = hasFocus || Boolean(currentValue)
-  const canClear = clearable && Boolean(currentValue)
-  const canTogglePassword = type === 'password' && actionVisible
-  const canSearch = searchable && actionVisible
+  const canClear = (clearable ?? true) && Boolean(currentValue) && actionVisible
+  const canTogglePassword = type === 'password' && Boolean(currentValue) && actionVisible
+  const canSearch = searchable && Boolean(currentValue) && actionVisible
 
   React.useEffect(() => {
     const timer = window.setTimeout(() => setAutofillGuard(false), 350)
@@ -202,13 +202,14 @@ export const SmartInput = React.forwardRef<HTMLInputElement, SmartInputProps>(fu
           disabled={disabled}
           readOnly={autofillGuard || readOnly}
           placeholder=" "
-          autoComplete={props.autoComplete ?? 'off'}
-          autoCapitalize="none"
-          autoCorrect="off"
-          spellCheck={false}
+          autoComplete={props.autoComplete ?? (type === 'password' ? 'new-password' : 'off')}
+          autoCapitalize={props.autoCapitalize ?? 'none'}
+          autoCorrect={props.autoCorrect ?? 'off'}
+          spellCheck={props.spellCheck ?? false}
           data-1p-ignore="true"
           data-lpignore="true"
           data-bwignore="true"
+          data-form-type="other"
           aria-label={props['aria-label'] ?? label}
           aria-required={required || undefined}
           aria-invalid={isInvalid || undefined}
