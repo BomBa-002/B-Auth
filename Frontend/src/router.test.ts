@@ -5,10 +5,22 @@
  */
 
 import { describe, expect, it } from 'vitest'
-import { ROUTE_PATHS } from './router'
+import { resolveScreenPath, ROUTE_PATHS } from './router'
 
 describe('application route tree', () => {
   it('contains all public and protected screen paths', () => {
     expect(ROUTE_PATHS).toEqual(expect.arrayContaining(['/', '/signin', '/signup', '/home', '/error']))
+  })
+
+  it('redirects protected home navigation to signin without a session', () => {
+    expect(resolveScreenPath('home', false)).toBe('/signin')
+    expect(resolveScreenPath('home', true)).toBe('/home')
+  })
+
+  it('keeps supported screen navigation inside the route tree', () => {
+    expect(resolveScreenPath('signin', false)).toBe('/signin')
+    expect(resolveScreenPath('signup', false)).toBe('/signup')
+    expect(resolveScreenPath('error', false)).toBe('/error')
+    expect(resolveScreenPath('unknown', false)).toBe('/signin')
   })
 })

@@ -11,6 +11,15 @@ import { SplashScreen } from '@screens/splash.screen'
 import { useBootstrap } from '@features/auth/hooks/use-bootstrap'
 import { createRuntimeHealthMonitor, type RuntimeHealthState } from '@features/health/runtime-health-monitor'
 
+// eslint-disable-next-line react-refresh/only-export-components -- الدالة pure ومطلوبة لاختبار قرار التنقل.
+export function resolveScreenPath(screen: string, hasUser: boolean): '/signin' | '/signup' | '/home' | '/error' {
+  if (screen === 'home' && !hasUser) return '/signin'
+  if (screen === 'signup') return '/signup'
+  if (screen === 'error') return '/error'
+  if (screen === 'home') return '/home'
+  return '/signin'
+}
+
 function AppShell() {
   const { bootstrapStatus, retry } = useBootstrap()
   const user = useAuthStore((state) => state.user)
@@ -41,8 +50,7 @@ function AppShell() {
   }, [bootstrapStatus])
 
   const navigate = (screen: string) => {
-    const target = screen === 'home' && !user ? '/signin' : `/${screen}`
-    void router.navigate({ to: target as '/signin' | '/signup' | '/home' | '/error' })
+    void router.navigate({ to: resolveScreenPath(screen, Boolean(user)) })
   }
 
   let content: React.ReactNode
