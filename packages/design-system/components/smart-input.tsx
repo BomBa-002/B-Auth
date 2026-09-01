@@ -5,6 +5,26 @@
  */
 
 import * as React from 'react'
+import {
+  IconCheckCircle,
+  IconClose,
+  IconEye,
+  IconEyeOff,
+  IconSearch,
+  IconAlertTriangle,
+} from '../icon-registry'
+
+const ICON_SIZE = 16
+
+function TooltipIcon({
+  label,
+  children,
+}: {
+  label: string
+  children: React.ReactNode
+}) {
+  return <span className="smart-input-tooltip" data-tooltip={label}>{children}</span>
+}
 
 export interface SmartSuggestion {
   id: string
@@ -206,10 +226,16 @@ export const SmartInput = React.forwardRef<HTMLInputElement, SmartInputProps>(fu
           onKeyDown={handleKeyDown}
         />
           <label htmlFor={inputId}>{label}</label>
-        {validation !== 'default' ? <span id={validationId} className="smart-input-validation" role="status" aria-label={validationLabel ?? validation} aria-live="polite">{validation === 'success' ? '✓' : '!'}</span> : null}
-        {canClear ? <button type="button" className="smart-input-action" aria-label={`${clearLabel} ${label}`} tabIndex={-1} disabled={disabled} onClick={handleClear}>×</button> : null}
-        {canTogglePassword ? <button type="button" className="smart-input-action" aria-label={showPassword ? hidePasswordLabel : showPasswordLabel} aria-pressed={showPassword} tabIndex={-1} disabled={disabled} onClick={() => setShowPassword((state) => !state)}>{showPassword ? '◉' : '◌'}</button> : null}
-        {canSearch ? <button type="button" className="smart-input-action" aria-label={`${searchLabel} ${label}`} tabIndex={-1} disabled={disabled} onClick={() => onSearch?.(currentValue)}>⌕</button> : null}
+        {validation !== 'default' ? (
+          <TooltipIcon label={validationLabel ?? (validation === 'success' ? 'Valid' : 'Invalid')}>
+            <span id={validationId} className="smart-input-validation" role="status" aria-label={validationLabel ?? validation} aria-live="polite">
+              {validation === 'success' ? <IconCheckCircle size={ICON_SIZE} aria-hidden="true" /> : <IconAlertTriangle size={ICON_SIZE} aria-hidden="true" />}
+            </span>
+          </TooltipIcon>
+        ) : null}
+        {canClear ? <button type="button" className="smart-input-action" aria-label={`${clearLabel} ${label}`} title={`${clearLabel} ${label}`} tabIndex={-1} disabled={disabled} onClick={handleClear}><IconClose size={ICON_SIZE} aria-hidden="true" /></button> : null}
+        {canTogglePassword ? <button type="button" className="smart-input-action" aria-label={showPassword ? hidePasswordLabel : showPasswordLabel} title={showPassword ? hidePasswordLabel : showPasswordLabel} aria-pressed={showPassword} tabIndex={-1} disabled={disabled} onClick={() => setShowPassword((state) => !state)}>{showPassword ? <IconEyeOff size={ICON_SIZE} aria-hidden="true" /> : <IconEye size={ICON_SIZE} aria-hidden="true" />}</button> : null}
+        {canSearch ? <button type="button" className="smart-input-action" aria-label={`${searchLabel} ${label}`} title={`${searchLabel} ${label}`} tabIndex={-1} disabled={disabled} onClick={() => onSearch?.(currentValue)}><IconSearch size={ICON_SIZE} aria-hidden="true" /></button> : null}
       </div>
       {open && suggestions.length ? (
         <div id={listId} className="smart-input-list" role="listbox" aria-label={suggestionsLabel}>
