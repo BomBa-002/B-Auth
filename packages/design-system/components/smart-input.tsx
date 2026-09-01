@@ -186,6 +186,7 @@ export const SmartInput = React.forwardRef<HTMLInputElement, SmartInputProps>(fu
 
   function handleClear() {
     update('')
+    onChange?.({ target: { value: '' } } as React.ChangeEvent<HTMLInputElement>)
     onClear?.()
   }
 
