@@ -26,9 +26,11 @@ export interface SmartInputProps extends Omit<React.InputHTMLAttributes<HTMLInpu
   suggestions?: SmartSuggestion[]
   validation?: SmartValidationState
   validationLabel?: string
+  validationMessage?: string
   error?: string
   helperText?: string
   noResultsText?: string
+  suggestionsLabel?: string
   clearLabel?: string
   showPasswordLabel?: string
   hidePasswordLabel?: string
@@ -70,9 +72,11 @@ export const SmartInput = React.forwardRef<HTMLInputElement, SmartInputProps>(fu
     suggestions = [],
     validation = 'default',
     validationLabel,
+    validationMessage,
     error,
     helperText,
     noResultsText = 'No results',
+    suggestionsLabel = `${label} suggestions`,
     clearLabel = 'Clear',
     showPasswordLabel = 'Show password',
     hidePasswordLabel = 'Hide password',
@@ -97,7 +101,8 @@ export const SmartInput = React.forwardRef<HTMLInputElement, SmartInputProps>(fu
   const generatedId = React.useId()
   const inputId = id ?? generatedId
   const listId = `${inputId}-suggestions`
-  const descriptionId = error || helperText ? `${inputId}-description` : undefined
+  const descriptionId = error || helperText || validationMessage ? `${inputId}-description` : undefined
+  const validationId = validation !== 'default' ? `${inputId}-validation` : undefined
   const [innerValue, setInnerValue] = React.useState(String(defaultValue ?? ''))
   const [open, setOpen] = React.useState(false)
   const [hasFocus, setHasFocus] = React.useState(false)
@@ -176,7 +181,7 @@ export const SmartInput = React.forwardRef<HTMLInputElement, SmartInputProps>(fu
           aria-label={props['aria-label'] ?? label}
           aria-required={required || undefined}
           aria-invalid={isInvalid || undefined}
-          aria-describedby={descriptionId}
+          aria-describedby={[descriptionId, validationId].filter(Boolean).join(' ') || undefined}
           aria-errormessage={error ? descriptionId : undefined}
           aria-autocomplete={suggestions.length ? 'list' : undefined}
           aria-haspopup={suggestions.length ? 'listbox' : undefined}
@@ -189,14 +194,14 @@ export const SmartInput = React.forwardRef<HTMLInputElement, SmartInputProps>(fu
           onChange={(event) => { update(event.target.value); onChange?.(event) }}
           onKeyDown={handleKeyDown}
         />
-        <label htmlFor={inputId}>{label}</label>
-        {validation !== 'default' ? <span className="smart-input-validation" role="status" aria-label={validationLabel}>{validation === 'success' ? '✓' : '!'}</span> : null}
+          <label htmlFor={inputId}>{label}</label>
+        {validation !== 'default' ? <span id={validationId} className="smart-input-validation" role="status" aria-label={validationLabel} aria-live="polite">{validation === 'success' ? '✓' : '!'}</span> : null}
         {clearable && actionVisible && currentValue ? <button type="button" className="smart-input-action" aria-label={`${clearLabel} ${label}`} tabIndex={-1} disabled={disabled} onClick={handleClear}>×</button> : null}
         {type === 'password' && actionVisible ? <button type="button" className="smart-input-action" aria-label={showPassword ? hidePasswordLabel : showPasswordLabel} tabIndex={-1} disabled={disabled} onClick={() => setShowPassword((state) => !state)}>{showPassword ? '◉' : '◌'}</button> : null}
         {searchable && actionVisible ? <button type="button" className="smart-input-action" aria-label={`${searchLabel} ${label}`} tabIndex={-1} disabled={disabled} onClick={() => onSearch?.(currentValue)}>⌕</button> : null}
       </div>
       {open && suggestions.length ? (
-        <div id={listId} className="smart-input-list" role="listbox" aria-label={`${label} suggestions`}>
+        <div id={listId} className="smart-input-list" role="listbox" aria-label={suggestionsLabel}>
           {Object.entries(groups).map(([group, items]) => (
             <React.Fragment key={group || 'ungrouped'}>
               {group ? <div className="smart-input-group" role="presentation">{group}</div> : null}
@@ -209,7 +214,7 @@ export const SmartInput = React.forwardRef<HTMLInputElement, SmartInputProps>(fu
           {!filtered.length ? <div className="smart-input-empty" role="status">{noResultsText}</div> : null}
         </div>
       ) : null}
-      {descriptionText ? <p id={descriptionId} className="smart-input-description" role={error ? 'alert' : undefined} aria-live={error ? 'assertive' : 'polite'}>{descriptionText}</p> : null}
+      {descriptionText || validationMessage ? <p id={descriptionId} className="smart-input-description" role={error ? 'alert' : undefined} aria-live={error ? 'assertive' : 'polite'} aria-atomic="true">{descriptionText ?? validationMessage}</p> : null}
     </div>
   )
 })
