@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.18.0 — 02/09/2026
+
+### Verified
+- إعادة تشغيل بيئة Backend وFrontend بدون تعارض منافذ.
+- `pnpm typecheck` و`pnpm lint` و`pnpm test -- --run` و`pnpm build` نجحوا.
+
+### Note
+- Preview ما زال محتاج إعادة فحص بجلسة متصفح جديدة؛ المتصفح الحالي عرض صفحة فاضية بدون أخطاء Console واضحة.
+
 ## 1.17.0 — 02/09/2026
 
 ### Changed
