@@ -8,8 +8,11 @@
 .smart-input-control input::placeholder { color: transparent; }
 .smart-input-control input:-webkit-autofill,
 .smart-input-control input:-webkit-autofill:hover,
-.smart-input-control input:-webkit-autofill:focus { -webkit-box-shadow: inset 0 0 0 1000em var(--color-bg) !important; box-shadow: inset 0 0 0 1000em var(--color-bg) !important; -webkit-text-fill-color: var(--color-surface-f) !important; caret-color: var(--color-surface-f); transition: background-color 9999s ease-out 0s; }
-.smart-input-control input:-moz-autofill { box-shadow: inset 0 0 0 1000em var(--color-bg) !important; color: var(--color-surface-f) !important; }
+.smart-input-control input:-webkit-autofill:focus,
+.smart-input-control input:-webkit-autofill:active { -webkit-box-shadow: inset 0 0 0 1000em var(--color-bg) !important; box-shadow: inset 0 0 0 1000em var(--color-bg) !important; -webkit-text-fill-color: var(--color-surface-f) !important; caret-color: var(--smart-focus); transition: background-color 9999s ease-in-out 0s; }
+.smart-input-control input:-moz-autofill,
+.smart-input-control input:-moz-autofill-preview { filter: none; background: transparent; color: var(--color-surface-f) !important; }
+.smart-input-control input[readonly] { cursor: text; opacity: 1; background: transparent; }
 .smart-input-control label { position: absolute; inset-inline-start: 0.25em; inset-block-start: 50%; color: var(--color-md-f); pointer-events: none; transform: translateY(-50%); transition: inset-block-start var(--transition-fast), color var(--transition-fast), font-size var(--transition-fast); }
 .smart-input-control input:focus + label, .smart-input-control input:not(:placeholder-shown) + label { inset-block-start: 0.35em; color: var(--smart-focus); font-size: var(--font-size-xs); }
 .smart-input-prefix { display: inline-flex; color: var(--color-md-f); }
@@ -17,7 +20,7 @@
 .smart-input-tooltip { position: relative; display: inline-flex; }
 .smart-input-tooltip::after { content: attr(data-tooltip); position: absolute; inset-block-end: calc(100% + 0.5em); inset-inline-start: 50%; z-index: var(--z-tooltip); inline-size: max-content; max-inline-size: 18em; padding: 0.375em 0.625em; border: 0.0625em solid var(--color-border); border-radius: var(--border-radius-sm); background: var(--color-surface-f); color: var(--color-surface); font-size: var(--font-size-xs); font-weight: var(--font-weight-normal); line-height: var(--line-height-normal); opacity: 0; pointer-events: none; transform: translateX(-50%) translateY(0.25em); transition: opacity var(--transition-fast), transform var(--transition-fast); }
 .smart-input-tooltip:hover::after, .smart-input-tooltip:focus-within::after { opacity: 1; transform: translateX(-50%) translateY(0); }
-.smart-input-action { display: inline-grid; place-items: center; min-inline-size: 2.75em; min-block-size: 2.75em; border: 0; border-radius: var(--border-radius-sm); background: transparent; color: var(--color-md-f); cursor: pointer; transition: color var(--transition-fast), background-color var(--transition-fast); }
+.smart-input-action { display: inline-grid; place-items: center; min-inline-size: 1.25em; min-block-size: 1.25em; border: 0; border-radius: var(--border-radius-sm); background: transparent; color: var(--color-md-f); cursor: pointer; transition: color var(--transition-fast), background-color var(--transition-fast); }
 .smart-input-action:hover { background: var(--color-hover); color: var(--smart-focus); }
 .smart-input-action:focus-visible { box-shadow: 0 0 0 0.125em var(--color-bg), 0 0 0 0.25em var(--smart-focus); }
 .smart-input[data-disabled="true"] .smart-input-control { opacity: 0.6; }
