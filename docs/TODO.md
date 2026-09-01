@@ -6,7 +6,7 @@
 - [x] إصلاح dependencies وCSS اللازمة لنجاح build.
 - [x] إفراغ الجذر وإعادة بناء هيكل المشروع.
 - [x] نقل محتويات مشروع `b-auth-03.zip` كاملة إلى جذر بيئة v0.
-- [x] إزالة اعتماد TanStack Router غير المستخدم.
+- [x] اعتماد @tanstack/react-router للتنقل المركزي بين الصفحات.
 - [x] تثبيت قرار Zustand: persistence لاسم المستخدم فقط، والتوكن في الذاكرة.
 - [x] تثبيت قرار الترخيص: لا `eval` ولا منطق ترخيص ديناميكي حالياً.
 - [x] إنشاء توثيق الاستمرارية.
@@ -27,12 +27,15 @@
 - [x] 🟡 MED — إضافة ESLint للـ Frontend وتشغيل lint.
 - [x] 🟢 LOW — تشغيل preview واختبار المسار الأساسي.
 
-## 3. الخطة النشطة: إعادة تصميم Splash/Auth
+## 3. الخطة النشطة: تثبيت التنقل وجودة المنتج
 - [x] 🔴 HIGH — توحيد i18n وتطبيق `lang` و`dir` على مستوى المستند.
 - [x] 🔴 HIGH — إزالة النصوص الثابتة من Splash/Auth/System.
-- [ ] 🟡 MED — إعادة تصميم Splash/Auth مع الحفاظ على منطق المصادقة وStatusBar.
+- [x] 🟡 MED — اعتماد @tanstack/react-router وربط مسارات `/`, `/signin`, `/signup`, `/home`, `/error`.
+- [x] 🟡 MED — الحفاظ على تصميم Splash/Auth الحالي بدون إعادة تصميم.
 - [x] 🟡 MED — اختبار English/LTR وArabic/RTL في المتصفح.
-- [ ] 🟢 LOW — تحديث screenshots أو مراجع التصميم بعد اعتماد الشكل النهائي.
+- [ ] 🟡 MED — إضافة اختبارات Frontend لـ Router وAuth flow.
+- [ ] 🟡 MED — إصلاح تحذير حجم bundle عبر code splitting.
+- [ ] 🟢 LOW — تثبيت خط عربي bundled لو ظل glyph fallback مؤثراً.
 
 ## 4. نقطة الاستكمال القادمة
 - [x] مراجعة خطة SmartInput بعد التشتت وتحديد المنجز والمتبقي في `v0_plans/swift-build.md`.

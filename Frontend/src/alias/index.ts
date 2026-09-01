@@ -23,6 +23,7 @@ export {
   Link,
   useNavigate,
   useRouter,
+  useRouterState,
   redirect,
   notFound,
 } from '@tanstack/react-router'
