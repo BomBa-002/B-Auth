@@ -41,7 +41,7 @@
 - [x] 🟡 MED — تشغيل Frontend وBackend معاً والتحقق من Preview و`/api/health`.
 - [x] 🟡 MED — مراجعة Console وAccessibility وWeb Vitals على Preview.
 - [ ] 🟢 LOW — تثبيت خط عربي bundled لو ظل glyph fallback مؤثراً.
-- [ ] 🟡 MED — إعادة فحص Preview في جلسة متصفح جديدة بعد ملاحظة DOM فاضي بدون Console errors.
+- [ ] 🟡 MED — إصلاح/إعادة فحص Preview في جلسة متصفح جديدة؛ بعد restart ما زال `#root` فاضي و`hydration`/`FCP/LCP` بقوا `null` بدون Console errors.
 
 ## 4. نقطة الاستكمال القادمة
 - [x] مراجعة خطة SmartInput بعد التشتت وتحديد المنجز والمتبقي في `v0_plans/swift-build.md`.
