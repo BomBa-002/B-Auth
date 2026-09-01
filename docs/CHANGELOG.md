@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.10.0 — 01/09/2026
+
+### Verified
+- تشغيل Frontend وBackend مرة واحدة بدون تعارض منافذ.
+- التحقق من حلقة Splash والانتقال إلى Auth في Dark/LTR على Preview بحجم `939x726`.
+- فحص Accessibility snapshot وConsole بدون أخطاء تطبيقية.
+- `GET /api/health` رجّع `success: true` و`status: ok`.
+- Web Vitals في بيئة التطوير: `TTFB 18.7ms` و`FCP/LCP 504ms` و`CLS 0`.
+
 ## 1.9.0 — 01/09/2026
 
 ### Fixed

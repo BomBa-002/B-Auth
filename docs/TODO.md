@@ -37,6 +37,8 @@
 - [x] 🟡 MED — إصلاح تحذير حجم bundle عبر manual chunks.
 - [x] 🟡 MED — إضافة اختبار Frontend للمسارات الأساسية وAuth error flow.
 - [ ] 🟡 MED — إضافة اختبارات تفاعلية كاملة لـ Router وAuth flow.
+- [x] 🟡 MED — تشغيل Frontend وBackend معاً والتحقق من Preview و`/api/health`.
+- [x] 🟡 MED — مراجعة Console وAccessibility وWeb Vitals على Preview.
 - [ ] 🟢 LOW — تثبيت خط عربي bundled لو ظل glyph fallback مؤثراً.
 
 ## 4. نقطة الاستكمال القادمة
