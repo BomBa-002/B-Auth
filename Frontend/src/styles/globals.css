@@ -61,8 +61,7 @@ input, textarea, select, [contenteditable="true"] { user-select: text; -webkit-u
 .button-row .primary-action { background: var(--color-sy); border-color: var(--color-sy); color: var(--color-bg); }
 .secondary-action { border: 0.0625em solid var(--color-border); background: var(--color-bg); backdrop-filter: blur(0.75em); -webkit-backdrop-filter: blur(0.75em); color: var(--color-surface-f); }
 .screen-icon-badge.tone-error svg.Error { inline-size: 10em; block-size: 10em; color: var(--color-err); }
-.alert-list .alert-item svg.Warning { color: var(--color-war); }
-.alert-list .alert-item { color: var(--color-war); }
+.alert-list .alert-item svg.Warning { color: var(--color-err); }
 .alert-list .alert-item { display: flex; align-items: center; gap: 0.3em; }
 .link-action { color: var(--color-py); text-decoration: underline; }
 .settings-row select { min-block-size: 2.75em; padding: var(--spacing-xs) var(--spacing-sm); border: 0.0625em solid var(--color-border); border-radius: var(--border-radius); background: var(--color-bg); backdrop-filter: blur(0.75em); -webkit-backdrop-filter: blur(0.75em); color: var(--color-surface-f); }
