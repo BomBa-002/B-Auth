@@ -38,8 +38,8 @@ function App() {
     }
     if (bootstrapStatus !== 'ready' && bootstrapStatus !== 'degraded') return undefined
 
-    const timer = window.setTimeout(() => setScreen(user ? 'home' : 'signin'), 2500)
-    return () => window.clearTimeout(timer)
+    setScreen(user ? 'home' : 'signin')
+    return undefined
   }, [bootstrapStatus, user])
 
   React.useEffect(() => {

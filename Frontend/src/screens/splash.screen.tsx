@@ -21,7 +21,15 @@ export function SplashScreen({ status }: { status: BootstrapStatus }) {
           <p>{t('app.tagline')}</p>
         </div>
 
-        <div className="boot-ring" style={{ '--progress': `${progress * 3.6}deg` } as React.CSSProperties} aria-label={`${progress}%`}>
+        <div
+          className="boot-ring"
+          style={{ '--progress': `${progress * 3.6}deg` } as React.CSSProperties}
+          role="progressbar"
+          aria-label={t('splash.status_starting')}
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-valuenow={progress}
+        >
           <div className="boot-ring-center"><strong>{progress}%</strong></div>
         </div>
 

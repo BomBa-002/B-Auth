@@ -1,3 +1,29 @@
+# AI Session — 01/09/2026 (إصلاح Splash وboot-ring وPreview)
+
+## اتعمل
+- اكتشفنا أن `.boot-ring` كانت بتعرض لون ثابت ومش بتستهلك قيمة `--progress`، فكانت منفصلة عن العداد.
+- ربطنا الحلقة بـ `conic-gradient` باستخدام نفس زاوية التقدم، وأضافنا `role="progressbar"` وقيم ARIA.
+- أزلنا timeout الانتقال الثابت من `main.tsx`، ونقلنا تطبيق حالة `ready/degraded` لما بعد مدة Splash الدنيا داخل `use-bootstrap`.
+
+## التحقق
+- `pnpm typecheck` ناجح.
+- `pnpm lint` ناجح بدون تحذيرات.
+- `pnpm test` ناجح: 16 اختباراً.
+- `pnpm build` ناجح.
+- `/api/health` رجّع `success: true`.
+- Preview اشتغل على `http://localhost:3000`؛ أثناء حالة الإقلاع تم التحقق من `aria-valuenow="68"` و`--progress: 244.8deg`.
+- Console مفيهوش أخطاء تطبيقية. ظهور شاشة تسجيل الدخول بعد اكتمال الإقلاع متوقع.
+
+## الملفات المتأثرة
+- `Frontend/src/screens/splash.screen.tsx`
+- `Frontend/src/styles/globals.css`
+- `Frontend/src/main.tsx`
+- `Frontend/src/features/auth/hooks/use-bootstrap.ts`
+- `docs/AI_SESSION.md`
+- `docs/CHANGELOG.md`
+
+---
+
 # AI Session — 01/09/2026 (إصلاح شاشات الأخطاء وبيئة Sandbox)
 
 ## ✅ اتعمل
