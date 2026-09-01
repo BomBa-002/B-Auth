@@ -46,7 +46,8 @@
 - [x] مراجعة خطة SmartInput بعد التشتت وتحديد المنجز والمتبقي في `v0_plans/swift-build.md`.
 - [x] تشغيل التحقق الكامل: `pnpm typecheck` و`pnpm lint` و`pnpm test` و`pnpm build`.
 - [x] اختبار المسارات باللغتين English/LTR وArabic/RTL في Preview.
-- [ ] استكمال إعادة تصميم Splash/Auth من الخطة بعد اعتماد المرجع البصري النهائي.
+- [x] استكمال إعادة تصميم Auth طبقاً للمرجع البصري النهائي مع responsive fallback للموبايل.
+- [ ] تثبيت خط عربي bundled لو ظل glyph fallback مؤثراً؛ يحتاج asset خط معتمد.
 
 ## 5. آخر تعديلات معتمدة
 - [x] ضبط `.console-card` في `ScreenLayout` إلى `max-width: 48.0625em` و`min-width: 16em`.
