@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.8.0 — 01/09/2026
+
+### Fixed
+- إزالة زرار Exit من شاشات الأخطاء والاكتفاء بإعادة المحاولة.
+- إصلاح مشكلة تشغيل Preview داخل Sandbox الناتجة عن تشغيل dev servers مكررة على نفس المنافذ.
+
+### Verified
+- `pnpm typecheck` و`pnpm lint` و`pnpm test` و`pnpm build` نجحوا.
+- `/api/health` شغال وPreview ظاهر على `http://localhost:3000`.
+
 ## 1.7.0 — 01/09/2026
 
 ### Changed
