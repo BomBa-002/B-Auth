@@ -35,7 +35,8 @@
 - [x] 🟡 MED — اختبار English/LTR وArabic/RTL في المتصفح.
 - [x] 🟡 MED — إضافة اختبارات Frontend أساسية لـ Auth error mapping.
 - [x] 🟡 MED — إصلاح تحذير حجم bundle عبر manual chunks.
-- [ ] 🟡 MED — إضافة اختبارات Frontend لـ Router وAuth flow الكامل.
+- [x] 🟡 MED — إضافة اختبار Frontend للمسارات الأساسية وAuth error flow.
+- [ ] 🟡 MED — إضافة اختبارات تفاعلية كاملة لـ Router وAuth flow.
 - [ ] 🟢 LOW — تثبيت خط عربي bundled لو ظل glyph fallback مؤثراً.
 
 ## 4. نقطة الاستكمال القادمة
