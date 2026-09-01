@@ -3,7 +3,7 @@
 .smart-input-control:focus-within { border-color: var(--smart-focus); box-shadow: 0 0.125em 0 var(--smart-focus); }
 .smart-input-control input { inline-size: 100%; min-block-size: 3em; padding: 0.875em 0.25em 0.375em; border: 0; outline: 0; background: transparent; color: var(--color-surface-f); user-select: text; }
 .smart-input-control input::selection { background: var(--color-py); color: var(--color-py-f); }
-.smart-input-option:focus-visible { outline: 0.125em solid var(--smart-focus); outline-offset: -0.125em; }
+.smart-input-option:focus-visible { box-shadow: inset 0 0 0 0.125em var(--smart-focus); }
 .smart-input-empty { min-block-size: 2.75em; display: grid; place-items: center; text-align: center; }
 .smart-input-control input::placeholder { color: transparent; }
 .smart-input-control input:-webkit-autofill,
