@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.16.0 — 02/09/2026
+
+### Added
+- إضافة اختبارات لحماية تنقل Home ومسارات الشاشات المدعومة.
+
+### Changed
+- فصل `resolveScreenPath` عن `AppShell` لتسهيل التحقق من Auth flow.
+
+### Verified
+- `pnpm test -- --run` نجح: 29 اختباراً.
+
 ## 1.15.0 — 02/09/2026
 
 ### Added
