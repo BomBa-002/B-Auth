@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.11.0 — 01/09/2026
+
+### Changed
+- ضبط ظهور Custom Autocomplete في `SmartInput` باستخدام `showOnFocus` و`minChars`.
+- تحسين readonly guard لمكافحة Autofill مع احترام `autoFocus` والقيمة الابتدائية.
+- توثيق خطة أدوات Smart في `docs/BombaSmart.md`.
+
+### Verified
+- تم تحديث قواعد أزرار الإجراءات وحالات الخطأ حسب متطلبات المراجعة.
+
+
 ## 1.10.0 — 01/09/2026
 
 ### Verified
