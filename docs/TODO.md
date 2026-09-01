@@ -31,13 +31,14 @@
 - [x] 🔴 HIGH — توحيد i18n وتطبيق `lang` و`dir` على مستوى المستند.
 - [x] 🔴 HIGH — إزالة النصوص الثابتة من Splash/Auth/System.
 - [ ] 🟡 MED — إعادة تصميم Splash/Auth مع الحفاظ على منطق المصادقة وStatusBar.
-- [ ] 🟡 MED — اختبار English/LTR وArabic/RTL في المتصفح.
+- [x] 🟡 MED — اختبار English/LTR وArabic/RTL في المتصفح.
 - [ ] 🟢 LOW — تحديث screenshots أو مراجع التصميم بعد اعتماد الشكل النهائي.
 
 ## 4. نقطة الاستكمال القادمة
-- [ ] استكمال العمل لاحقاً من خطة `v0_plans/calm-spec.md`.
-- [ ] تشغيل التحقق الكامل بعد أي تعديل جديد: `pnpm typecheck` و`pnpm lint` و`pnpm test` و`pnpm build`.
-- [ ] اختبار المسارات باللغتين English/LTR وArabic/RTL بعد استكمال Splash/Auth.
+- [x] مراجعة خطة SmartInput بعد التشتت وتحديد المنجز والمتبقي في `v0_plans/swift-build.md`.
+- [x] تشغيل التحقق الكامل: `pnpm typecheck` و`pnpm lint` و`pnpm test` و`pnpm build`.
+- [x] اختبار المسارات باللغتين English/LTR وArabic/RTL في Preview.
+- [ ] استكمال إعادة تصميم Splash/Auth من الخطة بعد اعتماد المرجع البصري النهائي.
 
 ## 5. آخر تعديلات معتمدة
 - [x] ضبط `.console-card` في `ScreenLayout` إلى `max-width: 48.0625em` و`min-width: 16em`.
