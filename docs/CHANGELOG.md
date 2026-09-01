@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.17.0 — 02/09/2026
+
+### Changed
+- إعادة بناء Auth layout بتقسيم بصري مستوحى من المرجع: لوحة هوية جانبية وكارت دخول واضح.
+- تطوير Button primitive بإضافة `link` و`xs/xl` و`shape` و`fullWidth` و`startIcon/endIcon`.
+- إضافة responsive fallback يخفي اللوحة الجانبية على الشاشات الصغيرة بدون كسر التدفق.
+
+### Verified
+- `pnpm typecheck` و`pnpm test -- --run` و`pnpm build` نجحوا.
+- تم إصلاح تحذير Fast Refresh في Button، و`pnpm lint` يمر بدون تحذيرات.
+
 ## 1.16.0 — 02/09/2026
 
 ### Added
