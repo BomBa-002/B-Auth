@@ -1,7 +1,7 @@
 /**
  * @file        : packages/design-system/components/smart-input.tsx
- * @description : حقل إدخال ذكي بترجمة عائمة، اقتراحات، وتفاعل كامل بلوحة المفاتيح.
- * @updated     : [{ "date": "30/08/2026", "version": "1.1.0", "by": ["v0"], "comment": "استكمال حالات التفاعل وإمكانية الوصول" }]
+ * @description : حقل إدخال ذكي بترجمة عائمة، تحقق، اقتراحات، وتفاعل كامل بلوحة المفاتيح.
+ * @updated     : [{ "date": "01/09/2026", "version": "1.2.0", "by": ["v0"], "comment": "استكمال ARIA والاقتراحات والتحكم في حالات الإدخال" }]
  */
 
 import * as React from 'react'
@@ -12,6 +12,7 @@ export interface SmartSuggestion {
   value: string
   group?: string
   description?: string
+  avatar?: string
 }
 
 export type SmartValidationState = 'default' | 'success' | 'error'
@@ -24,17 +25,38 @@ export interface SmartInputProps extends Omit<React.InputHTMLAttributes<HTMLInpu
   searchable?: boolean
   suggestions?: SmartSuggestion[]
   validation?: SmartValidationState
+  validationLabel?: string
   error?: string
   helperText?: string
   noResultsText?: string
+  clearLabel?: string
+  showPasswordLabel?: string
+  hidePasswordLabel?: string
+  searchLabel?: string
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
   onClear?: () => void
   onSearch?: (value: string) => void
   onSuggestionSelect?: (suggestion: SmartSuggestion) => void
 }
 
+function getInitials(label: string) {
+  return label
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase())
+    .join('')
+}
+
+function highlightMatch(label: string, query: string) {
+  if (!query) return label
+  const escapedQuery = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  const parts = label.split(new RegExp(`(${escapedQuery})`, 'ig'))
+  return parts.map((part, index) => part.toLocaleLowerCase() === query.toLocaleLowerCase() ? <mark key={`${part}-${index}`}>{part}</mark> : part)
+}
+
 /**
- * SmartInput - حقل إدخال موحّد بيدعم الاقتراحات والتحقق وأزرار التحكم.
+ * SmartInput - حقل إدخال موحّد بيدعم التحقق، الاقتراحات، والأزرار الداخلية.
  * @param props - إعدادات الحقل وسلوك callbacks.
  * @returns عنصر إدخال قابل لإعادة الاستخدام.
  */
@@ -47,9 +69,14 @@ export const SmartInput = React.forwardRef<HTMLInputElement, SmartInputProps>(fu
     searchable,
     suggestions = [],
     validation = 'default',
+    validationLabel,
     error,
     helperText,
     noResultsText = 'No results',
+    clearLabel = 'Clear',
+    showPasswordLabel = 'Show password',
+    hidePasswordLabel = 'Hide password',
+    searchLabel = 'Search',
     onChange,
     onClear,
     onSearch,
@@ -60,6 +87,9 @@ export const SmartInput = React.forwardRef<HTMLInputElement, SmartInputProps>(fu
     disabled,
     className,
     onFocus,
+    onBlur,
+    readOnly,
+    required,
     ...props
   },
   ref,
@@ -70,6 +100,7 @@ export const SmartInput = React.forwardRef<HTMLInputElement, SmartInputProps>(fu
   const descriptionId = error || helperText ? `${inputId}-description` : undefined
   const [innerValue, setInnerValue] = React.useState(String(defaultValue ?? ''))
   const [open, setOpen] = React.useState(false)
+  const [hasFocus, setHasFocus] = React.useState(false)
   const [activeIndex, setActiveIndex] = React.useState(-1)
   const [showPassword, setShowPassword] = React.useState(false)
   const [autofillGuard, setAutofillGuard] = React.useState(true)
@@ -82,6 +113,9 @@ export const SmartInput = React.forwardRef<HTMLInputElement, SmartInputProps>(fu
     return result
   }, {})
   const active = activeIndex >= 0 ? filtered[activeIndex] : undefined
+  const isInvalid = validation === 'error' || Boolean(error)
+  const descriptionText = error ?? helperText
+  const actionVisible = hasFocus || Boolean(currentValue)
 
   React.useEffect(() => {
     const timer = window.setTimeout(() => setAutofillGuard(false), 350)
@@ -109,35 +143,13 @@ export const SmartInput = React.forwardRef<HTMLInputElement, SmartInputProps>(fu
 
   function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
     if (event.nativeEvent.isComposing || event.keyCode === 229) return
-    if (event.key === 'Escape') {
-      setOpen(false)
-      return
-    }
-    if (event.key === 'ArrowDown' && filtered.length) {
-      event.preventDefault()
-      setOpen(true)
-      setActiveIndex((index) => (index + 1) % filtered.length)
-      return
-    }
-    if (event.key === 'ArrowUp' && filtered.length) {
-      event.preventDefault()
-      setActiveIndex((index) => (index - 1 + filtered.length) % filtered.length)
-      return
-    }
-    if (event.key === 'Tab') setOpen(false)
-    if (event.key === 'Enter' && active) {
-      event.preventDefault()
-      select(active)
-      return
-    }
-    if (event.key === 'Enter' && searchable && (event.ctrlKey || !active)) {
-      event.preventDefault()
-      onSearch?.(currentValue)
-    }
-    if (event.key === 'Backspace' && event.ctrlKey) {
-      event.preventDefault()
-      update('')
-    }
+    if (event.key === 'Escape') { setOpen(false); setActiveIndex(-1); return }
+    if (event.key === 'ArrowDown' && filtered.length) { event.preventDefault(); setOpen(true); setActiveIndex((index) => (index + 1) % filtered.length); return }
+    if (event.key === 'ArrowUp' && filtered.length) { event.preventDefault(); setActiveIndex((index) => (index - 1 + filtered.length) % filtered.length); return }
+    if (event.key === 'Tab') { setOpen(false); setActiveIndex(-1); return }
+    if (event.key === 'Enter' && active) { event.preventDefault(); select(active); return }
+    if (event.key === 'Enter' && searchable && (event.ctrlKey || !active)) { event.preventDefault(); onSearch?.(currentValue); return }
+    if (event.key === 'Backspace' && event.ctrlKey) { event.preventDefault(); update('') }
   }
 
   function handleClear() {
@@ -156,41 +168,48 @@ export const SmartInput = React.forwardRef<HTMLInputElement, SmartInputProps>(fu
           type={type === 'password' && showPassword ? 'text' : type}
           value={currentValue}
           disabled={disabled}
-          readOnly={autofillGuard || props.readOnly}
+          readOnly={autofillGuard || readOnly}
           placeholder=" "
           autoComplete={props.autoComplete ?? 'off'}
-          aria-invalid={validation === 'error' || undefined}
+          autoCapitalize="none"
+          spellCheck={false}
+          aria-label={props['aria-label'] ?? label}
+          aria-required={required || undefined}
+          aria-invalid={isInvalid || undefined}
           aria-describedby={descriptionId}
+          aria-errormessage={error ? descriptionId : undefined}
           aria-autocomplete={suggestions.length ? 'list' : undefined}
           aria-haspopup={suggestions.length ? 'listbox' : undefined}
           aria-expanded={suggestions.length ? open : undefined}
           role={suggestions.length ? 'combobox' : undefined}
           aria-controls={open && suggestions.length ? listId : undefined}
           aria-activedescendant={active ? `${listId}-${active.id}` : undefined}
-          onFocus={(event) => { setAutofillGuard(false); onFocus?.(event); if (suggestions.length) setOpen(true) }}
+          onFocus={(event) => { setAutofillGuard(false); setHasFocus(true); onFocus?.(event); if (suggestions.length) setOpen(true) }}
+          onBlur={(event) => { setHasFocus(false); onBlur?.(event) }}
           onChange={(event) => { update(event.target.value); onChange?.(event) }}
           onKeyDown={handleKeyDown}
         />
         <label htmlFor={inputId}>{label}</label>
-        {clearable && currentValue ? <button type="button" className="smart-input-action" aria-label={`Clear ${label}`} tabIndex={-1} disabled={disabled} onClick={handleClear}>×</button> : null}
-        {type === 'password' ? <button type="button" className="smart-input-action" aria-label={showPassword ? 'Hide password' : 'Show password'} tabIndex={-1} disabled={disabled} onClick={() => setShowPassword((state) => !state)}>{showPassword ? '◉' : '◌'}</button> : null}
-        {searchable ? <button type="button" className="smart-input-action" aria-label={`Search ${label}`} tabIndex={-1} disabled={disabled} onClick={() => onSearch?.(currentValue)}>⌕</button> : null}
+        {validation !== 'default' ? <span className="smart-input-validation" role="status" aria-label={validationLabel}>{validation === 'success' ? '✓' : '!'}</span> : null}
+        {clearable && actionVisible && currentValue ? <button type="button" className="smart-input-action" aria-label={`${clearLabel} ${label}`} tabIndex={-1} disabled={disabled} onClick={handleClear}>×</button> : null}
+        {type === 'password' && actionVisible ? <button type="button" className="smart-input-action" aria-label={showPassword ? hidePasswordLabel : showPasswordLabel} tabIndex={-1} disabled={disabled} onClick={() => setShowPassword((state) => !state)}>{showPassword ? '◉' : '◌'}</button> : null}
+        {searchable && actionVisible ? <button type="button" className="smart-input-action" aria-label={`${searchLabel} ${label}`} tabIndex={-1} disabled={disabled} onClick={() => onSearch?.(currentValue)}>⌕</button> : null}
       </div>
       {open && suggestions.length ? (
         <div id={listId} className="smart-input-list" role="listbox" aria-label={`${label} suggestions`}>
           {Object.entries(groups).map(([group, items]) => (
             <React.Fragment key={group || 'ungrouped'}>
-              {group ? <div className="smart-input-group">{group}</div> : null}
+              {group ? <div className="smart-input-group" role="presentation">{group}</div> : null}
               {items.map((item) => {
                 const index = filtered.indexOf(item)
-                return <button key={item.id} id={`${listId}-${item.id}`} type="button" role="option" aria-selected={index === activeIndex} className="smart-input-option" onMouseDown={(event) => event.preventDefault()} onClick={() => select(item)}><span>{item.label}</span>{item.description ? <small>{item.description}</small> : null}</button>
+                return <button key={item.id} id={`${listId}-${item.id}`} type="button" role="option" aria-selected={index === activeIndex} className="smart-input-option" onMouseDown={(event) => event.preventDefault()} onClick={() => select(item)}><span className="smart-input-option-main">{item.avatar ? <img src={item.avatar} alt="" /> : <span className="smart-input-avatar" aria-hidden="true">{getInitials(item.label)}</span>}<span>{highlightMatch(item.label, currentValue)}</span>{index === activeIndex ? <span className="smart-input-option-arrow" aria-hidden="true">›</span> : null}</span>{item.description ? <small>{item.description}</small> : null}</button>
               })}
             </React.Fragment>
           ))}
           {!filtered.length ? <div className="smart-input-empty" role="status">{noResultsText}</div> : null}
         </div>
       ) : null}
-      {error || helperText ? <p id={descriptionId} className="smart-input-description">{error ?? helperText}</p> : null}
+      {descriptionText ? <p id={descriptionId} className="smart-input-description" role={error ? 'alert' : undefined} aria-live={error ? 'assertive' : 'polite'}>{descriptionText}</p> : null}
     </div>
   )
 })

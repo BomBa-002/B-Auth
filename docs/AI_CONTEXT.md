@@ -1,5 +1,5 @@
 # AI Context — B-Auth
-> آخر تحديث: 28/08/2026
+> آخر تحديث: 01/09/2026
 
 ## 8. حدود العرض الحالية
 - `ScreenLayout` يستخدم `.console-card` بعرض أقصى `48.0625em` وعرض أدنى `16em`.
@@ -33,6 +33,7 @@ packages/{aliases,design-system,theme,utils}
 - تدفق الواجهة الحالي: bootstrap → splash → error أو signin → home.
 - signup اختياري ومغلق افتراضياً من `Frontend/src/app/features.ts`.
 - `packages/design-system/components/outlined-input.tsx` هو مكوّن الحقول المشترك، ويدعم floating labels وRTL/LTR والحالات المختلفة.
+- `packages/design-system/components/smart-input.tsx` يدعم validation states، ARIA combobox، keyboard navigation، highlighting للاقتراحات، وخصائص autofill دفاعية.
 ```
 
 ## 4. قيود مهمة
