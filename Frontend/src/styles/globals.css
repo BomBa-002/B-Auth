@@ -30,7 +30,7 @@ input, textarea, select, [contenteditable="true"] { user-select: text; -webkit-u
 .splash-identity { display: flex; flex-direction: column; align-items: center; gap: var(--spacing-sm); padding-block-start: var(--spacing-lg); }
 .splash-brand, .auth-brand { display: grid; place-items: center; inline-size: 6em; block-size: 6em; color: var(--color-py); }
 .splash-brand svg, .auth-brand svg { inline-size: 100%; block-size: 100%; }
-.boot-ring { display: grid; place-items: center; inline-size: min(37.2vw, 9em); aspect-ratio: 1; border-radius: var(--border-radius-full); background: var(--color-py); box-shadow: var(--shadow-md); }
+.boot-ring { display: grid; place-items: center; inline-size: min(37.2vw, 9em); aspect-ratio: 1; border-radius: var(--border-radius-full); background: conic-gradient(from -90deg, var(--color-py) 0deg var(--progress, 0deg), var(--color-border) var(--progress, 0deg) 360deg); box-shadow: var(--shadow-md); transition: background var(--transition-normal); }
 .boot-ring-center { display: flex; flex-direction: column; align-items: center; justify-content: center; inline-size: calc(100% - 0.3em); block-size: calc(100% - 0.3em); border-radius: var(--border-radius-full); background: var(--color-bg); color: var(--color-bg-f); }
 .boot-ring-center strong { font-size: 200%; font-weight: var(--font-weight-semibold); }
 .terminal-logs, .form-card, .info-card, .settings-panel { inline-size: 100%; padding: var(--spacing-md); border: 0.0625em solid var(--color-border); border-radius: var(--border-radius-lg); box-shadow: var(--shadow-md); }

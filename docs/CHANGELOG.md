@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.9.0 — 01/09/2026
+
+### Fixed
+- إصلاح `boot-ring-center` بحيث تتحرك الحلقة المرئية بنفس قيمة عداد الإقلاع عبر `--progress`.
+- توحيد توقيت الانتقال من Splash بعد انتهاء مدة الإقلاع الدنيا، وإزالة الـ timeout المنفصل.
+- إضافة دلالات `progressbar` وقيم ARIA للعداد.
+
+### Verified
+- `pnpm typecheck` و`pnpm lint` و`pnpm test` و`pnpm build` نجحوا.
+- `/api/health` رجّع `success: true`.
+- Preview اشتغل على `http://localhost:3000`، وظهر أثناء الاختبار أن الحالة وصلت إلى 68% مع `--progress: 244.8deg` بدون أخطاء تطبيقية في Console.
+
 ## 1.8.0 — 01/09/2026
 
 ### Fixed
