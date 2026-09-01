@@ -38,7 +38,7 @@
   --spacing-xl: 2em;
   --spacing-2xl: 3em;
   --font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
-  --font-family-ar: "Noto Sans Arabic", "Noto Sans", "Segoe UI", sans-serif;
+  --font-family-ar: Arial, "Segoe UI", sans-serif;
   --font-family-mono: "Cascadia Code", "Fira Code", "Consolas", monospace;
   --font-size-xs: 0.75em;
   --font-size-sm: 0.875em;

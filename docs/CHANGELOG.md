@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.7.0 — 01/09/2026
+
+### Changed
+- اختبار شاشة المصادقة في Light/LTR وLight/RTL على Preview.
+- تحسين fallback لخط RTL في design tokens باستخدام خطوط متاحة بشكل أوسع.
+- توثيق ملاحظة glyph fallback في بيئة المتصفح كعنصر متابعة اختياري.
+
+### Verified
+- `pnpm typecheck` نجح.
+- `pnpm lint` نجح.
+- `pnpm test` نجح: 16 اختباراً.
+- `pnpm build` نجح.
+
 ## 1.6.0 — 29/08/2026
 
 ### Documentation
