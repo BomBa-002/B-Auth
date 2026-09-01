@@ -30,7 +30,7 @@
 ## 3. الخطة النشطة: إعادة تصميم Splash/Auth
 - [x] 🔴 HIGH — توحيد i18n وتطبيق `lang` و`dir` على مستوى المستند.
 - [x] 🔴 HIGH — إزالة النصوص الثابتة من Splash/Auth/System.
-- [ ] 🟡 MED — إعادة تصميم Splash/Auth مع الحفاظ على منطق المصادقة وStatusBar.
+- [x] 🟡 MED — إعادة تصميم Splash/Auth مع الحفاظ على منطق المصادقة وStatusBar.
 - [x] 🟡 MED — اختبار English/LTR وArabic/RTL في المتصفح.
 - [ ] 🟢 LOW — تحديث screenshots أو مراجع التصميم بعد اعتماد الشكل النهائي.
 
@@ -38,7 +38,7 @@
 - [x] مراجعة خطة SmartInput بعد التشتت وتحديد المنجز والمتبقي في `v0_plans/swift-build.md`.
 - [x] تشغيل التحقق الكامل: `pnpm typecheck` و`pnpm lint` و`pnpm test` و`pnpm build`.
 - [x] اختبار المسارات باللغتين English/LTR وArabic/RTL في Preview.
-- [ ] استكمال إعادة تصميم Splash/Auth من الخطة بعد اعتماد المرجع البصري النهائي.
+- [x] استكمال إعادة تصميم Splash/Auth من الخطة بعد اعتماد المرجع البصري النهائي.
 
 ## 5. آخر تعديلات معتمدة
 - [x] ضبط `.console-card` في `ScreenLayout` إلى `max-width: 48.0625em` و`min-width: 16em`.

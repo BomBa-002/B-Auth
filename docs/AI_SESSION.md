@@ -1,3 +1,30 @@
+# AI Session — 01/09/2026 (إعادة تصميم Splash/Auth)
+
+## ✅ اتعمل
+- إعادة تركيب AuthFrame بتقسيم بصري بين هوية B-Auth التقنية ونموذج المصادقة.
+- إضافة روابط واضحة بين تسجيل الدخول وإنشاء الحساب مع الحفاظ على منطق الخدمات والجلسة كما هو.
+- تحسين Splash بنفس لغة الهوية: عنوان أوضح، وصف، وتدرج تقدّم مرتبط بحالة الإقلاع.
+- تحديث responsive behavior للشاشات الصغيرة، مع دعم RTL/LTR وLight/Dark وfocus-visible.
+
+## 📁 الملفات المتأثرة
+- `Frontend/src/screens/auth.screens.tsx`
+- `Frontend/src/styles/globals.css`
+- `docs/TODO.md`
+- `docs/AI_SESSION.md`
+
+## ✅ التحقق
+- `pnpm install --frozen-lockfile` ناجح.
+- `pnpm --dir Frontend typecheck` ناجح.
+- `pnpm --dir Frontend lint` ناجح.
+- `pnpm --dir Frontend build` ناجح.
+- Preview وصل لواجهة System Error لأن Backend health غير متاح في جلسة التحقق؛ لا توجد console logs متاحة، والكود نفسه اجتاز الفحوصات.
+
+## ⏭️ الخطوات الجاية
+- تشغيل Frontend مع Backend معاً لإكمال التحقق البصري من Splash/Auth ومسار login.
+- تحديث screenshot المرجعي بعد ظهور Preview الكامل.
+
+---
+
 # AI Session — 01/09/2026 (استكمال SmartInput والتحقق)
 
 ## ✅ اتعمل
@@ -130,7 +157,7 @@
 
 ## اتعمل
 - مراجعة جميع ملفات واجهة `Frontend/src` ومكوّنات الشاشات والتخطيط والحالة.
-- توحيد ألوان خلفية التطبيق وشبكة الخلفية وظلال الـ blocker والـ tooltip داخل CSS tokens.
+- توحيد ألوان خ��فية التطبيق وشبكة الخلفية وظلال الـ blocker والـ tooltip داخل CSS tokens.
 - إزالة تكرار قواعد focus وربطها بتوكن موحّد، مع الحفاظ على focus-visible واضح.
 - التأكد من عدم وجود HEX/RGB/px أو `outline: none` في ملفات الواجهة.
 - الحفاظ على وحدات `em` وخصائص RTL المنطقية ودعم الثيمات.
@@ -244,10 +271,10 @@
 - تم إفراغ جذر بيئة v0 بالكامل (Next.js scaffold افتراضي) بطلب صريح من المستخدم.
 - تم فك أرشيف `b-auth-03.zip` ونقل محتواه كاملاً إلى الجذر (باستثناء `dist/` و
   `node_modules` و `package-lock.json`).
-- تم تشغيل `pnpm install` بنجاح (513 حزمة عبر lockfile الموجود بدون تعديله).
+- تم تشغيل `pnpm install` بنجاح (513 حزمة ع��ر lockfile الموجود بدون تعديله).
 - تم الت��قق من `pnpm typecheck` و `pnpm lint` و `pnpm build` — كل الأوامر نجحت
   بدون أي مخالفة على المشروع كما استُعيد.
-- تم تشغيل `pnpm dev` فعلياً (Backend:4000 + Frontend/Vite:3000) واختبار المسار
+- تم تشغيل `pnpm dev` فعلياً (Backend:4000 + Frontend/Vite:3000) واختبار ال��سار
   الأساسي في متصفح حقيقي: تسجيل دخول admin ناجح وظهور شاشة الترحيب بالهوية والدور.
 - تمت إضافة `dist/` و `coverage/` لملف `.gitignore` الجذري.
 - تمت إضافة `docs/SKILLS.md` كمرجع مختصر للمهارات الفعّالة والقرارات المعتمدة.
