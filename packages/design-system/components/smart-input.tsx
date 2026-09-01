@@ -145,15 +145,19 @@ export const SmartInput = React.forwardRef<HTMLInputElement, SmartInputProps>(fu
 
   function select(item: SmartSuggestion) {
     update(item.value)
+    onChange?.({ target: { value: item.value } } as React.ChangeEvent<HTMLInputElement>)
     onSuggestionSelect?.(item)
     setOpen(false)
+    setActiveIndex(-1)
   }
 
   function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
     if (event.nativeEvent.isComposing || event.keyCode === 229) return
     if (event.key === 'Escape') { setOpen(false); setActiveIndex(-1); return }
     if (event.key === 'ArrowDown' && filtered.length) { event.preventDefault(); setOpen(true); setActiveIndex((index) => (index + 1) % filtered.length); return }
-    if (event.key === 'ArrowUp' && filtered.length) { event.preventDefault(); setActiveIndex((index) => (index - 1 + filtered.length) % filtered.length); return }
+    if (event.key === 'ArrowUp' && filtered.length) { event.preventDefault(); setOpen(true); setActiveIndex((index) => (index - 1 + filtered.length) % filtered.length); return }
+    if (event.key === 'Home' && open && filtered.length) { event.preventDefault(); setActiveIndex(0); return }
+    if (event.key === 'End' && open && filtered.length) { event.preventDefault(); setActiveIndex(filtered.length - 1); return }
     if (event.key === 'Tab') { setOpen(false); setActiveIndex(-1); return }
     if (event.key === 'Enter' && active) { event.preventDefault(); select(active); return }
     if (event.key === 'Enter' && searchable && (event.ctrlKey || !active)) { event.preventDefault(); onSearch?.(currentValue); return }
