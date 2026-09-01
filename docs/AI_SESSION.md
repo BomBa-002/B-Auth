@@ -1,3 +1,15 @@
+# AI Session — 02/09/2026 (إعادة فحص Preview)
+
+## اتعمل
+- اتعمل restart نظيف لـ Frontend وBackend، والخادمين بدأوا بنجاح على المنفذين 3000 و4000.
+- اتفتح Preview في جلسة متصفح جديدة، لكن `#root` فضل فاضي رغم تحميل Vite وReact بدون أخطاء Console.
+- `agent-browser vitals` أكد إن `hydration` و`FCP/LCP` لسه `null`؛ المشكلة تشغيلية في Preview وليست نتيجة فشل typecheck أو build.
+
+## نقطة الاستكمال
+- مفيش تعديل كود اتعمل في الفحص ده؛ نحتاج إعادة فحص بيئة Preview لاحقاً قبل إعلان التحقق البصري مكتمل.
+
+---
+
 # AI Session — 02/09/2026 (استكمال تحقق SmartButton وPreview)
 
 ## اتعمل

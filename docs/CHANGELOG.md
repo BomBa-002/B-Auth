@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.19.0 — 02/09/2026
+
+### Verified
+- إعادة تشغيل Frontend وBackend بدون تعارض، مع بقاء Preview فارغاً في جلسة متصفح جديدة.
+- لا توجد أخطاء Console؛ `hydration` و`FCP/LCP` ظهروا `null`، فتم تسجيل الحالة كمشكلة بيئية pending بدون تعديل كود.
+
 ## 1.18.0 — 02/09/2026
 
 ### Verified
