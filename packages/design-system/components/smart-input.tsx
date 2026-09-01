@@ -121,6 +121,9 @@ export const SmartInput = React.forwardRef<HTMLInputElement, SmartInputProps>(fu
   const isInvalid = validation === 'error' || Boolean(error)
   const descriptionText = error ?? helperText
   const actionVisible = hasFocus || Boolean(currentValue)
+  const canClear = clearable && Boolean(currentValue)
+  const canTogglePassword = type === 'password' && actionVisible
+  const canSearch = searchable && actionVisible
 
   React.useEffect(() => {
     const timer = window.setTimeout(() => setAutofillGuard(false), 350)
@@ -195,10 +198,10 @@ export const SmartInput = React.forwardRef<HTMLInputElement, SmartInputProps>(fu
           onKeyDown={handleKeyDown}
         />
           <label htmlFor={inputId}>{label}</label>
-        {validation !== 'default' ? <span id={validationId} className="smart-input-validation" role="status" aria-label={validationLabel} aria-live="polite">{validation === 'success' ? '✓' : '!'}</span> : null}
-        {clearable && actionVisible && currentValue ? <button type="button" className="smart-input-action" aria-label={`${clearLabel} ${label}`} tabIndex={-1} disabled={disabled} onClick={handleClear}>×</button> : null}
-        {type === 'password' && actionVisible ? <button type="button" className="smart-input-action" aria-label={showPassword ? hidePasswordLabel : showPasswordLabel} tabIndex={-1} disabled={disabled} onClick={() => setShowPassword((state) => !state)}>{showPassword ? '◉' : '◌'}</button> : null}
-        {searchable && actionVisible ? <button type="button" className="smart-input-action" aria-label={`${searchLabel} ${label}`} tabIndex={-1} disabled={disabled} onClick={() => onSearch?.(currentValue)}>⌕</button> : null}
+        {validation !== 'default' ? <span id={validationId} className="smart-input-validation" role="status" aria-label={validationLabel ?? validation} aria-live="polite">{validation === 'success' ? '✓' : '!'}</span> : null}
+        {canClear ? <button type="button" className="smart-input-action" aria-label={`${clearLabel} ${label}`} disabled={disabled} onClick={handleClear}>×</button> : null}
+        {canTogglePassword ? <button type="button" className="smart-input-action" aria-label={showPassword ? hidePasswordLabel : showPasswordLabel} aria-pressed={showPassword} disabled={disabled} onClick={() => setShowPassword((state) => !state)}>{showPassword ? '◉' : '◌'}</button> : null}
+        {canSearch ? <button type="button" className="smart-input-action" aria-label={`${searchLabel} ${label}`} disabled={disabled} onClick={() => onSearch?.(currentValue)}>⌕</button> : null}
       </div>
       {open && suggestions.length ? (
         <div id={listId} className="smart-input-list" role="listbox" aria-label={suggestionsLabel}>
