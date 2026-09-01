@@ -1,3 +1,20 @@
+# AI Session — 01/09/2026 (إصلاح شاشات الأخطاء وبيئة Sandbox)
+
+## ✅ اتعمل
+- إلغاء زرار Exit من `ErrorScreen` وإزالة callback المرتبط به من نقطة تشغيل التطبيق.
+- تحديد سبب مشكلة عرض المشروع داخل Sandbox: كان فيه أكثر من Frontend/Backend dev server شغالين في نفس الوقت، فظهر `EADDRINUSE` على المنفذين 3000 و4000.
+- إيقاف العمليات المكررة وتشغيل المشروع مرة واحدة من خلال `pnpm dev`.
+
+## ✅ التحقق
+- `pnpm typecheck` ناجح.
+- `pnpm lint` ناجح بدون تحذيرات.
+- `pnpm test` ناجح: 16 اختباراً.
+- `pnpm build` ناجح.
+- `GET /api/health` رجّع `success: true`.
+- Preview على `http://localhost:3000` ظهر بشكل صحيح، وAccessibility snapshot وConsole بدون أخطاء تطبيقية.
+
+---
+
 # AI Session — 01/09/2026 (استكمال SmartInput والتحقق)
 
 ## ✅ اتعمل
@@ -244,7 +261,7 @@
 - تم إفراغ جذر بيئة v0 بالكامل (Next.js scaffold افتراضي) بطلب صريح من المستخدم.
 - تم فك أرشيف `b-auth-03.zip` ونقل محتواه كاملاً إلى الجذر (باستثناء `dist/` و
   `node_modules` و `package-lock.json`).
-- تم تشغيل `pnpm install` بنجاح (513 حزمة عبر lockfile الموجود بدون تعديله).
+- تم تشغيل `pnpm install` بنجاح (513 حزمة ع��ر lockfile الموجود بدون تعديله).
 - تم الت��قق من `pnpm typecheck` و `pnpm lint` و `pnpm build` — كل الأوامر نجحت
   بدون أي مخالفة على المشروع كما استُعيد.
 - تم تشغيل `pnpm dev` فعلياً (Backend:4000 + Frontend/Vite:3000) واختبار المسار
