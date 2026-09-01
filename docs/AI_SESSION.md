@@ -1,3 +1,30 @@
+# AI Session — 01/09/2026 (استكمال SmartInput والتحقق)
+
+## ✅ اتعمل
+- استكملنا SmartInput بعقد أوضح لحالات validation وتسميات الأزرار وARIA.
+- أصلحنا keyboard navigation وإغلاق الاقتراحات، وأضفنا highlighting وinitials/avatar وسهم العنصر النشط وحالة no-results.
+- أضفنا خصائص autofill دفاعية، دعم Firefox، selection styling، وأزلنا منع تحديد النص من checkbox-row.
+- اختبرنا شاشة Auth في المتصفح الداكن وتأكدنا أن زر إظهار كلمة المرور يظهر بعد إدخال قيمة.
+
+## 📁 الملفات المتأثرة
+- `packages/design-system/components/smart-input.tsx`
+- `packages/design-system/styles/smart-input.css`
+- `Frontend/src/styles/globals.css`
+- `docs/TODO.md`
+- `docs/AI_CONTEXT.md`
+
+## ✅ التحقق
+- `pnpm typecheck` ناجح.
+- `pnpm lint` ناجح بدون تحذيرات.
+- `pnpm test` ناجح: 16 اختباراً.
+- `pnpm build` ناجح.
+- Preview على `http://localhost:3000` ناجح في Dark/LTR، بدون أخطاء Console ظاهرة.
+
+## ⏭️ الخطوات الجاية
+- اختبار Light/RTL ولقطات إضافية عند اعتماد الشكل النهائي.
+
+---
+
 # AI Session — 29/08/2026 (إضافة مرجع واجهة تسجيل الدخول)
 
 ## اتعمل
@@ -249,7 +276,7 @@ commits يجب أولاً إعداد مستودع Git واتباع `git-repo-mas
 - [3.1] ✅ أُضيفت اختبارات Vitest لخدمات auth وusers، ونجحت 10 اختبارات.
 - [3.2] ✅ نجحت أوامر test وtypecheck وlint وbuild بعد إضافة الاختبارات.
 - [2.1] ✅ تم بناء تدفق الشاشات المطلوبة: splash / error / signin / signup / home.
-- [2.2] ✅ تم ربط شاشة التسجيل بخياري feature flags مع ��لإعداد الافتراضي المعطّل.
+- [2.2] ✅ تم ربط شاشة التسجيل بخياري feature flags مع ��لإعداد الافتراضي المعطّ��.
 - [2.3] ✅ تم توحيد شاشة الخطأ العامة وإعادة المحاولة والعودة إلى signin.
 - [2.4] ✅ تم تحديث تصميم splash وإضافة شريط تقدم متوافق مع الهوية.
 - [2.5] ✅ تم تحديث aliases والتوثيق وتشغيل typecheck/build بنجاح.
