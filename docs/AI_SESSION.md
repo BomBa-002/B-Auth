@@ -1,3 +1,22 @@
+# AI Session — 01/09/2026 (إصلاح عرض Sandbox)
+
+## ✅ اتعمل
+- فحصنا سبب ظهور شاشة الخطأ داخل Sandbox، واتضح إن محاولة تشغيل `pnpm dev` إضافية كانت بتصطدم بمنافذ مستخدمة بالفعل (`3000` للواجهة و`4000` للخادم)، مش عطل في التطبيق.
+- تأكدنا إن الـ Frontend والـ Backend الأساسيين شغالين فعلياً، وإن `/api/health` بيرجع `success: true`.
+- اختبرنا Preview في المتصفح على الوضع الداكن، وظهرت شاشة تسجيل الدخول كاملة بدون شاشة System Error أو أخطاء Console.
+
+## ✅ التحقق
+- `pnpm typecheck` ناجح.
+- `pnpm lint` ناجح.
+- `pnpm test` ناجح: 16 اختباراً.
+- `pnpm build` ناجح.
+
+## 📁 الملفات المتأثرة
+- `docs/AI_SESSION.md`
+- `docs/TODO.md`
+
+---
+
 # AI Session — 01/09/2026 (إعادة تصميم Splash/Auth)
 
 ## ✅ اتعمل
@@ -254,7 +273,7 @@
 - اتفصل orchestrator الإقلاع عن واجهة Splash، واتضافت retry policy بمهلة وbackoff وjitter وإلغاء.
 - اتضاف runtime health monitor مع توقف عند hidden وتنظيف كامل، وcritical blocking overlay برسائل عربية/إنجليزية.
 - اتحدثت حالات Zustand وربط lifecycle في `Frontend/src/main.tsx`.
-- ال��حقق: `pnpm typecheck` و`pnpm lint` و`pnpm build` ناجحين.
+- ال����حقق: `pnpm typecheck` و`pnpm lint` و`pnpm build` ناجحين.
 
 
 ## مراجعة إضافية
