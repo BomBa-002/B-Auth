@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.15.0 — 02/09/2026
+
+### Added
+- إضافة اختبارات تفاعلية لـ SmartButton وActionLockManager.
+
+### Fixed
+- السماح لـ SmartButton بتنفيذ action بدون lock اختياري، مع الحفاظ على منع التكرار عند استخدام lockKey أو lockGroup.
+
+### Verified
+- `pnpm typecheck` و`pnpm lint` و`pnpm test -- --run` و`pnpm build` نجحوا.
+
+
 ## 1.14.0 — 01/09/2026
 
 ### Added

@@ -1,5 +1,15 @@
 # آخر التطورات — ترقيم شجري
 
+## 12.0 اختبارات SmartButton وإصلاح action بدون lock — 02/09/2026
+### 12.1 الاختبارات
+- إضافة اختبارات لـ SmartButton تغطي التنفيذ مرة واحدة، loading، النجاح، الفشل، وإعادة المحاولة.
+- إضافة اختبارات لـ ActionLockManager تغطي التعارض وتقاطع المجموعات وملكية release.
+
+### 12.2 الإصلاح والتحقق
+- SmartButton بينفذ action بدون lock اختياري، وبيستخدم ActionLockManager فقط لما يتحدد lock.
+- `pnpm typecheck`, `pnpm lint`, `pnpm test -- --run`, و`pnpm build` نجحوا.
+
+
 ## 11.0 تنفيذ SmartButton وأقفال الأفعال — 01/09/2026
 ### 11.1 المكونات
 - إنشاء مدير أقفال framework-independent بملكية تمنع release من مالك غلط.
