@@ -61,7 +61,10 @@ const signinRoute = createRoute({ getParentRoute: () => rootRoute, path: '/signi
 const signupRoute = createRoute({ getParentRoute: () => rootRoute, path: '/signup' })
 const homeRoute = createRoute({ getParentRoute: () => rootRoute, path: '/home' })
 const errorRoute = createRoute({ getParentRoute: () => rootRoute, path: '/error' })
-const routeTree = rootRoute.addChildren([indexRoute, signinRoute, signupRoute, homeRoute, errorRoute])
+// eslint-disable-next-line react-refresh/only-export-components -- قائمة المسارات مصدر اختبار مركزي.
+export const ROUTE_PATHS = ['/', '/signin', '/signup', '/home', '/error'] as const
+// eslint-disable-next-line react-refresh/only-export-components -- شجرة المسارات مطلوبة لإنشاء Router مركزي.
+export const routeTree = rootRoute.addChildren([indexRoute, signinRoute, signupRoute, homeRoute, errorRoute])
 // eslint-disable-next-line react-refresh/only-export-components -- التصدير مطلوب لتهيئة Router المركزي.
 export const router = createRouter({ routeTree })
 export function AppRouter() { return <RouterProvider router={router} /> }
