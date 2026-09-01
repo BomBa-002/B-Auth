@@ -1,3 +1,14 @@
+# AI Session — 01/09/2026 (تنفيذ SmartButton)
+
+## اتعمل
+- اتنفذ `ActionLockManager` بسياسة drop وملكية آمنة للأقفال.
+- اتضاف `SmartButton` مع loading، lifecycle callbacks، cleanup، و`AbortSignal`.
+- اتطبقت أقفال `auth:login` و`auth:register` و`bootstrap:retry` على الشاشات الأساسية.
+- التحقق نجح: typecheck واختبارات Frontend (3 ملفات / 6 اختبارات).
+- `lint` و`build` نجحوا، بينما Preview كان غير متاح مؤقتاً لأن المنفذ 3000 لم يكن يستمع.
+
+---
+
 # AI Session — 01/09/2026 (توثيق إصلاح لون التحذير)
 
 ## اتعمل
