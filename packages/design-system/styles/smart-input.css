@@ -3,6 +3,8 @@
 .smart-input-control:focus-within { border-color: var(--smart-focus); box-shadow: 0 0.125em 0 var(--smart-focus); }
 .smart-input-control input { inline-size: 100%; min-block-size: 3em; padding: 0.875em 0.25em 0.375em; border: 0; outline: 0; background: transparent; color: var(--color-surface-f); user-select: text; }
 .smart-input-control input::selection { background: var(--color-py); color: var(--color-py-f); }
+.smart-input-option:focus-visible { outline: 0.125em solid var(--smart-focus); outline-offset: -0.125em; }
+.smart-input-empty { min-block-size: 2.75em; display: grid; place-items: center; text-align: center; }
 .smart-input-control input::placeholder { color: transparent; }
 .smart-input-control input:-webkit-autofill,
 .smart-input-control input:-webkit-autofill:hover,
@@ -26,7 +28,7 @@
 .smart-input[data-validation="success"] .smart-input-control { --smart-border: var(--color-ok); }
 .smart-input[data-validation="default"] .smart-input-control { --smart-border: var(--color-border); }
 .smart-input-description { margin: 0; color: var(--smart-focus); font-size: var(--font-size-xs); line-height: var(--line-height-normal); }
-.smart-input-list { position: absolute; inset-block-start: calc(100% + 0.35em); z-index: var(--z-overlay); display: grid; inline-size: 100%; padding: var(--spacing-xs); border: 0.0625em solid var(--color-border); border-radius: var(--border-radius); background: var(--color-surface); box-shadow: var(--shadow-lg); }
+.smart-input-list { position: absolute; inset-block-start: calc(100% + 0.35em); z-index: var(--z-overlay); display: grid; inline-size: 100%; max-block-size: 20em; overflow-y: auto; padding: var(--spacing-xs); border: 0.0625em solid var(--color-border); border-radius: var(--border-radius); background: var(--color-surface); box-shadow: var(--shadow-lg); }
 .smart-input-group { padding: var(--spacing-xs) var(--spacing-sm); color: var(--color-md-f); font-size: var(--font-size-xs); font-weight: var(--font-weight-bold); }
 .smart-input-option { display: flex; flex-direction: column; align-items: stretch; gap: 0.125em; padding: var(--spacing-sm); border: 0; background: transparent; color: var(--color-surface-f); text-align: start; cursor: pointer; }
 .smart-input-option:hover, .smart-input-option[aria-selected="true"] { background: var(--color-hover); color: var(--color-py); }
