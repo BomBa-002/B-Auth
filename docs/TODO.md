@@ -33,8 +33,9 @@
 - [x] 🟡 MED — اعتماد @tanstack/react-router وربط مسارات `/`, `/signin`, `/signup`, `/home`, `/error`.
 - [x] 🟡 MED — الحفاظ على تصميم Splash/Auth الحالي بدون إعادة تصميم.
 - [x] 🟡 MED — اختبار English/LTR وArabic/RTL في المتصفح.
-- [ ] 🟡 MED — إضافة اختبارات Frontend لـ Router وAuth flow.
-- [ ] 🟡 MED — إصلاح تحذير حجم bundle عبر code splitting.
+- [x] 🟡 MED — إضافة اختبارات Frontend أساسية لـ Auth error mapping.
+- [x] 🟡 MED — إصلاح تحذير حجم bundle عبر manual chunks.
+- [ ] 🟡 MED — إضافة اختبارات Frontend لـ Router وAuth flow الكامل.
 - [ ] 🟢 LOW — تثبيت خط عربي bundled لو ظل glyph fallback مؤثراً.
 
 ## 4. نقطة الاستكمال القادمة
