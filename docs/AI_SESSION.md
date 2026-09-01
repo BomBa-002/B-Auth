@@ -74,6 +74,26 @@
 - تم اختبار تبديل اللغة بين LTR وRTL وتبديل الثيم من Preview، مع بقاء الحقول والأزرار متاحة وظيفياً.
 - تم التحقق برمجياً أن أزرار إجراءات `SmartInput` غير موجودة في ترتيب Tab (`tabIndex` لا يظهر كعنصر قابل للتركيز).
 
+---
+
+# AI Session — 01/09/2026 (التحقق النهائي من Splash وPreview)
+
+## ✅ اتعمل
+- تأكدنا إن `.boot-ring` بتستهلك `--progress` فعلياً من خلال `conic-gradient`، والعداد والحلقة متزامنين.
+- شغلنا Backend وFrontend مرة واحدة بدون تعارض منافذ.
+- اختبرنا انتقال Splash إلى Auth في Preview الداكن بحجم `939x726`.
+- راجعنا Accessibility snapshot وConsole؛ مفيش أخطاء تطبيقية.
+
+## ✅ التحقق
+- `GET http://localhost:4000/api/health` رجّع `success: true` و`status: ok`.
+- `agent-browser vitals` سجّل `TTFB 18.7ms` و`FCP/LCP 504ms` و`CLS 0` في بيئة التطوير.
+- تم حفظ اللقطات خارج المشروع داخل `/tmp/agent-browser/splash-ring-final.png` و`/tmp/agent-browser/auth-screen-final.png`.
+
+## ⏭️ الخطوات الجاية
+- إضافة اختبارات تفاعلية فعلية لـ Auth submit وRouter navigation.
+- مراجعة إعدادات Production security headers قبل الـ Release.
+- تثبيت خط عربي bundled فقط لو احتجنا تطابق glyph بصري كامل.
+
 ## ⏭️ الخطوات الجاية
 - مراجعة مطابقة Splash/Auth مع المرجع البصري النهائي.
 - تثبيت خط عربي bundled فقط لو ظل glyph fallback مؤثراً بعد اعتماد الشكل.
