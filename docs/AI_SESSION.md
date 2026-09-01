@@ -1,6 +1,15 @@
 # AI Session — 01/09/2026 (استكمال SmartInput والتحقق)
 
 ## ✅ اتعمل
+- اختبرنا شاشة تسجيل الدخول في Light/LTR وLight/RTL على Preview بحجم 768x644.
+- راجعنا Accessibility snapshot، وثبت ظهور النصوص العربية وظيفياً من خلال شجرة الوصول.
+- عدّلنا fallback الخاص بخط RTL إلى `Arial` و`Segoe UI` لتقليل اعتماد العرض على خطوط غير متاحة في بيئة المتصفح.
+
+## التحقق المرئي
+- تم حفظ اللقطات خارج المشروع داخل `/tmp/agent-browser/smart-input-light-ltr.png` و`/tmp/agent-browser/smart-input-light-rtl-fixed.png`.
+- لقطة RTL ما زالت تعرض glyph fallback غير مثالي بصرياً داخل بيئة المتصفح، بينما النصوص والـ accessible names صحيحة؛ يلزم تثبيت خط عربي bundled لو مطلوب تطابق بصري كامل.
+
+## ✅ اتعمل
 - استكملنا SmartInput بعقد أوضح لحالات validation وتسميات الأزرار وARIA.
 - أصلحنا keyboard navigation وإغلاق الاقتراحات، وأضفنا highlighting وinitials/avatar وسهم العنصر النشط وحالة no-results.
 - أضفنا خصائص autofill دفاعية، دعم Firefox، selection styling، وأزلنا منع تحديد النص من checkbox-row.
@@ -147,7 +156,7 @@
 - راجعنا الواجهة على mobile `390x844` وtablet `768x1024` في RTL والوضع الداكن، مع حفظ screenshots خارج المشروع في `/tmp/agent-browser/`.
 
 ## التحقق النهائي
-- 4 ملفات اختبار ناجحة، 16 اختباراً ناجحاً.
+- 4 مل��ات اختبار ناجحة، 16 اختباراً ناجحاً.
 - `pnpm -r typecheck` ناجح.
 - `pnpm -r lint` ناجح.
 - `pnpm -r test` ناجح.
