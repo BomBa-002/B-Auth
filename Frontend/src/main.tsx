@@ -48,7 +48,7 @@ function App() {
   }, [bootstrapStatus])
 
   let content: React.ReactNode
-  if (screen === 'error') content = <ErrorScreen onRetry={() => { setScreen('splash'); retry() }} onExit={() => setScreen('signin')} />
+  if (screen === 'error') content = <ErrorScreen onRetry={() => { setScreen('splash'); retry() }} />
   else if (screen === 'home') content = user ? <><HomeScreen onLogout={() => { clearSession(); setScreen('signin') }} />{runtimeHealth.level === 'critical' ? <HealthBlocker onRetry={() => window.location.reload()} /> : null}</> : <SigninScreen onNavigate={navigate} />
   else if (screen === 'signup' && features.ENABLE_SIGNUP) content = <SignupScreen onNavigate={navigate} />
   else if (screen === 'signin') content = <SigninScreen onNavigate={navigate} />

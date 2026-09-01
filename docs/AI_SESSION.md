@@ -254,7 +254,7 @@
 - اتفصل orchestrator الإقلاع عن واجهة Splash، واتضافت retry policy بمهلة وbackoff وjitter وإلغاء.
 - اتضاف runtime health monitor مع توقف عند hidden وتنظيف كامل، وcritical blocking overlay برسائل عربية/إنجليزية.
 - اتحدثت حالات Zustand وربط lifecycle في `Frontend/src/main.tsx`.
-- التحقق: `pnpm typecheck` و`pnpm lint` و`pnpm build` ناجحين.
+- ال��حقق: `pnpm typecheck` و`pnpm lint` و`pnpm build` ناجحين.
 
 
 ## مراجعة إضافية
@@ -322,6 +322,30 @@ commits يجب أولاً إعداد مستودع Git واتباع `git-repo-mas
 - [1.6] أُضيف ESLint للـ Frontend مع إعداد Flat Config وقواعد TypeScript وReact Hooks.
 - [1.7] أُضيف إعداد ESLint للـ Backend، وتم إصلاح مخالفات lint البسيطة.
 - [1.8] نجحت أوامر `pnpm lint` و`pnpm typecheck` و`pnpm build` من الجذر.
+
+---
+
+# AI Session — 01/09/2026 (تنظيف شاشة الخطأ)
+
+## ✅ اتعمل
+- اتشال زرار `Exit` من `ErrorScreen` والإجراء المرتبط `onExit`.
+- اتشال تمرير `onExit` من `Frontend/src/main.tsx`.
+- اتشالت مفاتيح الترجمة `errors.exit` من العربي والإنجليزي.
+
+## 📁 الملفات المتأثرة
+- `Frontend/src/screens/system.screens.tsx`
+- `Frontend/src/main.tsx`
+- `Frontend/src/i18n/locales/ar.json`
+- `Frontend/src/i18n/locales/en.json`
+- `docs/AI_SESSION.md`
+- `docs/TODO.md`
+
+## ✅ التحقق
+- `pnpm typecheck` ناجح.
+- `pnpm lint` ناجح بدون تحذيرات.
+- `pnpm test` ناجح: 16 اختباراً.
+- `pnpm build` ناجح.
+- Preview شغال، وشجرة الوصول بتعرض شاشة المصادقة بدون أي زرار `Exit`؛ شاشة الخطأ بتحتوي على `Retry` فقط حسب الكود المراجع.
 
 ## 5. الخطوات الجاية
 - [3.1] ✅ أُضيفت اختبارات Vitest لخدمات auth وusers، ونجحت 10 اختبارات.

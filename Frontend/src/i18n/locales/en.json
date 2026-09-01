@@ -109,7 +109,6 @@
     "bootstrap_body": "The console could not finish starting up. The following issue prevented it from proceeding:",
     "bootstrap_health_message": "Unable to connect to the B-Auth backend service.",
     "retry": "Retry",
-    "exit": "Exit",
     "runtime_title": "Service interruption",
     "runtime_body": "The authentication service is temporarily unavailable. Retry to restore a secure connection."
   }
