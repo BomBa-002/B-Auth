@@ -36,6 +36,7 @@
 - [x] 🟡 MED — إضافة اختبارات Frontend أساسية لـ Auth error mapping.
 - [x] 🟡 MED — إصلاح تحذير حجم bundle عبر manual chunks.
 - [x] 🟡 MED — إضافة اختبار Frontend للمسارات الأساسية وAuth error flow.
+- [x] 🟡 MED — إضافة اختبارات تفاعلية لـ SmartButton وActionLockManager.
 - [ ] 🟡 MED — إضافة اختبارات تفاعلية كاملة لـ Router وAuth flow.
 - [x] 🟡 MED — تشغيل Frontend وBackend معاً والتحقق من Preview و`/api/health`.
 - [x] 🟡 MED — مراجعة Console وAccessibility وWeb Vitals على Preview.

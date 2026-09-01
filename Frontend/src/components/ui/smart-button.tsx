@@ -29,8 +29,9 @@ export const SmartButton = React.forwardRef<HTMLButtonElement, SmartButtonProps>
       onClick?.(event)
       if (!action || event.defaultPrevented || isRunning || loading || disabled) return
       event.preventDefault()
-      const owner = ActionLockManager.tryAcquire({ lockKey, lockGroup })
-      if (!owner) {
+      const hasLock = Boolean(lockKey || lockGroup)
+      const owner = hasLock ? ActionLockManager.tryAcquire({ lockKey, lockGroup }) : null
+      if (hasLock && !owner) {
         return
       }
       const controller = new AbortController()
