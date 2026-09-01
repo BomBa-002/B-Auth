@@ -191,7 +191,7 @@ export const SmartInput = React.forwardRef<HTMLInputElement, SmartInputProps>(fu
   }
 
   return (
-    <div ref={rootRef} className={`smart-input ${className ?? ''}`} data-validation={validation} data-disabled={disabled ? 'true' : 'false'}>
+    <div ref={rootRef} className={`smart-input ${className ?? ''}`} data-validation={validation} data-disabled={disabled ? 'true' : 'false'} data-prefix={prefixIcon ? 'true' : 'false'}>
       <div className="smart-input-control">
         {prefixIcon ? <span className="smart-input-prefix" aria-hidden="true">{prefixIcon}</span> : null}
         <input
