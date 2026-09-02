@@ -38,6 +38,7 @@
     "username_label": "اسم المستخدم / البريد / الهاتف",
     "username_placeholder": "أدخل اسم المستخدم أو البريد أو الهاتف",
     "forgot_password": "نسيت كلمة المرور؟",
+    "forgot_password_hint": "إعادة تعيين كلمة المرور غير متاحة حالياً — يرجى التواصل مع مسؤول النظام.",
     "password_label": "كلمة المرور",
     "password_placeholder": "••••••••",
     "remember_me": "تذكرني على هذا الجهاز",

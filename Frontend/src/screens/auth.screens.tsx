@@ -14,6 +14,8 @@ export function SigninScreen({ onNavigate }: AuthScreenProps) {
   const setRememberedUsername = useAuthStore((s) => s.setRememberedUsername)
   const setSession = useAuthStore((s) => s.setSession)
   const [serverError, setServerError] = React.useState('')
+  // رسالة إرشادية لزرار "نسيت كلمة المرور" — مفيش flow استعادة فعلي لسه، فبنوضّح بدل ما يكون الزرار ميت.
+  const [forgotHint, setForgotHint] = React.useState(false)
   // rememberMe مش جزء من تحقق zod — حالة UI مستقلة لأنها بتتحكم في persistence مش في صحة الإدخال.
   const [remember, setRemember] = React.useState(Boolean(rememberedUsername))
 
@@ -35,7 +37,7 @@ export function SigninScreen({ onNavigate }: AuthScreenProps) {
     }
   })
 
-  return <ScreenLayout statusLabel={t('auth.status')} statusTone="busy"><AuthFrame title={t('auth.login_title')} subtitle={t('auth.login_subtitle')}><form className="form-card auth-form" onSubmit={onSubmit} noValidate>{serverError && <div className="form-error-banner" role="alert">{serverError}</div>}<SmartInput label={t('auth.username_label')} placeholder={t('auth.username_placeholder')} error={formState.errors.identifier?.message} autoComplete="username" clearable {...register('identifier')} /><SmartInput label={t('auth.password_label')} placeholder={t('auth.password_placeholder')} type="password" error={formState.errors.password?.message} autoComplete="current-password" clearable {...register('password')} /><div className="auth-options"><label className="checkbox-row"><input type="checkbox" checked={remember} onChange={(e) => setRemember(e.target.checked)} />{t('auth.remember_me')}</label><button className="link-action" type="button">{t('auth.forgot_password')}</button></div><SmartButton className="primary-action" type="submit" loading={formState.isSubmitting} lockKey="auth:login">{formState.isSubmitting ? t('auth.submitting') : t('auth.submit')}</SmartButton></form></AuthFrame></ScreenLayout>
+  return <ScreenLayout statusLabel={t('auth.status')} statusTone="busy"><AuthFrame title={t('auth.login_title')} subtitle={t('auth.login_subtitle')}><form className="form-card auth-form" onSubmit={onSubmit} noValidate>{serverError && <div className="form-error-banner" role="alert">{serverError}</div>}<SmartInput label={t('auth.username_label')} placeholder={t('auth.username_placeholder')} error={formState.errors.identifier?.message} autoComplete="username" clearable {...register('identifier')} /><SmartInput label={t('auth.password_label')} placeholder={t('auth.password_placeholder')} type="password" error={formState.errors.password?.message} autoComplete="current-password" clearable {...register('password')} /><div className="auth-options"><label className="checkbox-row"><input type="checkbox" checked={remember} onChange={(e) => setRemember(e.target.checked)} />{t('auth.remember_me')}</label><button className="link-action" type="button" aria-expanded={forgotHint} onClick={() => setForgotHint((v) => !v)}>{t('auth.forgot_password')}</button></div>{forgotHint && <p className="screen-subtitle" role="note">{t('auth.forgot_password_hint')}</p>}<SmartButton className="primary-action" type="submit" loading={formState.isSubmitting} lockKey="auth:login">{formState.isSubmitting ? t('auth.submitting') : t('auth.submit')}</SmartButton></form></AuthFrame></ScreenLayout>
 }
 
 export function SignupScreen({ onNavigate }: AuthScreenProps) {

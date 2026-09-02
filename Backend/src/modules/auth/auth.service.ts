@@ -62,7 +62,8 @@ export async function registerUser(input: RegisterInput): Promise<PublicUser> {
     throw AppError.conflict("A user with that username, email or phone already exists.")
   }
 
-  const defaultRole = await rolesRepository.findOne((r) => r.name === "user")
+  // مطابقة غير حساسة لحالة الأحرف — الـ seed بيعمل الدور باسم "User" بحرف كبير.
+  const defaultRole = await rolesRepository.findOne((r) => r.name.toLowerCase() === "user")
   const passwordHash = await bcrypt.hash(input.password, BCRYPT_ROUNDS)
   const now = new Date().toISOString()
 
