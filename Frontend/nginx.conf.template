@@ -1,5 +1,9 @@
-# @file        : Frontend/nginx.conf
-# @description : إعداد nginx داخل الحاوية — SPA fallback + proxy للـ /api على خدمة الـ backend.
+# @file        : Frontend/nginx.conf.template
+# @description : قالب إعداد nginx — بيتحول لـ conf عند الإقلاع عبر envsubst المدمج في صورة nginx.
+#                المتغير BACKEND_HOST بيتحقم من البيئة: محلياً "backend" (docker-compose)
+#                وعلى Railway "backend.railway.internal" (الشبكة الخاصة بين الخدمات).
+# ملاحظة: سكريبت envsubst المدمج بيستبدل بس المتغيرات المعرفة كمتغيرات بيئة،
+#         فمتغيرات nginx الداخلية زي $uri بتفضل سليمة.
 
 server {
   listen 80;
@@ -20,7 +24,7 @@ server {
 
   # الـ API — نفس الأصل عشان الـ HttpOnly cookies تشتغل من غير CORS.
   location /api {
-    proxy_pass http://backend:4000;
+    proxy_pass http://${BACKEND_HOST}:4000;
     proxy_http_version 1.1;
     proxy_set_header Host $host;
     proxy_set_header X-Real-IP $remote_addr;
