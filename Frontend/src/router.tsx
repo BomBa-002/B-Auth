@@ -58,7 +58,7 @@ function AppShell() {
   let content: React.ReactNode
   if (pathname === '/error') content = <ErrorScreen onRetry={() => { void router.navigate({ to: '/', replace: true }); retry() }} />
   else if (pathname === '/home') content = user ? <><HomeScreen onLogout={() => { void logout() }} />{runtimeHealth.level === 'critical' ? <HealthBlocker onRetry={() => window.location.reload()} /> : null}</> : <SigninScreen onNavigate={navigate} />
-  else if (pathname === '/signup' && features.ENABLE_SIGNUP) content = <SignupScreen onNavigate={navigate} />
+  else if (pathname === '/signup') content = features.ENABLE_SIGNUP ? <SignupScreen onNavigate={navigate} /> : <SigninScreen onNavigate={navigate} />
   else if (pathname === '/signin') content = <SigninScreen onNavigate={navigate} />
   else content = <SplashScreen status={bootstrapStatus} />
 
