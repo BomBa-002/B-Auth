@@ -51,7 +51,7 @@ export function SignupScreen({ onNavigate }: AuthScreenProps) {
   const onSubmit = handleSubmit(async (values: SignupFormValues) => {
     setServerError(''); setMessage('')
     try {
-      await register({ ...values, phone: values.phone || undefined })
+      await registerAccount({ ...values, phone: values.phone || undefined })
       setMessage(t('auth.signup_success_body'))
       reset()
     } catch (error) {

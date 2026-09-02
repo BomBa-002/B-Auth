@@ -1,5 +1,26 @@
 # Changelog
 
+## 1.22.0 — 02/09/2026
+
+### Added
+- Logout حقيقي: `useLogout` hook بيستدعي `POST /api/auth/logout` (إبطال الجلسة + مسح الـ cookie) قبل مسح الحالة المحلية.
+- فحوص صحة منفصلة: `GET /api/health/live` و`GET /api/health`/ready` عبر `health.service` جديد مع اختبارات.
+- دعم رقم الجوال: `phone` اختياري في `UserRecord` والتسجيل، وتسجيل الدخول بالجوال بمطابقة أرقام فقط.
+- إعادة كتابة شاشات Signin/Signup بـ react-hook-form + zod (`features/auth/lib/auth.schemas.ts`) مع رسائل تحقق مترجمة.
+- طبقة صلاحيات في الواجهة: `can` / `canAny` / `useCan` مع دعم wildcard، واستخدامها في Home.
+- Docker: `Backend/Dockerfile` و`Frontend/Dockerfile` (multi-stage) + `Frontend/nginx.conf` + `docker-compose.yml` (MinIO + minio-init + healthchecks على `/ready`).
+- `Frontend/.env.example` وSentry اختياري عبر `VITE_SENTRY_DSN` (dynamic import).
+- `docs/ARCHITECTURE.md` — توثيق معماري موحّد (auth flow / RBAC / health / docker / security).
+
+### Security
+- إخراج `Backend/.env` (أسرار JWT) و`dist/` و`sessions.json` من تتبع git وتحديث `.gitignore`.
+
+### Documentation
+- README: بيانات الدخول التطويرية + قسم Docker + تحديث المميزات.
+
+### Verified
+- Backend: 22 اختبار ناجح + typecheck. Frontend: 19 اختبار ناجح + typecheck + lint.
+
 ## 1.21.0 — 02/09/2026
 
 ### Documentation
@@ -172,7 +193,7 @@
 ## 1.4.0 — 27/08/2026
 
 ### Changed
-- إفراغ جذر بيئة v0 بالكامل (Next.js scaffold افتراضي) واستعادة مشروع B-Auth
+- إفراغ جذر بي��ة v0 بالكامل (Next.js scaffold افتراضي) واستعادة مشروع B-Auth
   كاملاً من أرشيف `b-auth-03.zip` (Backend + Frontend + packages + docs).
 - استبعاد `dist/`, `node_modules`, و `package-lock.json` من عملية النقل للحفاظ
   على `pnpm-lock.yaml` كمصدر الحقيقة الوحيد للاعتماديات.
