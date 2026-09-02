@@ -15,15 +15,20 @@ export function SigninScreen({ onNavigate }: AuthScreenProps) {
   const [password, setPassword] = React.useState('')
   const [remember, setRemember] = React.useState(Boolean(rememberedUsername))
   const [error, setError] = React.useState('')
+  const [notice, setNotice] = React.useState('')
   const [loading, setLoading] = React.useState(false)
 
+  function handleForgotPassword() {
+    setError(''); setNotice(t('auth.forgot_password_hint'))
+  }
+
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault(); setError(''); setLoading(true)
+    event.preventDefault(); setError(''); setNotice(''); setLoading(true)
     try { const session = await login({ identifier: username, password, rememberMe: remember }); if (remember) setRememberedUsername(username); else setRememberedUsername(null); setSession({ accessToken: session.accessToken, user: session.user, persistent: session.persistent }); onNavigate('home') }
     catch (error) { setError(resolveAuthErrorMessage(error, t)) } finally { setLoading(false) }
   }
 
-  return <ScreenLayout statusLabel={t('auth.status')} statusTone="busy"><AuthFrame title={t('auth.login_title')} subtitle={t('auth.login_subtitle')}><form className="form-card auth-form" onSubmit={handleSubmit}>{error && <div className="form-error-banner" role="alert">{error}</div>}<OutlinedInput label={t('auth.username_label')} placeholder={t('auth.username_placeholder')} value={username} onChange={(e) => setUsername(e.target.value)} autoComplete="username" required /><OutlinedInput label={t('auth.password_label')} placeholder={t('auth.password_placeholder')} type="password" value={password} onChange={(e) => setPassword(e.target.value)} autoComplete="current-password" required /><div className="auth-options"><label className="checkbox-row"><input type="checkbox" checked={remember} onChange={(e) => setRemember(e.target.checked)} />{t('auth.remember_me')}</label><button className="link-action" type="button">{t('auth.forgot_password')}</button></div><button className="primary-action" type="submit" disabled={loading}>{loading ? t('auth.submitting') : t('auth.submit')}</button></form></AuthFrame></ScreenLayout>
+  return <ScreenLayout statusLabel={t('auth.status')} statusTone="busy"><AuthFrame title={t('auth.login_title')} subtitle={t('auth.login_subtitle')}><form className="form-card auth-form" onSubmit={handleSubmit}>{error && <div className="form-error-banner" role="alert">{error}</div>}{notice && <div className="form-info-banner" role="status">{notice}</div>}<OutlinedInput label={t('auth.username_label')} placeholder={t('auth.username_placeholder')} value={username} onChange={(e) => setUsername(e.target.value)} autoComplete="username" required /><OutlinedInput label={t('auth.password_label')} placeholder={t('auth.password_placeholder')} type="password" value={password} onChange={(e) => setPassword(e.target.value)} autoComplete="current-password" required /><div className="auth-options"><label className="checkbox-row"><input type="checkbox" checked={remember} onChange={(e) => setRemember(e.target.checked)} />{t('auth.remember_me')}</label><button className="link-action" type="button" onClick={handleForgotPassword}>{t('auth.forgot_password')}</button></div><button className="primary-action" type="submit" disabled={loading}>{loading ? t('auth.submitting') : t('auth.submit')}</button></form></AuthFrame></ScreenLayout>
 }
 
 export function SignupScreen({ onNavigate }: AuthScreenProps) {

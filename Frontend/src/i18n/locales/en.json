@@ -32,6 +32,7 @@
     "username_label": "Username / email / phone",
     "username_placeholder": "Enter your username, email, or phone",
     "forgot_password": "Forgot Password?",
+    "forgot_password_hint": "Password resets are handled by your administrator. Please contact your system administrator to reset your password.",
     "password_label": "Password",
     "password_placeholder": "••••••••",
     "remember_me": "Remember me on this device",
