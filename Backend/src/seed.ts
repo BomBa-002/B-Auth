@@ -78,6 +78,7 @@ export async function seedIfEmpty(): Promise<void> {
       id: randomUUID(),
       username: env.SEED_ADMIN_USERNAME,
       email: env.SEED_ADMIN_EMAIL,
+      phone: null,
       passwordHash,
       displayName: "Administrator",
       roleIds: [adminRole.id],

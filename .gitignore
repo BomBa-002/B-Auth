@@ -6,8 +6,19 @@ __v0_jsx-dev-runtime.ts
 .v0-trash/
 .vercel/
 
-# Environment variables
-.env*.local
+# Environment variables — الأسرار عمرها ما تدخل git؛ الـ .env.example فقط هو المتعقَّب
+.env
+.env.*
+!.env.example
+
+# Build artifacts
+dist/
+coverage/
+*.tsbuildinfo
+
+# Runtime data — الجلسات بتتولد وقت التشغيل (الملف بيتعمل تلقائياً لو مش موجود)
+Backend/data/sessions.json
+Backend/data/*.tmp
 
 # Common ignores
 node_modules

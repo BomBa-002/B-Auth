@@ -21,7 +21,7 @@ vi.mock("@shared/repositories.js", () => repositories)
 const { loginUser, registerUser, refreshSession, logoutSession } = await import("./auth.service.js")
 
 const user: UserRecord = {
-  id: "user-1", username: "admin", email: "admin@example.com", passwordHash: "hash",
+  id: "user-1", username: "admin", email: "admin@example.com", phone: "+201001234567", passwordHash: "hash",
   displayName: "Admin", roleIds: ["role-1"], isActive: true,
   createdAt: "2026-08-27T00:00:00.000Z", updatedAt: "2026-08-27T00:00:00.000Z",
 }
@@ -39,7 +39,7 @@ describe("auth service", () => {
     repositories.usersRepository.findOne.mockResolvedValue(undefined)
     repositories.rolesRepository.findOne.mockResolvedValue({ id: "role-user", name: "user", permissionIds: [] })
 
-    const result = await registerUser({ username: "new-user", email: "new@example.com", password: "Strong123", displayName: "New User" })
+    const result = await registerUser({ username: "new-user", email: "new@example.com", phone: null, password: "Strong123", displayName: "New User" })
 
     expect(result).not.toHaveProperty("passwordHash")
     expect(repositories.usersRepository.create).toHaveBeenCalledOnce()
@@ -61,6 +61,26 @@ describe("auth service", () => {
     expect(result.user).not.toHaveProperty("passwordHash")
     expect(result.roleNames).toEqual(["admin"])
     expect(repositories.sessionsRepository.create).toHaveBeenCalledOnce()
+  })
+
+  it("يسجل الدخول برقم الجوال مهما اختلف التنسيق", async () => {
+    repositories.usersRepository.findOne.mockImplementation(async (predicate: (u: UserRecord) => boolean) =>
+      predicate(user) ? user : undefined
+    )
+    vi.spyOn(bcrypt, "compare").mockResolvedValue(true as never)
+
+    const result = await loginUser({ identifier: "+20 100-123-4567", password: "Strong123", rememberMe: false }, null)
+
+    expect(result.user.username).toBe("admin")
+  })
+
+  it("يرفض رقم جوال قصير أو غير مطابق", async () => {
+    repositories.usersRepository.findOne.mockImplementation(async (predicate: (u: UserRecord) => boolean) =>
+      predicate(user) ? user : undefined
+    )
+
+    await expect(loginUser({ identifier: "12345", password: "Strong123", rememberMe: false }, null))
+      .rejects.toMatchObject({ code: "INVALID_CREDENTIALS", status: 401 })
   })
 
   it("يرفض refresh لجلسة منتهية", async () => {

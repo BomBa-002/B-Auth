@@ -272,7 +272,7 @@
 - `docs/TODO.md`
 
 ## نقطة الاستكمال
-- إعادة تصميم Splash/Auth طبقاً للمرجع مع الحفاظ على منطق الجلسة، الترجمة، RTL/LTR، والثيم الداكن.
+- إعادة تصم��م Splash/Auth طبقاً للمرجع مع الحفاظ على منطق الجلسة، الترجمة، RTL/LTR، والثيم الداكن.
 
 ---
 
@@ -516,3 +516,27 @@ commits يجب أولاً إعداد مستودع Git واتباع `git-repo-mas
 - [3.1] 🔴 HIGH → إضافة اختبارات auth والخدمات.
 - [2.2] 🔴 HIGH → إضافة اختبارات auth والخدمات.
 - [2.3] 🟢 LOW → تشغيل preview فعلي واختبار المسار الأساسي في المتصفح.
+
+---
+
+## جلسة 02/09/2026 — تدقيق الخطة الرئيسية وإغلاق الفجوات
+
+### 1. اتعمل
+- تدقيق كامل للخطة (84 بند) مقابل الكود — النتائج في `docs/TODO.md §11`.
+- أمني: إخراج `Backend/.env` و`dist/` و`sessions.json` من تتبع git + تحديث `.gitignore`.
+- Logout حقيقي: `useLogout` hook (features/auth/hooks/use-logout.ts) بيستدعي `POST /api/auth/logout` قبل مسح الحالة، مربوط في `router.tsx`.
+- Health: `health.service.ts` جديد + `GET /api/health/live` و`/ready` + تصحيح نوع `HealthReport` في الواجهة.
+- دعم `phone`: `UserRecord.phone` + تسجيل + دخول بمطابقة أرقام فقط + اختبارات.
+- شاشات Signin/Signup أعيدت كتابتها بـ react-hook-form + zod (`features/auth/lib/auth.schemas.ts`).
+- طبقة صلاحيات: `can/canAny/useCan` (features/auth/lib/permissions.ts) + استخدامها في Home.
+- Docker: Backend/Frontend Dockerfiles + nginx.conf + docker-compose.yml (MinIO + healthchecks).
+- `Frontend/.env.example` + Sentry اختياري (VITE_SENTRY_DSN، dynamic import).
+- توثيق: `docs/ARCHITECTURE.md` موحّد + credentials في README + تحديث TODO/CHANGELOG.
+
+### 2. التحقق
+- Backend: 22 اختبار ✅ + typecheck ✅
+- Frontend: 19 اختبار ✅ + typecheck ✅ + lint ✅
+
+### 3. الخطوات الجاية
+- فحص Preview في جلسة متصفح جديدة (بند بيئي).
+- تثبيت خط عربي bundled — محجوب لغياب asset معتمد.

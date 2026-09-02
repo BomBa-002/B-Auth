@@ -9,6 +9,7 @@ import { ErrorScreen, HealthBlocker, HomeScreen } from '@screens/system.screens'
 import { SigninScreen, SignupScreen } from '@screens/auth.screens'
 import { SplashScreen } from '@screens/splash.screen'
 import { useBootstrap } from '@features/auth/hooks/use-bootstrap'
+import { useLogout } from '@features/auth/hooks/use-logout'
 import { createRuntimeHealthMonitor, type RuntimeHealthState } from '@features/health/runtime-health-monitor'
 
 // eslint-disable-next-line react-refresh/only-export-components -- الدالة pure ومطلوبة لاختبار قرار التنقل.
@@ -23,7 +24,6 @@ export function resolveScreenPath(screen: string, hasUser: boolean): '/signin' |
 function AppShell() {
   const { bootstrapStatus, retry } = useBootstrap()
   const user = useAuthStore((state) => state.user)
-  const clearSession = useAuthStore((state) => state.clearSession)
   const [runtimeHealth, setRuntimeHealth] = React.useState<RuntimeHealthState>({ level: 'healthy', report: null, error: null })
   const pathname = useRouterState({ select: (state) => state.location.pathname })
   const router = useRouter()
@@ -52,10 +52,12 @@ function AppShell() {
   const navigate = (screen: string) => {
     void router.navigate({ to: resolveScreenPath(screen, Boolean(user)) })
   }
+  // تسجيل الخروج الحقيقي: إبطال الجلسة على السيرفر أولاً، ثم مسح الحالة والانتقال لصفحة الدخول.
+  const { logout } = useLogout(() => { void router.navigate({ to: '/signin', replace: true }) })
 
   let content: React.ReactNode
   if (pathname === '/error') content = <ErrorScreen onRetry={() => { void router.navigate({ to: '/', replace: true }); retry() }} />
-  else if (pathname === '/home') content = user ? <><HomeScreen onLogout={() => { clearSession(); navigate('signin') }} />{runtimeHealth.level === 'critical' ? <HealthBlocker onRetry={() => window.location.reload()} /> : null}</> : <SigninScreen onNavigate={navigate} />
+  else if (pathname === '/home') content = user ? <><HomeScreen onLogout={() => { void logout() }} />{runtimeHealth.level === 'critical' ? <HealthBlocker onRetry={() => window.location.reload()} /> : null}</> : <SigninScreen onNavigate={navigate} />
   else if (pathname === '/signup' && features.ENABLE_SIGNUP) content = <SignupScreen onNavigate={navigate} />
   else if (pathname === '/signin') content = <SigninScreen onNavigate={navigate} />
   else content = <SplashScreen status={bootstrapStatus} />

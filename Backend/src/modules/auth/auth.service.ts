@@ -50,10 +50,13 @@ async function buildAuthTokens(user: UserRecord, rememberMe: boolean, userAgent:
 
 export async function registerUser(input: RegisterInput): Promise<PublicUser> {
   const existing = await usersRepository.findOne(
-    (u) => u.username.toLowerCase() === input.username.toLowerCase() || u.email.toLowerCase() === input.email.toLowerCase()
+    (u) =>
+      u.username.toLowerCase() === input.username.toLowerCase() ||
+      u.email.toLowerCase() === input.email.toLowerCase() ||
+      (input.phone !== null && u.phone !== null && u.phone === input.phone)
   )
   if (existing) {
-    throw AppError.conflict("A user with that username or email already exists.")
+    throw AppError.conflict("A user with that username, email or phone already exists.")
   }
 
   const defaultRole = await rolesRepository.findOne((r) => r.name === "user")
@@ -64,6 +67,7 @@ export async function registerUser(input: RegisterInput): Promise<PublicUser> {
     id: nanoid(),
     username: input.username,
     email: input.email,
+    phone: input.phone,
     passwordHash,
     displayName: input.displayName,
     roleIds: defaultRole ? [defaultRole.id] : [],
@@ -77,17 +81,22 @@ export async function registerUser(input: RegisterInput): Promise<PublicUser> {
 }
 
 export async function loginUser(input: LoginInput, userAgent: string | null) {
-  const identifier = input.identifier.toLowerCase()
+  const identifier = input.identifier.trim().toLowerCase()
+  // مطابقة الجوال بالأرقام فقط عشان تلاقي الفرق بين "+20 100..." و "+20100...".
+  const phoneDigits = identifier.replace(/\D/g, "")
   const user = await usersRepository.findOne(
-    (u) => u.username.toLowerCase() === identifier || u.email.toLowerCase() === identifier
+    (u) =>
+      u.username.toLowerCase() === identifier ||
+      u.email.toLowerCase() === identifier ||
+      (phoneDigits.length >= 7 && (u.phone ?? "").replace(/\D/g, "") === phoneDigits)
   )
   if (!user || !user.isActive) {
-    throw new AppError(401, "INVALID_CREDENTIALS", "Incorrect username/email or password.")
+    throw new AppError(401, "INVALID_CREDENTIALS", "Incorrect username/email/phone or password.")
   }
 
   const passwordMatches = await bcrypt.compare(input.password, user.passwordHash)
   if (!passwordMatches) {
-    throw new AppError(401, "INVALID_CREDENTIALS", "Incorrect username/email or password.")
+    throw new AppError(401, "INVALID_CREDENTIALS", "Incorrect username/email/phone or password.")
   }
 
   const tokens = await buildAuthTokens(user, input.rememberMe, userAgent)

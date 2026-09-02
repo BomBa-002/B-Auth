@@ -15,7 +15,13 @@
     "languages": "EN / AR",
     "waiting_enabled": "Optional visibility window enabled — 5 seconds",
     "secure_portal": "SECURE PORTAL",
-    "steps": { "modules": "Starting system modules", "security": "Securing the session workspace", "health": "Checking backend health", "session": "Restoring secure session", "config": "Loading console configuration" },
+    "steps": {
+      "modules": "Starting system modules",
+      "security": "Securing the session workspace",
+      "health": "Checking backend health",
+      "session": "Restoring secure session",
+      "config": "Loading console configuration"
+    },
     "status_starting": "Starting up",
     "status_checking_health": "Checking backend health",
     "status_restoring_session": "Restoring your session",
@@ -55,11 +61,16 @@
     "go_to_signin": "Sign in",
     "signup_success_title": "Account created",
     "signup_success_body": "Your account has been created successfully. You can now sign in.",
-    "signup_success_action": "Go to sign in"
+    "signup_success_action": "Go to sign in",
+    "phone_label": "Phone (optional)",
+    "phone_placeholder": "+20 100 123 4567"
   },
   "validation": {
     "required": "This field is required",
-    "min_length": "Must be at least {{count}} characters"
+    "min_length": "Must be at least {{count}} characters",
+    "invalid_email": "Enter a valid email address",
+    "invalid_username": "Use 3-32 letters, numbers, dots, underscores, or hyphens",
+    "invalid_phone": "Enter a valid phone number"
   },
   "home": {
     "welcome": "Welcome back, {{name}}",
@@ -69,7 +80,9 @@
     "session_persistent": "Persistent (remember me)",
     "session_temporary": "Ends when you close the browser",
     "default_operator": "Operator",
-    "no_permissions": "No permissions assigned"
+    "no_permissions": "No permissions assigned",
+    "admin_label": "Administration",
+    "admin_body": "You can manage users and roles."
   },
   "nav": {
     "home": "Home",

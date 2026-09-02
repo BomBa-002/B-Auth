@@ -15,7 +15,13 @@
     "languages": "عربي / English",
     "waiting_enabled": "مدة العرض الاختيارية مفعّلة — 5 ثوانٍ",
     "secure_portal": "بوابة آمنة",
-    "steps": { "modules": "بدء وحدات النظام", "security": "تأمين مساحة الجلسة", "health": "فحص حالة الخادم", "session": "استعادة الجلسة الآمنة", "config": "تحميل إعدادات المنصة" },
+    "steps": {
+      "modules": "بدء وحدات النظام",
+      "security": "تأمين مساحة الجلسة",
+      "health": "فحص حالة الخادم",
+      "session": "استعادة الجلسة الآمنة",
+      "config": "تحميل إعدادات المنصة"
+    },
     "status_starting": "جاري بدء التشغيل",
     "status_checking_health": "جاري فحص حالة الخادم",
     "status_restoring_session": "جاري استعادة جلستك",
@@ -55,11 +61,16 @@
     "go_to_signin": "تسجيل الدخول",
     "signup_success_title": "تم إنشاء الحساب",
     "signup_success_body": "تم إنشاء حسابك بنجاح. يمكنك الآن تسجيل الدخول.",
-    "signup_success_action": "الانتقال لتسجيل الدخول"
+    "signup_success_action": "الانتقال لتسجيل الدخول",
+    "phone_label": "رقم الجوال (اختياري)",
+    "phone_placeholder": "+20 100 123 4567"
   },
   "validation": {
-    "required": "هذا الحقل مطلوب",
-    "min_length": "يجب أن يحتوي على {{count}} حرفاً على الأقل"
+    "required": "الحقل مطلوب",
+    "min_length": "لازم {{count}} حرف على الأقل",
+    "invalid_email": "اكتب بريد إلكتروني صحيح",
+    "invalid_username": "استخدم 3-32 حرف/رقم أو نقطة أو شرطة سفلية",
+    "invalid_phone": "اكتب رقم جوال صحيح"
   },
   "home": {
     "welcome": "مرحباً بعودتك، {{name}}",
@@ -69,7 +80,9 @@
     "session_persistent": "دائمة (تم تفعيل تذكرني)",
     "session_temporary": "تنتهي عند إغلاق المتصفح",
     "default_operator": "المستخدم",
-    "no_permissions": "لا توجد صلاحيات مخصصة"
+    "no_permissions": "لا توجد صلاحيات مخصصة",
+    "admin_label": "الإدارة",
+    "admin_body": "تقدر تدير المستخدمين والأدوار."
   },
   "nav": {
     "home": "الرئيسية",
