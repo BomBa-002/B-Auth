@@ -1,3 +1,100 @@
+# AI Session — 01/09/2026 (إصلاح عرض Sandbox)
+
+## ✅ اتعمل
+- فحصنا سبب ظهور شاشة الخطأ داخل Sandbox، واتضح إن محاولة تشغيل `pnpm dev` إضافية كانت بتصطدم بمنافذ مستخدمة بالفعل (`3000` للواجهة و`4000` للخادم)، مش عطل في التطبيق.
+- تأكدنا إن الـ Frontend والـ Backend الأساسيين شغالين فعلياً، وإن `/api/health` بيرجع `success: true`.
+- اختبرنا Preview في المتصفح على الوضع الداكن، وظهرت شاشة تسجيل الدخول كاملة بدون شاشة System Error أو أخطاء Console.
+
+## ✅ التحقق
+- `pnpm typecheck` ناجح.
+- `pnpm lint` ناجح.
+- `pnpm test` ناجح: 16 اختباراً.
+- `pnpm build` ناجح.
+
+## 📁 الملفات المتأثرة
+- `docs/AI_SESSION.md`
+- `docs/TODO.md`
+
+---
+
+# AI Session — 01/09/2026 (إعادة تصميم Splash/Auth)
+
+## ✅ اتعمل
+- إعادة تركيب AuthFrame بتقسيم بصري بين هوية B-Auth التقنية ونموذج المصادقة.
+- إضافة روابط واضحة بين تسجيل الدخول وإنشاء الحساب مع الحفاظ على منطق الخدمات والجلسة كما هو.
+- تحسين Splash بنفس لغة الهوية: عنوان أوضح، وصف، وتدرج تقدّم مرتبط بحالة الإقلاع.
+- تحديث responsive behavior للشاشات الصغيرة، مع دعم RTL/LTR وLight/Dark وfocus-visible.
+
+## 📁 الملفات المتأثرة
+- `Frontend/src/screens/auth.screens.tsx`
+- `Frontend/src/styles/globals.css`
+- `docs/TODO.md`
+- `docs/AI_SESSION.md`
+
+## ✅ التحقق
+- `pnpm install --frozen-lockfile` ناجح.
+- `pnpm --dir Frontend typecheck` ناجح.
+- `pnpm --dir Frontend lint` ناجح.
+- `pnpm --dir Frontend build` ناجح.
+- Preview وصل لواجهة System Error لأن Backend health غير متاح في جلسة التحقق؛ لا توجد console logs متاحة، والكود نفسه اجتاز الفحوصات.
+
+## ⏭️ الخطوات الجاية
+- تشغيل Frontend مع Backend معاً لإكمال التحقق البصري من Splash/Auth ومسار login.
+- تحديث screenshot المرجعي بعد ظهور Preview الكامل.
+
+---
+
+# AI Session — 01/09/2026 (استكمال SmartInput والتحقق)
+
+## ✅ اتعمل
+- اختبرنا شاشة تسجيل الدخول في Light/LTR وLight/RTL على Preview بحجم 768x644.
+- راجعنا Accessibility snapshot، وثبت ظهور النصوص العربية وظيفياً من خلال شجرة الوصول.
+- عدّلنا fallback الخاص بخط RTL إلى `Arial` و`Segoe UI` لتقليل اعتماد العرض على خطوط غير متاحة في بيئة المتصفح.
+
+## التحقق المرئي
+- تم حفظ اللقطات خارج المشروع داخل `/tmp/agent-browser/smart-input-light-ltr.png` و`/tmp/agent-browser/smart-input-light-rtl-fixed.png`.
+- لقطة RTL ما زالت تعرض glyph fallback غير مثالي بصرياً داخل بيئة المتصفح، بينما النصوص والـ accessible names صحيحة؛ يلزم تثبيت خط عربي bundled لو مطلوب تطابق بصري كامل.
+
+## ✅ اتعمل
+- استكملنا SmartInput بعقد أوضح لحالات validation وتسميات الأزرار وARIA.
+- أصلحنا keyboard navigation وإغلاق الاقتراحات، وأضفنا highlighting وinitials/avatar وسهم العنصر النشط وحالة no-results.
+- أضفنا خصائص autofill دفاعية، دعم Firefox، selection styling، وأزلنا منع تحديد النص من checkbox-row.
+- اختبرنا شاشة Auth في المتصفح الداكن وتأكدنا أن زر إظهار كلمة المرور يظهر بعد إدخال قيمة.
+
+## 📁 الملفات المتأثرة
+- `packages/design-system/components/smart-input.tsx`
+- `packages/design-system/styles/smart-input.css`
+- `Frontend/src/styles/globals.css`
+- `docs/TODO.md`
+- `docs/AI_CONTEXT.md`
+
+## ✅ التحقق
+- `pnpm typecheck` ناجح.
+- `pnpm lint` ناجح بدون تحذيرات.
+- `pnpm test` ناجح: 16 اختباراً.
+- `pnpm build` ناجح.
+- Preview على `http://localhost:3000` ناجح في Dark/LTR، بدون أخطاء Console ظاهرة.
+- تم اختبار تبديل اللغة بين LTR وRTL وتبديل الثيم من Preview، مع بقاء الحقول والأزرار متاحة وظيفياً.
+- تم التحقق برمجياً أن أزرار إجراءات `SmartInput` غير موجودة في ترتيب Tab (`tabIndex` لا يظهر كعنصر قابل للتركيز).
+
+## ⏭️ الخطوات الجاية
+- مراجعة مطابقة Splash/Auth مع المرجع البصري النهائي.
+- تثبيت خط عربي bundled فقط لو ظل glyph fallback مؤثراً بعد اعتماد الشكل.
+
+## مراجعة الخطة واستعادة التركيز — 01/09/2026
+- راجعنا `v0_plans/swift-build.md` بعد ملاحظة التشتت من المرحلة الأولى.
+- الخطة الآن تميز بوضوح بين البنود المكتملة والبنود غير المكتملة بدلاً من اعتبار كل تحسينات SmartInput منجزة تلقائياً.
+- البنود المتبقية الفعلية: مطابقة PRD البصرية، مراجعة استخدام Auth عند الحاجة، وتشغيل/تسجيل `pnpm test` ضمن تحقق مستقل.
+- تم تحديث `docs/TODO.md` ليكون نقطة الاستكمال العملية، بدون تغيير منطق المصادقة أو إضافة تكاملات.
+
+## ✅ استكمال SmartInput — سلوك أزرار الإجراءات
+- أضفنا `tabIndex={-1}` لزر المسح وزر إظهار كلمة المرور وزر البحث داخل `SmartInput`.
+- أزرار الإجراءات لا تدخل ترتيب Tab ولا تتفاعل عبر `Enter` أو `Space` من مسار التركيز الحالي، مع إبقاء النقر بالماوس متاحاً.
+- تم التحقق في المتصفح من عدم انتقال التركيز إلى أزرار الإجراءات.
+- `pnpm typecheck` و`pnpm lint` و`pnpm build` ناجحة.
+
+---
+
 # AI Session — 29/08/2026 (إضافة مرجع واجهة تسجيل الدخول)
 
 ## اتعمل
@@ -79,7 +176,7 @@
 
 ## اتعمل
 - مراجعة جميع ملفات واجهة `Frontend/src` ومكوّنات الشاشات والتخطيط والحالة.
-- توحيد ألوان خلفية التطبيق وشبكة الخلفية وظلال الـ blocker والـ tooltip داخل CSS tokens.
+- توحيد ألوان خ��فية التطبيق وشبكة الخلفية وظلال الـ blocker والـ tooltip داخل CSS tokens.
 - إزالة تكرار قواعد focus وربطها بتوكن موحّد، مع الحفاظ على focus-visible واضح.
 - التأكد من عدم وجود HEX/RGB/px أو `outline: none` في ملفات الواجهة.
 - الحفاظ على وحدات `em` وخصائص RTL المنطقية ودعم الثيمات.
@@ -120,7 +217,7 @@
 - راجعنا الواجهة على mobile `390x844` وtablet `768x1024` في RTL والوضع الداكن، مع حفظ screenshots خارج المشروع في `/tmp/agent-browser/`.
 
 ## التحقق النهائي
-- 4 ملفات اختبار ناجحة، 16 اختباراً ناجحاً.
+- 4 مل��ات اختبار ناجحة، 16 اختباراً ناجحاً.
 - `pnpm -r typecheck` ناجح.
 - `pnpm -r lint` ناجح.
 - `pnpm -r test` ناجح.
@@ -176,7 +273,7 @@
 - اتفصل orchestrator الإقلاع عن واجهة Splash، واتضافت retry policy بمهلة وbackoff وjitter وإلغاء.
 - اتضاف runtime health monitor مع توقف عند hidden وتنظيف كامل، وcritical blocking overlay برسائل عربية/إنجليزية.
 - اتحدثت حالات Zustand وربط lifecycle في `Frontend/src/main.tsx`.
-- التحقق: `pnpm typecheck` و`pnpm lint` و`pnpm build` ناجحين.
+- ال����حقق: `pnpm typecheck` و`pnpm lint` و`pnpm build` ناجحين.
 
 
 ## مراجعة إضافية
@@ -193,25 +290,25 @@
 - تم إفراغ جذر بيئة v0 بالكامل (Next.js scaffold افتراضي) بطلب صريح من المستخدم.
 - تم فك أرشيف `b-auth-03.zip` ونقل محتواه كاملاً إلى الجذر (باستثناء `dist/` و
   `node_modules` و `package-lock.json`).
-- تم تشغيل `pnpm install` بنجاح (513 حزمة عبر lockfile الموجود بدون تعديله).
+- تم تشغيل `pnpm install` بنجاح (513 حزمة ع��ر lockfile الموجود بدون تعديله).
 - تم الت��قق من `pnpm typecheck` و `pnpm lint` و `pnpm build` — كل الأوامر نجحت
   بدون أي مخالفة على المشروع كما استُعيد.
-- تم تشغيل `pnpm dev` فعلياً (Backend:4000 + Frontend/Vite:3000) واختبار المسار
+- تم تشغيل `pnpm dev` فعلياً (Backend:4000 + Frontend/Vite:3000) واختبار ال��سار
   الأساسي في متصفح حقيقي: تسجيل دخول admin ناجح وظهور شاشة الترحيب بالهوية والدور.
 - تمت إضافة `dist/` و `coverage/` لملف `.gitignore` الجذري.
 - تمت إضافة `docs/SKILLS.md` كمرجع مختصر للمهارات الفعّالة والقرارات المعتمدة.
 - تم تحديث `docs/DEVELOPMENTS.md` بقسم شجري جديد [5.0] لهذه الجلسة.
 
 ### 🔄 ملاحظة استمرارية
-لا يوجد `.git` في جذر v0 بعد؛ لم يُطلب تفعيله في هذه الجلسة. عند الحاجة لعمل
+لا يوجد `.git` ��ي جذر v0 بعد؛ لم يُطلب تفعيله في هذه الجلسة. عند الحاجة لعمل
 commits يجب أولاً إعداد مستودع Git واتباع `git-repo-master` (ترقيم شجري للفروع).
 
 ---
 
 ### ✅ اتعمل (الجلسة السابقة)
-- تم تنظيف الجذر مع استثناء `.git` وفك محتوى الأرشيف `b-auth-02.zip` للجذر، ثم حذف نسخة الأرشيف المؤقتة.
+- تم تنظيف الجذر مع استثناء `.git` وفك ��حتوى الأرشيف `b-auth-02.zip` للجذر، ثم حذف نسخة الأرشيف المؤقتة.
 - تم تطبيق Callback Injection في عميل Axios عبر `configureHttp`.
-- تم تثبيت قرار أمان الترخيص: منع `eval()` واعتماد تحقق توقيع رقمي على الخادم عند إضافة الترخيص.
+- تم تثبيت قرار أمان الترخيص: منع `eval()` واعتماد تحقق توقيع رقمي على الخادم عند إضاف�� الترخيص.
 - تم إصلاح اعتماديات حزمة design-system الخاصة بأنواع React و`lucide-react`.
 - تم إصلاح رأس ملف CSS الذي كان يمنع PostCSS من التحليل.
 
@@ -245,11 +342,35 @@ commits يجب أولاً إعداد مستودع Git واتباع `git-repo-mas
 - [1.7] أُضيف إعداد ESLint للـ Backend، وتم إصلاح مخالفات lint البسيطة.
 - [1.8] نجحت أوامر `pnpm lint` و`pnpm typecheck` و`pnpm build` من الجذر.
 
+---
+
+# AI Session — 01/09/2026 (تنظيف شاشة الخطأ)
+
+## ✅ اتعمل
+- اتشال زرار `Exit` من `ErrorScreen` والإجراء المرتبط `onExit`.
+- اتشال تمرير `onExit` من `Frontend/src/main.tsx`.
+- اتشالت مفاتيح الترجمة `errors.exit` من العربي والإنجليزي.
+
+## 📁 الملفات المتأثرة
+- `Frontend/src/screens/system.screens.tsx`
+- `Frontend/src/main.tsx`
+- `Frontend/src/i18n/locales/ar.json`
+- `Frontend/src/i18n/locales/en.json`
+- `docs/AI_SESSION.md`
+- `docs/TODO.md`
+
+## ✅ التحقق
+- `pnpm typecheck` ناجح.
+- `pnpm lint` ناجح بدون تحذيرات.
+- `pnpm test` ناجح: 16 اختباراً.
+- `pnpm build` ناجح.
+- Preview شغال، وشجرة الوصول بتعرض شاشة المصادقة بدون أي زرار `Exit`؛ شاشة الخطأ بتحتوي على `Retry` فقط حسب الكود المراجع.
+
 ## 5. الخطوات الجاية
 - [3.1] ✅ أُضيفت اختبارات Vitest لخدمات auth وusers، ونجحت 10 اختبارات.
 - [3.2] ✅ نجحت أوامر test وtypecheck وlint وbuild بعد إضافة الاختبارات.
 - [2.1] ✅ تم بناء تدفق الشاشات المطلوبة: splash / error / signin / signup / home.
-- [2.2] ✅ تم ربط شاشة التسجيل بخياري feature flags مع ��لإعداد الافتراضي المعطّل.
+- [2.2] ✅ تم ربط شاشة التسجيل بخياري feature flags مع ��لإعداد الافتراضي المعطّ��.
 - [2.3] ✅ تم توحيد شاشة الخطأ العامة وإعادة المحاولة والعودة إلى signin.
 - [2.4] ✅ تم تحديث تصميم splash وإضافة شريط تقدم متوافق مع الهوية.
 - [2.5] ✅ تم تحديث aliases والتوثيق وتشغيل typecheck/build بنجاح.
