@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.21.0 — 02/09/2026
+
+### Documentation
+- تحديث خطة `docs/BombaSmart.md` بحالة المنظومة الحالية وطريقة استكمالها.
+- توضيح إن `BombaSmart` اسم منظومة كل المكونات الذكية، وتشمل حالياً `SmartInput` و`SmartButton` و`ActionLockManager`.
+- تحديث `TODO.md` و`DEVELOPMENTS.md` و`AI_SESSION.md` لتسهيل المراجعة واستمرار العمل.
+
 ## 1.20.0 — 02/09/2026
 
 ### Documentation

@@ -1,3 +1,19 @@
+# AI Session — 02/09/2026 (توثيق خطة منظومة BombaSmart)
+
+## اتعمل
+- اتحدثت وثائق `docs/` لتوضيح إن `BombaSmart` منظومة كاملة للمكونات الذكية.
+- اتسجلت حالة `SmartInput` و`SmartButton` و`ActionLockManager` ونقاط الاستكمال الحالية.
+- اتوثقت طريقة إضافة أي مكون ذكي مستقبلي، مع قواعد الاختبار والاستمرارية.
+
+## الملفات المتأثرة
+- `docs/BombaSmart.md`
+- `docs/TODO.md`
+- `docs/DEVELOPMENTS.md`
+- `docs/AI_SESSION.md`
+- `docs/CHANGELOG.md`
+
+---
+
 # AI Session — 02/09/2026 (توضيح منظومة BombaSmart)
 
 ## اتعمل
@@ -142,7 +158,7 @@
 # AI Session — 01/09/2026 (إصلاح شاشات الأخطاء وبيئة Sandbox)
 
 ## ✅ اتعمل
-- إلغاء زرار Exit من `ErrorScreen` وإزالة callback المرتبط به من نقطة تشغيل التطبيق.
+- إلغاء زرار Exit من `ErrorScreen` وإزالة callback المرتب�� به من نقطة تشغيل التطبيق.
 - تحديد سبب مشكلة عرض المشروع داخل Sandbox: كان فيه أكثر من Frontend/Backend dev server شغالين في نفس الوقت، فظهر `EADDRINUSE` على المنفذين 3000 و4000.
 - إيقاف العمليات المكررة وتشغيل المشروع مرة واحدة من خلال `pnpm dev`.
 
@@ -263,10 +279,10 @@
 # AI Session — 29/08/2026 (مراجعة الجودة وتجهيز الـ Pull Request)
 
 ## اتعمل
-- راجعنا حالة Git والهيكل الحالي للـ Backend والـ Frontend.
+- راجعنا حالة Git واله��كل الحالي للـ Backend والـ Frontend.
 - شغّلنا TypeScript وESLint والاختبارات وBuild بدون أخطاء.
 - اختبرنا Preview في الوضع الداكن على سطح المكتب، وعلى شاشة صغيرة في LTR وRTL.
-- راجعنا Backend فعلياً عبر `/api/health`؛ طبقة البيانات المحلية شغالة، وS3 غير مفعّل اختيارياً.
+- راجعنا Backend فعلياً عبر `/api/health`؛ طبق�� البيانات المحلية شغالة، وS3 غير مفعّل اختيارياً.
 - اتأكدنا إن الواجهة بتستخدم Backend الحقيقي عبر API، ومفيش احتياج ��إضافة Database خارجية بدون قرار معماري.
 - راجعنا `git diff --check` ومفيش whitespace errors.
 
