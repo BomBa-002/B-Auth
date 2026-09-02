@@ -1,7 +1,7 @@
 /**
  * @file        : Frontend/src/main.tsx
  * @description : نقطة تشغيل B-Auth مع lifecycle الإقلاع ومراقبة الصحة.
- * @updated     : [{ "date": "27/08/2026", "version": "2.0.0", "by": ["v0"], "comment": "ربط حالات ready/degraded/blocked ومراقبة runtime" }]
+ * @updated     : [{ "date": "02/09/2026", "version": "2.0.1", "by": ["v0"], "comment": "إعادة تشغيل بيئة المعاينة بعد تحرير المنافذ" }]
  */
 
 import { applySettingsToDocument, configureHttp, createRoot, useAuthStore, useSettingsStore } from '@a'
