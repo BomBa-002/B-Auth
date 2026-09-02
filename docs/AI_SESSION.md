@@ -1,3 +1,12 @@
+# AI Session — 02/09/2026 (توضيح منظومة BombaSmart)
+
+## اتعمل
+- تم تثبيت إن `BombaSmart` اسم المنظومة الكاملة للمكونات الذكية، وليس اسماً بديلاً لـ `SmartButton`.
+- المكونات الحالية داخل المنظومة هي `SmartInput` و`SmartButton`، وأي مكون ذكي جديد هيتبع نفس التسمية والعقد العام.
+- لم يتم تغيير كود التشغيل؛ التغيير توثيقي ومعماري فقط.
+
+---
+
 # AI Session — 02/09/2026 (إعادة فحص Preview)
 
 ## اتعمل
@@ -258,7 +267,7 @@
 - شغّلنا TypeScript وESLint والاختبارات وBuild بدون أخطاء.
 - اختبرنا Preview في الوضع الداكن على سطح المكتب، وعلى شاشة صغيرة في LTR وRTL.
 - راجعنا Backend فعلياً عبر `/api/health`؛ طبقة البيانات المحلية شغالة، وS3 غير مفعّل اختيارياً.
-- اتأكدنا إن الواجهة بتستخدم Backend الحقيقي عبر API، ومفيش احتياج لإضافة Database خارجية بدون قرار معماري.
+- اتأكدنا إن الواجهة بتستخدم Backend الحقيقي عبر API، ومفيش احتياج ��إضافة Database خارجية بدون قرار معماري.
 - راجعنا `git diff --check` ومفيش whitespace errors.
 
 ## التحقق
@@ -266,7 +275,7 @@
 - `pnpm lint` ناجح.
 - `pnpm test` ناجح: 16 اختباراً.
 - `pnpm build` ناجح.
-- Preview شغال على `http://localhost:3000` بدون أخطاء في Console، مع نجاح RTL/LTR وresponsive.
+- Preview شغال على `http://localhost:3000` ��دون أخطاء في Console، مع نجاح RTL/LTR وresponsive.
 - `/api/health` رجّع `success: true`.
 
 ## ملاحظات للمراجعة
@@ -404,7 +413,7 @@
 - ضبط أقصى عرض لشاشات `ScreenLayout` إلى `48.0625em` وأقل عرض إلى `16em`.
 - توثيق تعديلات StatusBar وSplash السابقة، بما فيها ترجمة أشهر التاريخ، شعار Splash، حذف `splash-topline` وتصغير `boot-ring`.
 - حفظ الشعار المرفق داخل `docs/references/images/Logo-favicon.svg`.
-- نقطة التوقف الحالية: استكمال العمل لاحقاً من تحسينات Splash/Auth واختبار RTL/LTR.
+- نقطة التوقف الحالية: استكمال العمل لاحقاً من تحسي��ات Splash/Auth واختبار RTL/LTR.
 
 ### ✅ اتعمل في الجلسة الحالية
 - اتفصل orchestrator الإقلاع عن واجهة Splash، واتضافت retry policy بمهلة وbackoff وjitter وإلغاء.
