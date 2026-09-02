@@ -10,7 +10,8 @@
     "./globals.css": "./styles/globals.css",
     "./outlined-input.css": "./styles/outlined-input.css",
     "./icon-registry": "./icon-registry.ts",
-    "./components/outlined-input": "./components/outlined-input.tsx"
+    "./components/outlined-input": "./components/outlined-input.tsx",
+    "./components/smart-input": "./components/smart-input.tsx"
   },
   "scripts": {
     "generate:tokens": "node scripts/generate-tokens.mjs"

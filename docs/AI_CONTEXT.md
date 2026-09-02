@@ -1,5 +1,5 @@
 # AI Context — B-Auth
-> آخر تحديث: 28/08/2026
+> آخر تحديث: 01/09/2026
 
 ## 8. حدود العرض الحالية
 - `ScreenLayout` يستخدم `.console-card` بعرض أقصى `48.0625em` وعرض أدنى `16em`.
@@ -24,6 +24,12 @@
 - لم يتم استخدام `eval` أو منطق ترخيص ديناميكي؛ قاعدة `no-eval` تظل سارية.
 - الاستيرادات الخاصة بالواجهة تمر من `@a` في الملفات التي تستخدم React أو UI.
 
+## 3. تعريف منظومة BombaSmart
+- `BombaSmart` هو اسم منظومة المكونات الذكية في المشروع، مش اسم مكون منفرد.
+- أي مكون تحت المنظومة لازم يضيف سلوك ذكي قابل لإعادة الاستخدام مع الحفاظ على Accessibility وRTL/LTR والثيمات.
+- المكونات الحالية: `SmartInput` للإدخال الذكي، و`SmartButton` لتنفيذ الأفعال مع loading وActionLock.
+- أي مكونات مستقبلية مثل `SmartForm` أو `SmartField` تتبع نفس التسمية والعقد العام.
+
 ## 3. Module Map
 ```text
 Backend/src/modules/{auth,users,roles,storage,health}
@@ -33,6 +39,7 @@ packages/{aliases,design-system,theme,utils}
 - تدفق الواجهة الحالي: bootstrap → splash → error أو signin → home.
 - signup اختياري ومغلق افتراضياً من `Frontend/src/app/features.ts`.
 - `packages/design-system/components/outlined-input.tsx` هو مكوّن الحقول المشترك، ويدعم floating labels وRTL/LTR والحالات المختلفة.
+- `packages/design-system/components/smart-input.tsx` يدعم validation states، ARIA combobox، keyboard navigation، highlighting للاقتراحات، وخصائص autofill دفاعية.
 ```
 
 ## 4. قيود مهمة

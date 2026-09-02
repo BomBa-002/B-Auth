@@ -9,6 +9,8 @@ import { signAccessToken, signRefreshToken, verifyRefreshToken, ttlToMs } from "
 import { env } from "@config/env.js"
 
 const BCRYPT_ROUNDS = 10
+/** نافذة سماح الـ rotation بالمللي ثانية — بتغطي سباق التابات المتزامنة فقط. */
+const REFRESH_GRACE_MS = 30_000
 
 async function resolveRolesAndPermissions(roleIds: string[]) {
   const roles = await rolesRepository.findMany((r) => roleIds.includes(r.id))
@@ -41,6 +43,7 @@ async function buildAuthTokens(user: UserRecord, rememberMe: boolean, userAgent:
     createdAt: now.toISOString(),
     expiresAt: new Date(now.getTime() + ttlMs).toISOString(),
     revokedAt: null,
+    graceUntil: null,
   })
 
   const refreshToken = signRefreshToken({ sub: user.id, sessionId }, rememberMe)
@@ -50,13 +53,17 @@ async function buildAuthTokens(user: UserRecord, rememberMe: boolean, userAgent:
 
 export async function registerUser(input: RegisterInput): Promise<PublicUser> {
   const existing = await usersRepository.findOne(
-    (u) => u.username.toLowerCase() === input.username.toLowerCase() || u.email.toLowerCase() === input.email.toLowerCase()
+    (u) =>
+      u.username.toLowerCase() === input.username.toLowerCase() ||
+      u.email.toLowerCase() === input.email.toLowerCase() ||
+      (input.phone !== null && u.phone !== null && u.phone === input.phone)
   )
   if (existing) {
-    throw AppError.conflict("A user with that username or email already exists.")
+    throw AppError.conflict("A user with that username, email or phone already exists.")
   }
 
-  const defaultRole = await rolesRepository.findOne((r) => r.name === "user")
+  // مطابقة غير حساسة لحالة الأحرف — الـ seed بيعمل الدور باسم "User" بحرف كبير.
+  const defaultRole = await rolesRepository.findOne((r) => r.name.toLowerCase() === "user")
   const passwordHash = await bcrypt.hash(input.password, BCRYPT_ROUNDS)
   const now = new Date().toISOString()
 
@@ -64,6 +71,7 @@ export async function registerUser(input: RegisterInput): Promise<PublicUser> {
     id: nanoid(),
     username: input.username,
     email: input.email,
+    phone: input.phone,
     passwordHash,
     displayName: input.displayName,
     roleIds: defaultRole ? [defaultRole.id] : [],
@@ -77,17 +85,22 @@ export async function registerUser(input: RegisterInput): Promise<PublicUser> {
 }
 
 export async function loginUser(input: LoginInput, userAgent: string | null) {
-  const identifier = input.identifier.toLowerCase()
+  const identifier = input.identifier.trim().toLowerCase()
+  // مطابقة الجوال بالأرقام فقط عشان تلاقي الفرق بين "+20 100..." و "+20100...".
+  const phoneDigits = identifier.replace(/\D/g, "")
   const user = await usersRepository.findOne(
-    (u) => u.username.toLowerCase() === identifier || u.email.toLowerCase() === identifier
+    (u) =>
+      u.username.toLowerCase() === identifier ||
+      u.email.toLowerCase() === identifier ||
+      (phoneDigits.length >= 7 && (u.phone ?? "").replace(/\D/g, "") === phoneDigits)
   )
   if (!user || !user.isActive) {
-    throw new AppError(401, "INVALID_CREDENTIALS", "Incorrect username/email or password.")
+    throw new AppError(401, "INVALID_CREDENTIALS", "Incorrect username/email/phone or password.")
   }
 
   const passwordMatches = await bcrypt.compare(input.password, user.passwordHash)
   if (!passwordMatches) {
-    throw new AppError(401, "INVALID_CREDENTIALS", "Incorrect username/email or password.")
+    throw new AppError(401, "INVALID_CREDENTIALS", "Incorrect username/email/phone or password.")
   }
 
   const tokens = await buildAuthTokens(user, input.rememberMe, userAgent)
@@ -103,7 +116,17 @@ export async function refreshSession(refreshToken: string, userAgent: string | n
   }
 
   const session = await sessionsRepository.findById(payload.sessionId)
-  if (!session || session.revokedAt || new Date(session.expiresAt) < new Date()) {
+  if (!session || new Date(session.expiresAt) < new Date()) {
+    throw new AppError(401, "SESSION_EXPIRED", "Session expired. Please sign in again.")
+  }
+
+  // نافذة سماح قصيرة (30 ثانية) للجلسات اللي اتعملها revoke بسبب الـ rotation:
+  // لو تابين عملوا refresh في نفس اللحظة بنفس الكوكي، التاني بيجدد عادي
+  // بدل ما ياخد 401 ويتعمله logout مفاجئ. الـ logout الصريح بيمسح الـ grace
+  // فالجلسة الملغاة يدوياً بتفضل ميتة فوراً.
+  const isRevoked = session.revokedAt !== null
+  const inGrace = session.graceUntil !== null && new Date(session.graceUntil) > new Date()
+  if (isRevoked && !inGrace) {
     throw new AppError(401, "SESSION_EXPIRED", "Session expired. Please sign in again.")
   }
 
@@ -113,7 +136,12 @@ export async function refreshSession(refreshToken: string, userAgent: string | n
   }
 
   // Rotate: revoke the old session, issue a new one with the same rememberMe policy.
-  await sessionsRepository.update(session.id, { revokedAt: new Date().toISOString() })
+  // الـ grace بيتفعّل هنا فقط (rotation) — مش في الـ logout.
+  const revokedAt = new Date()
+  await sessionsRepository.update(session.id, {
+    revokedAt: revokedAt.toISOString(),
+    graceUntil: new Date(revokedAt.getTime() + REFRESH_GRACE_MS).toISOString(),
+  })
   const tokens = await buildAuthTokens(user, session.rememberMe, userAgent)
   return { user: toPublicUser(user), ...tokens }
 }
@@ -122,7 +150,8 @@ export async function logoutSession(refreshToken: string | undefined) {
   if (!refreshToken) return
   try {
     const payload = verifyRefreshToken(refreshToken)
-    await sessionsRepository.update(payload.sessionId, { revokedAt: new Date().toISOString() })
+    // الـ logout بيمسح الـ grace صراحةً — عشان الجلسة تموت فوراً بدون أي نافذة سماح.
+    await sessionsRepository.update(payload.sessionId, { revokedAt: new Date().toISOString(), graceUntil: null })
   } catch {
     // token already invalid/expired — nothing to revoke
   }

@@ -3,6 +3,7 @@
     "id": "ba295af1-8213-4bf0-8ff6-cc2e547cb721",
     "username": "admin",
     "email": "admin@b-auth.local",
+    "phone": null,
     "passwordHash": "$2a$10$99sKp3pJac3XQUbYkLTDnOervDCLuL3oXfss8cPvD0QSlzOywoRGC",
     "displayName": "Administrator",
     "roleIds": [

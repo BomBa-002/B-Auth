@@ -31,14 +31,16 @@ export function useBootstrap() {
       const result = await runBootstrap(controller.signal)
       if (controller.signal.aborted) return
       if (result.accessToken && result.user) setSession({ accessToken: result.accessToken, user: result.user, persistent: result.persistent })
-      setBootstrapStatus(result.health.status === 'degraded' ? 'degraded' : 'ready')
+      const nextStatus = result.health.status === 'degraded' ? 'degraded' : 'ready'
+      const elapsed = Date.now() - start
+      if (features.ENABLE_SPLASH_MIN_DURATION && elapsed < MIN_SPLASH_MS && !controller.signal.aborted) await new Promise((resolve) => window.setTimeout(resolve, MIN_SPLASH_MS - elapsed))
+      if (controller.signal.aborted) return
+      setBootstrapStatus(nextStatus)
     } catch (error) {
       if (controller.signal.aborted) return
       setErrorReason(error instanceof Error && 'kind' in error && (error as { kind?: string }).kind === 'auth' ? 'unexpected' : 'health')
       setBootstrapStatus('error')
     }
-    const elapsed = Date.now() - start
-    if (features.ENABLE_SPLASH_MIN_DURATION && elapsed < MIN_SPLASH_MS && !controller.signal.aborted) await new Promise((resolve) => window.setTimeout(resolve, MIN_SPLASH_MS - elapsed))
   }, [setBootstrapStatus, setSession])
 
   React.useEffect(() => {

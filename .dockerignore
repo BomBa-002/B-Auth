@@ -1,0 +1,16 @@
+# @file        : .dockerignore
+# @description : استبعاد الملفات من الـ build context — يقلل حجم الصورة ويمنع تسريب أسرار محلية.
+node_modules
+**/node_modules
+dist
+**/dist
+.git
+.gitignore
+*.md
+docs
+Backend/.env
+Backend/data
+Frontend/dist
+coverage
+**/*.test.ts
+**/*.test.tsx

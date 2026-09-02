@@ -2,6 +2,8 @@ export interface UserRecord {
   id: string
   username: string
   email: string
+  /** رقم الجوال بصيغة دولية اختيارية (E.164 بعد التطبيع) — بيتستخدم كـ identifier ثالث لتسجيل الدخول. */
+  phone: string | null
   passwordHash: string
   displayName: string
   roleIds: string[]

@@ -21,11 +21,12 @@ export async function postUser(req: Request, res: Response) {
 
 export async function patchUser(req: Request, res: Response) {
   const input = updateUserSchema.parse(req.body)
-  const user = await updateUser(req.params.id as string, input)
+  // actorId بييجي من الـ access token بعد requireAuth — بيُستخدم لمنع تعطيل/تخفيض النفس.
+  const user = await updateUser(req.params.id as string, req.auth!.sub, input)
   return sendSuccess(res, { user })
 }
 
 export async function removeUser(req: Request, res: Response) {
-  await deleteUser(req.params.id as string)
+  await deleteUser(req.params.id as string, req.auth!.sub)
   return sendSuccess(res, { deleted: true })
 }

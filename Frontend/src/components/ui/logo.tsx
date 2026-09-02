@@ -1,4 +1,4 @@
-import type { SVGProps } from '@a'
+import type { SVGProps } from 'react'
 
 type LogoProps = SVGProps<SVGSVGElement> & {
   size?: number | string

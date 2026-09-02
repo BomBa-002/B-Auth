@@ -1,0 +1,34 @@
+# @file        : Frontend/nginx.conf.template
+# @description : قالب إعداد nginx — بيتحول لـ conf عند الإقلاع عبر envsubst المدمج في صورة nginx.
+#                المتغير BACKEND_HOST بيتحقم من البيئة: محلياً "backend" (docker-compose)
+#                وعلى Railway "backend.railway.internal" (الشبكة الخاصة بين الخدمات).
+# ملاحظة: سكريبت envsubst المدمج بيستبدل بس المتغيرات المعرفة كمتغيرات بيئة،
+#         فمتغيرات nginx الداخلية زي $uri بتفضل سليمة.
+
+server {
+  listen 80;
+  server_name _;
+
+  root /usr/share/nginx/html;
+  index index.html;
+
+  # أمان أساسي
+  add_header X-Content-Type-Options "nosniff" always;
+  add_header X-Frame-Options "SAMEORIGIN" always;
+  add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+
+  # SPA — أي مسار مش ملف بيرجع index.html
+  location / {
+    try_files $uri $uri/ /index.html;
+  }
+
+  # الـ API — نفس الأصل عشان الـ HttpOnly cookies تشتغل من غير CORS.
+  location /api {
+    proxy_pass http://${BACKEND_HOST}:4000;
+    proxy_http_version 1.1;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+  }
+}

@@ -1,60 +1,23 @@
 /**
  * @file        : Frontend/src/main.tsx
  * @description : نقطة تشغيل B-Auth مع lifecycle الإقلاع ومراقبة الصحة.
- * @updated     : [{ "date": "27/08/2026", "version": "2.0.0", "by": ["v0"], "comment": "ربط حالات ready/degraded/blocked ومراقبة runtime" }]
+ * @updated     : [{ "date": "02/09/2026", "version": "2.0.1", "by": ["v0"], "comment": "إعادة تشغيل بيئة المعاينة بعد تحرير المنافذ" }]
  */
 
-import { React, applySettingsToDocument, configureHttp, createRoot, useAuthStore, useSettingsStore, features } from '@a'
-import { useBootstrap } from '@features/auth/hooks/use-bootstrap'
-import { createRuntimeHealthMonitor, type RuntimeHealthState } from '@features/health/runtime-health-monitor'
-import { SplashScreen } from '@screens/splash.screen'
-import { SigninScreen, SignupScreen } from '@screens/auth.screens'
-import { ErrorScreen, HomeScreen, HealthBlocker } from '@screens/system.screens'
-import { AppBackground } from '@components/app-background'
+import { applySettingsToDocument, configureHttp, createRoot, useAuthStore, useSettingsStore } from '@a'
+import { AppRouter } from './router'
 import '@styles/globals.css'
 
-configureHttp({ getAccessToken: () => useAuthStore.getState().accessToken, clearSession: () => useAuthStore.getState().clearSession(), setAccessToken: (token) => useAuthStore.getState().setAccessToken(token) })
-applySettingsToDocument(useSettingsStore.getState().theme, useSettingsStore.getState().language)
-
-function App() {
-  const { bootstrapStatus, retry } = useBootstrap()
-  const user = useAuthStore((state) => state.user)
-  const clearSession = useAuthStore((state) => state.clearSession)
-  const [screen, setScreen] = React.useState('splash')
-  const [runtimeHealth, setRuntimeHealth] = React.useState<RuntimeHealthState>({ level: 'healthy', report: null, error: null })
-  const navigate = (nextScreen: string) => setScreen(nextScreen === 'home' && !user ? 'signin' : nextScreen)
-  const theme = useSettingsStore((state) => state.theme)
-  const language = useSettingsStore((state) => state.language)
-
-  React.useEffect(() => {
-    applySettingsToDocument(theme, language)
-  }, [theme, language])
-
-  React.useEffect(() => {
-    if (bootstrapStatus === 'error') {
-      setScreen('error')
-      return undefined
-    }
-    if (bootstrapStatus !== 'ready' && bootstrapStatus !== 'degraded') return undefined
-
-    const timer = window.setTimeout(() => setScreen(user ? 'home' : 'signin'), 2500)
-    return () => window.clearTimeout(timer)
-  }, [bootstrapStatus, user])
-
-  React.useEffect(() => {
-    if (bootstrapStatus !== 'ready' && bootstrapStatus !== 'degraded') return undefined
-    return createRuntimeHealthMonitor(setRuntimeHealth)
-  }, [bootstrapStatus])
-
-  let content: React.ReactNode
-  if (screen === 'error') content = <ErrorScreen onRetry={() => { setScreen('splash'); retry() }} onExit={() => setScreen('signin')} />
-  else if (screen === 'home') content = user ? <><HomeScreen onLogout={() => { clearSession(); setScreen('signin') }} />{runtimeHealth.level === 'critical' ? <HealthBlocker onRetry={() => window.location.reload()} /> : null}</> : <SigninScreen onNavigate={navigate} />
-  else if (screen === 'signup' && features.ENABLE_SIGNUP) content = <SignupScreen onNavigate={navigate} />
-  else if (screen === 'signin') content = <SigninScreen onNavigate={navigate} />
-  else content = <SplashScreen status={bootstrapStatus} />
-
-  return <><AppBackground /><div className="relative z-10 app-content-layer">{content}</div></>
+// Sentry اختياري — بيتفعّل بس لما VITE_SENTRY_DSN يكون موجود (dynamic import عشان ما يتحمّلش في العادي).
+const sentryDsn = import.meta.env.VITE_SENTRY_DSN as string | undefined
+if (sentryDsn) {
+  void import('@sentry/react').then((Sentry) => {
+    Sentry.init({ dsn: sentryDsn, environment: import.meta.env.MODE })
+  })
 }
+
+configureHttp({ getAccessToken: () => useAuthStore.getState().accessToken, clearSession: () => useAuthStore.getState().clearSession(), setAccessToken: (token) => useAuthStore.getState().setAccessToken(token) })
+applySettingsToDocument(useSettingsStore.getState().theme, useSettingsStore.getState().language, useSettingsStore.getState().showFocusRing)
 
 const rootElement = document.getElementById('root')
 if (!rootElement) throw new Error('Root element was not found')
@@ -63,5 +26,5 @@ type RootRegistry = typeof globalThis & { [rootKey]?: ReturnType<typeof createRo
 const rootRegistry = globalThis as RootRegistry
 const root = rootRegistry[rootKey] ?? createRoot(rootElement)
 rootRegistry[rootKey] = root
-root.render(<App />)
-export default App
+root.render(<AppRouter />)
+export default AppRouter
