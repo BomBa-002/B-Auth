@@ -9,6 +9,8 @@ import { signAccessToken, signRefreshToken, verifyRefreshToken, ttlToMs } from "
 import { env } from "@config/env.js"
 
 const BCRYPT_ROUNDS = 10
+/** نافذة سماح الـ rotation بالمللي ثانية — بتغطي سباق التابات المتزامنة فقط. */
+const REFRESH_GRACE_MS = 30_000
 
 async function resolveRolesAndPermissions(roleIds: string[]) {
   const roles = await rolesRepository.findMany((r) => roleIds.includes(r.id))
@@ -41,6 +43,7 @@ async function buildAuthTokens(user: UserRecord, rememberMe: boolean, userAgent:
     createdAt: now.toISOString(),
     expiresAt: new Date(now.getTime() + ttlMs).toISOString(),
     revokedAt: null,
+    graceUntil: null,
   })
 
   const refreshToken = signRefreshToken({ sub: user.id, sessionId }, rememberMe)
@@ -112,7 +115,17 @@ export async function refreshSession(refreshToken: string, userAgent: string | n
   }
 
   const session = await sessionsRepository.findById(payload.sessionId)
-  if (!session || session.revokedAt || new Date(session.expiresAt) < new Date()) {
+  if (!session || new Date(session.expiresAt) < new Date()) {
+    throw new AppError(401, "SESSION_EXPIRED", "Session expired. Please sign in again.")
+  }
+
+  // نافذة سماح قصيرة (30 ثانية) للجلسات اللي اتعملها revoke بسبب الـ rotation:
+  // لو تابين عملوا refresh في نفس اللحظة بنفس الكوكي، التاني بيجدد عادي
+  // بدل ما ياخد 401 ويتعمله logout مفاجئ. الـ logout الصريح بيمسح الـ grace
+  // فالجلسة الملغاة يدوياً بتفضل ميتة فوراً.
+  const isRevoked = session.revokedAt !== null
+  const inGrace = session.graceUntil !== null && new Date(session.graceUntil) > new Date()
+  if (isRevoked && !inGrace) {
     throw new AppError(401, "SESSION_EXPIRED", "Session expired. Please sign in again.")
   }
 
@@ -122,7 +135,12 @@ export async function refreshSession(refreshToken: string, userAgent: string | n
   }
 
   // Rotate: revoke the old session, issue a new one with the same rememberMe policy.
-  await sessionsRepository.update(session.id, { revokedAt: new Date().toISOString() })
+  // الـ grace بيتفعّل هنا فقط (rotation) — مش في الـ logout.
+  const revokedAt = new Date()
+  await sessionsRepository.update(session.id, {
+    revokedAt: revokedAt.toISOString(),
+    graceUntil: new Date(revokedAt.getTime() + REFRESH_GRACE_MS).toISOString(),
+  })
   const tokens = await buildAuthTokens(user, session.rememberMe, userAgent)
   return { user: toPublicUser(user), ...tokens }
 }
@@ -131,7 +149,8 @@ export async function logoutSession(refreshToken: string | undefined) {
   if (!refreshToken) return
   try {
     const payload = verifyRefreshToken(refreshToken)
-    await sessionsRepository.update(payload.sessionId, { revokedAt: new Date().toISOString() })
+    // الـ logout بيمسح الـ grace صراحةً — عشان الجلسة تموت فوراً بدون أي نافذة سماح.
+    await sessionsRepository.update(payload.sessionId, { revokedAt: new Date().toISOString(), graceUntil: null })
   } catch {
     // token already invalid/expired — nothing to revoke
   }
