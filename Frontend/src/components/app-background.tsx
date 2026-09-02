@@ -1,4 +1,5 @@
-import { React, useSettingsStore } from '@a'
+import React from 'react'
+import { useSettingsStore } from '@features/settings/store/settings.store'
 
 interface Orb {
   x: number

@@ -4,7 +4,9 @@
  * @updated     : [{ "date": "27/08/2026", "version": "1.0.0", "by": ["v0"], "comment": "إنشاء زر الثيم" }]
  */
 
-import { IconMoon, IconSun, Tooltip, useTranslation } from '@a'
+import { IconMoon, IconSun } from '@b-auth/design-system/icon-registry'
+import * as Tooltip from '@radix-ui/react-tooltip'
+import { useTranslation } from 'react-i18next'
 import { useTheme } from '@features/settings/store/settings.store'
 
 export function ThemeToggle() {

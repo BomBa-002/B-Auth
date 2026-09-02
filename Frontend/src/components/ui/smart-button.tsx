@@ -4,7 +4,9 @@
  * @updated     : [{ "date": "01/09/2026", "version": "1.0.0", "by": ["v0"], "comment": "إنشاء SmartButton" }]
  */
 
-import { React, Button, IconSpinner, type ButtonProps } from '@a'
+import React from 'react'
+import { Button, type ButtonProps } from './button'
+import { IconSpinner } from '@b-auth/design-system/icon-registry'
 import { ActionLockManager, type ActionLockKey } from '@features/ui/action-lock-manager'
 
 export interface SmartButtonContext {
