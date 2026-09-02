@@ -1,4 +1,7 @@
-import { IconLanguages, i18next, Tooltip, useTranslation } from '@a'
+import { IconLanguages } from '@b-auth/design-system/icon-registry'
+import { i18next } from '@i18n/index'
+import * as Tooltip from '@radix-ui/react-tooltip'
+import { useTranslation } from 'react-i18next'
 import { useLanguage } from '@features/settings/store/settings.store'
 
 export function LanguageToggle() {
