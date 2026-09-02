@@ -24,6 +24,12 @@
 - لم يتم استخدام `eval` أو منطق ترخيص ديناميكي؛ قاعدة `no-eval` تظل سارية.
 - الاستيرادات الخاصة بالواجهة تمر من `@a` في الملفات التي تستخدم React أو UI.
 
+## 3. تعريف منظومة BombaSmart
+- `BombaSmart` هو اسم منظومة المكونات الذكية في المشروع، مش اسم مكون منفرد.
+- أي مكون تحت المنظومة لازم يضيف سلوك ذكي قابل لإعادة الاستخدام مع الحفاظ على Accessibility وRTL/LTR والثيمات.
+- المكونات الحالية: `SmartInput` للإدخال الذكي، و`SmartButton` لتنفيذ الأفعال مع loading وActionLock.
+- أي مكونات مستقبلية مثل `SmartForm` أو `SmartField` تتبع نفس التسمية والعقد العام.
+
 ## 3. Module Map
 ```text
 Backend/src/modules/{auth,users,roles,storage,health}
