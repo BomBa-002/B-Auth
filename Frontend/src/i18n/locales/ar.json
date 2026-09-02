@@ -80,7 +80,9 @@
     "session_persistent": "دائمة (تم تفعيل تذكرني)",
     "session_temporary": "تنتهي عند إغلاق المتصفح",
     "default_operator": "المستخدم",
-    "no_permissions": "لا توجد صلاحيات مخصصة"
+    "no_permissions": "لا توجد صلاحيات مخصصة",
+    "admin_label": "الإدارة",
+    "admin_body": "تقدر تدير المستخدمين والأدوار."
   },
   "nav": {
     "home": "الرئيسية",

@@ -8,6 +8,14 @@ import { applySettingsToDocument, configureHttp, createRoot, useAuthStore, useSe
 import { AppRouter } from './router'
 import '@styles/globals.css'
 
+// Sentry اختياري — بيتفعّل بس لما VITE_SENTRY_DSN يكون موجود (dynamic import عشان ما يتحمّلش في العادي).
+const sentryDsn = import.meta.env.VITE_SENTRY_DSN as string | undefined
+if (sentryDsn) {
+  void import('@sentry/react').then((Sentry) => {
+    Sentry.init({ dsn: sentryDsn, environment: import.meta.env.MODE })
+  })
+}
+
 configureHttp({ getAccessToken: () => useAuthStore.getState().accessToken, clearSession: () => useAuthStore.getState().clearSession(), setAccessToken: (token) => useAuthStore.getState().setAccessToken(token) })
 applySettingsToDocument(useSettingsStore.getState().theme, useSettingsStore.getState().language, useSettingsStore.getState().showFocusRing)
 

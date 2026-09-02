@@ -80,7 +80,9 @@
     "session_persistent": "Persistent (remember me)",
     "session_temporary": "Ends when you close the browser",
     "default_operator": "Operator",
-    "no_permissions": "No permissions assigned"
+    "no_permissions": "No permissions assigned",
+    "admin_label": "Administration",
+    "admin_body": "You can manage users and roles."
   },
   "nav": {
     "home": "Home",

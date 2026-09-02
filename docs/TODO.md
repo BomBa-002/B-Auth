@@ -96,3 +96,16 @@
 - [x] اختبار Light/RTL ولقطات إضافية بعد اعتماد الشكل النهائي.
 - [x] التحقق من شاشة Auth في LTR وRTL مع تبديل الثيم من Preview.
 - [ ] تثبيت خط عربي bundled لو مطلوب إصلاح glyph fallback في بيئة Preview.
+
+## 11. تدقيق الخطة الرئيسية وإغلاق الفجوات — 02/09/2026
+- [x] 🔴 HIGH — إخراج `Backend/.env` و`dist/` و`sessions.json` من تتبع git وتحديث `.gitignore`.
+- [x] 🔴 HIGH — Logout حقيقي: `useLogout` بيستدعي `POST /api/auth/logout` قبل مسح الحالة.
+- [x] 🟡 MED — فصل `/api/health/live` و`/api/health/ready` في `health.service` + تصحيح نوع `HealthReport` في الواجهة.
+- [x] 🟡 MED — دعم `phone` في `UserRecord` والتسجيل وتسجيل الدخول (مطابقة بالأرقام فقط).
+- [x] 🟡 MED — إعادة كتابة Signin/Signup بـ react-hook-form + zod (`features/auth/lib/auth.schemas.ts`).
+- [x] 🟡 MED — طبقة صلاحيات `can/canAny/useCan` في الواجهة واستخدامها في Home.
+- [x] 🟡 MED — Docker: `Backend/Dockerfile` + `Frontend/Dockerfile` + `nginx.conf` + `docker-compose.yml` (MinIO + healthchecks).
+- [x] 🟢 LOW — `Frontend/.env.example` + Sentry اختياري عبر `VITE_SENTRY`_DSN`.
+- [x] 🟢 LOW — `docs/ARCHITECTURE.md` موحّد + بيانات الدخول التطويرية في README.
+- [ ] ⏸ محجوب — تثبيت خط عربي bundled (يحتاج asset معتمد من المالك).
+- [ ] فحص Preview في جلسة متصفح جديدة (بند بيئي متكرر).
