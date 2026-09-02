@@ -17,7 +17,7 @@
     "build:frontend": "pnpm --filter @b-auth/frontend build",
     "typecheck": "pnpm --filter @b-auth/backend typecheck && pnpm --filter @b-auth/frontend typecheck",
     "lint": "pnpm --filter @b-auth/backend lint && pnpm --filter @b-auth/frontend lint",
-    "test": "pnpm --filter @b-auth/backend test",
+    "test": "pnpm --filter @b-auth/backend test && pnpm --filter @b-auth/frontend test",
     "seed": "pnpm --filter @b-auth/backend seed",
     "docker:up": "docker compose up --build",
     "docker:down": "docker compose down -v"

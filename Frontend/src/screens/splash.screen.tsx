@@ -2,15 +2,16 @@ import { React, useTranslation } from '@a'
 import { ScreenLayout } from '@components/layout/screen-layout'
 import { Logo } from '@components/ui/logo'
 import type { BootstrapStatus } from '@features/auth/store/auth.store'
+import { getSplashProgress } from './splash-progress'
 
-type BootState = 'done' | 'active' | 'pending'
+ type BootState = 'done' | 'active' | 'pending'
 
 export function SplashScreen({ status }: { status: BootstrapStatus }) {
   const { t } = useTranslation()
   const healthState: BootState = status === 'running' || status === 'retrying' || status === 'idle' ? 'active' : 'done'
   const sessionState: BootState = status === 'running' ? 'active' : status === 'ready' || status === 'degraded' ? 'done' : 'pending'
   const configState: BootState = status === 'ready' || status === 'degraded' ? 'done' : 'pending'
-  const progress = status === 'ready' || status === 'degraded' ? 100 : status === 'running' ? 68 : 46
+  const progress = getSplashProgress(status)
 
   return (
     <ScreenLayout statusLabel={t('splash.status_starting')} statusTone="busy" version={t('app.version')} brand={t('app.brand')} environment={t('app.environment')}>
@@ -21,7 +22,15 @@ export function SplashScreen({ status }: { status: BootstrapStatus }) {
           <p>{t('app.tagline')}</p>
         </div>
 
-        <div className="boot-ring" style={{ '--progress': `${progress * 3.6}deg` } as React.CSSProperties} aria-label={`${progress}%`}>
+        <div
+          className="boot-ring"
+          style={{ '--progress': `${progress * 3.6}deg` } as React.CSSProperties}
+          role="progressbar"
+          aria-label={t('splash.status_starting')}
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-valuenow={progress}
+        >
           <div className="boot-ring-center"><strong>{progress}%</strong></div>
         </div>
 

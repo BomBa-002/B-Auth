@@ -1,5 +1,149 @@
 # Changelog
 
+## 1.21.0 — 02/09/2026
+
+### Documentation
+- تحديث خطة `docs/BombaSmart.md` بحالة المنظومة الحالية وطريقة استكمالها.
+- توضيح إن `BombaSmart` اسم منظومة كل المكونات الذكية، وتشمل حالياً `SmartInput` و`SmartButton` و`ActionLockManager`.
+- تحديث `TODO.md` و`DEVELOPMENTS.md` و`AI_SESSION.md` لتسهيل المراجعة واستمرار العمل.
+
+## 1.20.0 — 02/09/2026
+
+### Documentation
+- توضيح إن `BombaSmart` هو اسم منظومة كل المكونات الذكية، وتشمل حالياً `SmartInput` و`SmartButton`.
+- تثبيت التسمية كمرجع لأي مكونات ذكية مستقبلية.
+
+## 1.19.0 — 02/09/2026
+
+### Verified
+- إعادة تشغيل Frontend وBackend بدون تعارض، مع بقاء Preview فارغاً في جلسة متصفح جديدة.
+- لا توجد أخطاء Console؛ `hydration` و`FCP/LCP` ظهروا `null`، فتم تسجيل الحالة كمشكلة بيئية pending بدون تعديل كود.
+
+## 1.18.0 — 02/09/2026
+
+### Verified
+- إعادة تشغيل بيئة Backend وFrontend بدون تعارض منافذ.
+- `pnpm typecheck` و`pnpm lint` و`pnpm test -- --run` و`pnpm build` نجحوا.
+
+### Note
+- Preview ما زال محتاج إعادة فحص بجلسة متصفح جديدة؛ المتصفح الحالي عرض صفحة فاضية بدون أخطاء Console واضحة.
+
+## 1.17.0 — 02/09/2026
+
+### Changed
+- إعادة بناء Auth layout بتقسيم بصري مستوحى من المرجع: لوحة هوية جانبية وكارت دخول واضح.
+- تطوير Button primitive بإضافة `link` و`xs/xl` و`shape` و`fullWidth` و`startIcon/endIcon`.
+- إضافة responsive fallback يخفي اللوحة الجانبية على الشاشات الصغيرة بدون كسر التدفق.
+
+### Verified
+- `pnpm typecheck` و`pnpm test -- --run` و`pnpm build` نجحوا.
+- تم إصلاح تحذير Fast Refresh في Button، و`pnpm lint` يمر بدون تحذيرات.
+
+## 1.16.0 — 02/09/2026
+
+### Added
+- إضافة اختبارات لحماية تنقل Home ومسارات الشاشات المدعومة.
+
+### Changed
+- فصل `resolveScreenPath` عن `AppShell` لتسهيل التحقق من Auth flow.
+
+### Verified
+- `pnpm test -- --run` نجح: 29 اختباراً.
+
+## 1.15.0 — 02/09/2026
+
+### Added
+- إضافة اختبارات تفاعلية لـ SmartButton وActionLockManager.
+
+### Fixed
+- السماح لـ SmartButton بتنفيذ action بدون lock اختياري، مع الحفاظ على منع التكرار عند استخدام lockKey أو lockGroup.
+
+### Verified
+- `pnpm typecheck` و`pnpm lint` و`pnpm test -- --run` و`pnpm build` نجحوا.
+
+
+## 1.14.0 — 01/09/2026
+
+### Added
+- إضافة `ActionLockManager` لمنع التكرار والتعارض بين الأفعال.
+- إضافة `SmartButton` لحالات التحميل والأقفال ودورة تنفيذ موحدة.
+
+### Changed
+- تطبيق الأزرار الذكية على تدفقات تسجيل الدخول والتسجيل وإعادة المحاولة.
+
+### Verified
+- `pnpm typecheck` و`pnpm test -- --run` نجحوا.
+
+## 1.13.0 — 01/09/2026
+
+### Documentation
+- تحديث `README.md` ليشرح هوية B-Auth وحالة المشروع ومميزاته وهيكله.
+- تجهيز وصف GitHub About متوافق مع وظيفة المشروع وتقنياته.
+
+## 1.12.0 — 01/09/2026
+
+### Fixed
+- تثبيت لون أيقونة التحذير `Warning` على `--color-err` بدون توريث لون عام من عنصر التنبيه.
+- توثيق نقطة الاستكمال وخطوة رفع التغيير على GitHub.
+
+### Verified
+- التغيير محصور في `Frontend/src/styles/globals.css` مع مراجعة حالة Git.
+
+## 1.11.0 — 01/09/2026
+
+### Changed
+- ضبط ظهور Custom Autocomplete في `SmartInput` باستخدام `showOnFocus` و`minChars`.
+- تحسين readonly guard لمكافحة Autofill مع احترام `autoFocus` والقيمة الابتدائية.
+- توثيق خطة أدوات Smart في `docs/BombaSmart.md`.
+
+### Verified
+- تم تحديث قواعد أزرار الإجراءات وحالات الخطأ حسب متطلبات المراجعة.
+
+
+## 1.10.0 — 01/09/2026
+
+### Verified
+- تشغيل Frontend وBackend مرة واحدة بدون تعارض منافذ.
+- التحقق من حلقة Splash والانتقال إلى Auth في Dark/LTR على Preview بحجم `939x726`.
+- فحص Accessibility snapshot وConsole بدون أخطاء تطبيقية.
+- `GET /api/health` رجّع `success: true` و`status: ok`.
+- Web Vitals في بيئة التطوير: `TTFB 18.7ms` و`FCP/LCP 504ms` و`CLS 0`.
+
+## 1.9.0 — 01/09/2026
+
+### Fixed
+- إصلاح `boot-ring-center` بحيث تتحرك الحلقة المرئية بنفس قيمة عداد الإقلاع عبر `--progress`.
+- توحيد توقيت الانتقال من Splash بعد انتهاء مدة الإقلاع الدنيا، وإزالة الـ timeout المنفصل.
+- إضافة دلالات `progressbar` وقيم ARIA للعداد.
+
+### Verified
+- `pnpm typecheck` و`pnpm lint` و`pnpm test` و`pnpm build` نجحوا.
+- `/api/health` رجّع `success: true`.
+- Preview اشتغل على `http://localhost:3000`، وظهر أثناء الاختبار أن الحالة وصلت إلى 68% مع `--progress: 244.8deg` بدون أخطاء تطبيقية في Console.
+
+## 1.8.0 — 01/09/2026
+
+### Fixed
+- إزالة زرار Exit من شاشات الأخطاء والاكتفاء بإعادة المحاولة.
+- إصلاح مشكلة تشغيل Preview داخل Sandbox الناتجة عن تشغيل dev servers مكررة على نفس المنافذ.
+
+### Verified
+- `pnpm typecheck` و`pnpm lint` و`pnpm test` و`pnpm build` نجحوا.
+- `/api/health` شغال وPreview ظاهر على `http://localhost:3000`.
+
+## 1.7.0 — 01/09/2026
+
+### Changed
+- اختبار شاشة المصادقة في Light/LTR وLight/RTL على Preview.
+- تحسين fallback لخط RTL في design tokens باستخدام خطوط متاحة بشكل أوسع.
+- توثيق ملاحظة glyph fallback في بيئة المتصفح كعنصر متابعة اختياري.
+
+### Verified
+- `pnpm typecheck` نجح.
+- `pnpm lint` نجح.
+- `pnpm test` نجح: 16 اختباراً.
+- `pnpm build` نجح.
+
 ## 1.6.0 — 29/08/2026
 
 ### Documentation

@@ -23,6 +23,7 @@ export {
   Link,
   useNavigate,
   useRouter,
+  useRouterState,
   redirect,
   notFound,
 } from '@tanstack/react-router'
@@ -42,13 +43,19 @@ export { i18next } from '@i18n/index'
 export { cn } from '@b-auth/utils'
 export { OutlinedInput } from '@b-auth/design-system/components/outlined-input'
 export type { OutlinedInputProps } from '@b-auth/design-system/components/outlined-input'
+export { SmartInput } from '@b-auth/design-system/components/smart-input'
+export { Button } from '@components/ui/button'
+export type { ButtonProps } from '@components/ui/button'
+export { SmartButton } from '@components/ui/smart-button'
+export type { SmartButtonContext, SmartButtonProps } from '@components/ui/smart-button'
+export type { SmartInputProps, SmartSuggestion, SmartValidationState } from '@b-auth/design-system/components/smart-input'
 export { Logo } from '@components/ui/logo'
 export * from '@b-auth/design-system/icon-registry'
 export { apiClient, configureHttp } from '@lib/api-client'
 export { useAuthStore } from '@features/auth/store/auth.store'
 export type { AuthUser, BootstrapStatus } from '@features/auth/store/auth.store'
 export { useSettingsStore, useTheme, useLanguage, useTimeFormat, applySettingsToDocument, getResolvedTheme } from '@features/settings/store/settings.store'
-export type { ThemePreference, AppLanguage, BackgroundMotion } from '@features/settings/store/settings.store'
+export type { ThemePreference, AppLanguage, BackgroundMotion, SettingsState } from '@features/settings/store/settings.store'
 export { ThemeToggle } from '@components/layout/theme-toggle'
 export { LanguageToggle } from '@components/layout/language-toggle'
 export { AppBackground } from '@components/app-background'

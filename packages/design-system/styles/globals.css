@@ -1,16 +1,18 @@
 @import "tailwindcss";
 @import "./tokens.css";
 @import "./outlined-input.css";
+@import "./smart-input.css";
 @custom-variant dark (&:where(.dark, .dark *));
 @layer base {
-  * { box-sizing: border-box; border-color: var(--color-border); user-select: none; -webkit-user-select: none; }
+  * { box-sizing: border-box; border-color: var(--color-border); }
   html { min-block-size: 100%; background: var(--color-bg); color: var(--color-bg-f); color-scheme: light; }
   html.dark, html[data-theme="dark"] { color-scheme: dark; }
   body { min-block-size: 100%; margin: 0; background: var(--color-bg); color: var(--color-bg-f); font-family: var(--font-family); font-size: 1rem; line-height: var(--line-height-normal); }
   [dir="rtl"] { font-family: var(--font-family-ar); }
   button, input, textarea, select { font: inherit; }
   input, textarea, select, [contenteditable="true"] { user-select: text; -webkit-user-select: text; }
-  :focus-visible { outline: none; box-shadow: 0 0 0 0.125em var(--color-bg), 0 0 0 0.25em var(--color-border-focus); }
+  :focus, :focus-visible { outline: none; box-shadow: none; }
+  html[data-focus-ring="visible"] :focus-visible { outline: 0.125em solid var(--color-border-focus); outline-offset: 0.125em; box-shadow: none; }
 }
 @layer utilities {
   .text-success { color: var(--color-ok); }
