@@ -43,5 +43,23 @@
     "createdAt": "2026-08-29T13:36:24.306Z",
     "expiresAt": "2026-08-30T13:36:24.306Z",
     "revokedAt": null
+  },
+  {
+    "id": "f3_zIW-Vqn2n-CA29puLJ",
+    "userId": "ba295af1-8213-4bf0-8ff6-cc2e547cb721",
+    "rememberMe": false,
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.0.0 Safari/537.36",
+    "createdAt": "2026-09-02T01:30:16.918Z",
+    "expiresAt": "2026-09-03T01:30:16.918Z",
+    "revokedAt": "2026-09-02T01:31:38.949Z"
+  },
+  {
+    "id": "2bM-7p7Sx6bLR2cI-Gl1z",
+    "userId": "ba295af1-8213-4bf0-8ff6-cc2e547cb721",
+    "rememberMe": false,
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.0.0 Safari/537.36",
+    "createdAt": "2026-09-02T01:31:38.949Z",
+    "expiresAt": "2026-09-03T01:31:38.949Z",
+    "revokedAt": null
   }
 ]
