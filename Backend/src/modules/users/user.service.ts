@@ -30,6 +30,7 @@ export async function createUser(input: CreateUserInput): Promise<PublicUser> {
     id: nanoid(),
     username: input.username,
     email: input.email,
+    phone: null,
     passwordHash,
     displayName: input.displayName,
     roleIds: input.roleIds ?? [],

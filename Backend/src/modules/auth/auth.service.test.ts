@@ -39,7 +39,7 @@ describe("auth service", () => {
     repositories.usersRepository.findOne.mockResolvedValue(undefined)
     repositories.rolesRepository.findOne.mockResolvedValue({ id: "role-user", name: "user", permissionIds: [] })
 
-    const result = await registerUser({ username: "new-user", email: "new@example.com", password: "Strong123", displayName: "New User" })
+    const result = await registerUser({ username: "new-user", email: "new@example.com", phone: null, password: "Strong123", displayName: "New User" })
 
     expect(result).not.toHaveProperty("passwordHash")
     expect(repositories.usersRepository.create).toHaveBeenCalledOnce()

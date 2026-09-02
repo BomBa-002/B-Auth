@@ -10,6 +10,8 @@ export interface LoginPayload {
 export interface RegisterPayload {
   username: string
   email: string
+  /** اختياري — رقم الجوال بصيغة دولية أو محلية. */
+  phone?: string | null
   password: string
   displayName: string
 }
