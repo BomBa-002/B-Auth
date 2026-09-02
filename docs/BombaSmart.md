@@ -1,5 +1,22 @@
 # خطة أدوات BomBa Smart
 
+> **توضيح أساسي:** `BombaSmart` هو اسم منظومة المكونات الذكية بالكامل، وليس مكوّناً منفرداً. `SmartInput` و`SmartButton` هما المكونات الحالية داخل المنظومة، وأي `SmartForm` أو `SmartField` مستقبلي يلتزم بنفس العقد والقواعد.
+
+## الحالة الحالية — 02/09/2026
+- `SmartInput`: منفذ ومراجع في حالات الإدخال، validation، suggestions، keyboard، ARIA، وanti-autofill.
+- `SmartButton`: منفذ ومراجع في loading، disabled، lifecycle callbacks، و`ActionLockManager`.
+- `ActionLockManager`: منفذ بسياسة `drop` وملكية آمنة للأقفال.
+- Auth flow: تم تطبيق الأفعال الذكية على login وregister وretry.
+- الاختبارات: typecheck وlint وtest وbuild ناجحة حسب آخر جلسة موثقة.
+- المتبقي: إعادة فحص Preview بجلسة متصفح جديدة، وخط عربي bundled اختياري لو ظل glyph fallback مؤثراً.
+
+## طريقة الاستكمال
+1. أي مكون جديد يبدأ بعقد Props واختبارات قبل التجميل.
+2. يمر عبر طبقات التصميم والـ alias المعتمدة، مع دعم RTL/LTR وLight/Dark.
+3. يضيف سلوكاً ذكياً قابلاً لإعادة الاستخدام بدون ربط مخفي بـ API أو Router أو Toast.
+4. بعد كل مرحلة: تحقق، ثم حدّث `AI_SESSION.md` و`CHANGELOG.md` و`DEVELOPMENTS.md`، وحدّث `TODO.md` عند تغيير الحالة.
+
+
 ## الهدف
 بناء طبقة أدوات واجهة قابلة لإعادة الاستخدام مثل `SmartInput` و`SmartButton`، مع سلوك موحّد للـ validation، الاقتراحات، مكافحة autofill، وإمكانية الوصول، بدون كسر دعم RTL/LTR أو Light/Dark.
 
