@@ -1,7 +1,7 @@
 import { z } from "zod"
 
 export const loginSchema = z.object({
-  identifier: z.string().min(1, "Username or email is required."),
+  identifier: z.string().min(1, "Username, email or phone is required."),
   password: z.string().min(1, "Password is required."),
   rememberMe: z.boolean().optional().default(false),
 })
@@ -14,6 +14,11 @@ export const registerSchema = z.object({
     .max(32, "Username must be at most 32 characters.")
     .regex(/^[a-zA-Z0-9_.-]+$/, "Username may only contain letters, numbers, dots, underscores, and hyphens."),
   email: z.string().email("Enter a valid email address."),
+  /** اختياري — يُقبل بصيغة دولية (+20...) أو محلية، ويُطبَّع لأرقام فقط قبل التخزين. */
+  phone: z
+    .union([z.string().regex(/^\+?[0-9][0-9\s-]{6,19}$/, "Enter a valid phone number."), z.literal("")])
+    .optional()
+    .transform((v) => (v ? v.replace(/[\s-]/g, "") : null)),
   password: z
     .string()
     .min(8, "Password must be at least 8 characters.")
