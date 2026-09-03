@@ -15,6 +15,14 @@ COPY Backend/package.json ./Backend/
 # --filter بيجيب اعتماديات الـ backend وworkspace packages بتاعته بس.
 RUN pnpm install --frozen-lockfile --filter @b-auth/backend...
 
+# ---------- مرحلة التطوير (تشغيل حي بـ tsx watch) ----------
+# بتُستخدم من docker-compose.dev.yml — الكود بيتحمّل كـ volume فالتعديل الفوري شغال.
+FROM deps AS dev
+COPY Backend ./Backend
+ENV NODE_ENV=development
+EXPOSE 4000
+CMD ["pnpm", "--filter", "@b-auth/backend", "dev"]
+
 # ---------- مرحلة البناء ----------
 FROM deps AS build
 COPY Backend ./Backend

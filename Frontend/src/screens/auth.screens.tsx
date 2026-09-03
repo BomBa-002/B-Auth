@@ -2,7 +2,7 @@ import { React, SmartButton, SmartInput, useAuthStore, useTranslation, useForm, 
 import { login, register as registerAccount } from '@services/auth.service'
 import { ScreenLayout } from '@components/layout/screen-layout'
 import { Logo } from '@components/ui/logo'
-import { resolveAuthErrorMessage } from '@features/auth/lib/resolve-auth-error'
+import { resolveApiErrorMessage } from '@lib/resolve-api-error'
 import { createSigninSchema, createSignupSchema } from '@features/auth/lib/auth.schemas'
 import type { SigninFormValues, SignupFormValues } from '@features/auth/lib/auth.schemas'
 
@@ -33,7 +33,7 @@ export function SigninScreen({ onNavigate }: AuthScreenProps) {
       setSession({ accessToken: session.accessToken, user: session.user, persistent: session.persistent })
       onNavigate('home')
     } catch (error) {
-      setServerError(resolveAuthErrorMessage(error, t))
+      setServerError(resolveApiErrorMessage(error))
     }
   })
 
@@ -57,7 +57,7 @@ export function SignupScreen({ onNavigate }: AuthScreenProps) {
       setMessage(t('auth.signup_success_body'))
       reset()
     } catch (error) {
-      setServerError(resolveAuthErrorMessage(error, t))
+      setServerError(resolveApiErrorMessage(error))
     }
   })
 

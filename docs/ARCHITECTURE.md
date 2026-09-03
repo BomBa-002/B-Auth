@@ -1,6 +1,6 @@
 # B-Auth — التوثيق المعماري الموحّد
 
-> آخر تحديث: 2026-09-02 — يغطي: البنية العامة، تدفق المصادقة، الـ RBAC، الصحة، الـ Docker، الأمان.
+> آخر تحديث: 2026-09-03 — يغطي: البنية العامة، تدفق المصادقة، الـ RBAC، الصحة، الـ Docker، الأخطاء، الأمان.
 
 ## 1. البنية العامة
 
@@ -55,8 +55,11 @@ B-Auth/
 
 ## 5. Docker
 
+### وضع النشر (production)
+
 ```bash
-pnpm docker:up    # docker compose up --build
+pnpm docker:up      # docker compose up --build
+pnpm docker:down    # docker compose down -v
 ```
 
 | الخدمة | المنفذ | ملاحظات |
@@ -67,6 +70,29 @@ pnpm docker:up    # docker compose up --build
 
 - الـ Dockerfiles multi-stage بـ context = جذر المستودع (عشان الـ workspace packages).
 - الـ backend بيشتغل بـ non-root user و`/app/data` volume للبيانات.
+
+### وضع التطوير (تشغيل حي)
+
+```bash
+pnpm docker:dev:up      # docker compose -f docker-compose.dev.yml up --build
+pnpm docker:dev:down    # إيقاف الحاويات
+pnpm docker:dev:logs    # متابعة السجلات
+```
+
+- نفس الخدمات الثلاثة (backend + frontend + minio) لكن بمراحل `dev` في الـ Dockerfiles:
+  - **backend**: `tsx watch` مع `./Backend/src` مربوطة كـ volume — أي تعديل بيعمل restart فوري.
+  - **frontend**: `vite dev` مع `./Frontend/src` مربوطة كـ volume — HMR فوري، والـ proxy بيوصل على الـ backend عبر `VITE_API_PROXY_TARGET`.
+  - **minio**: نفس إعدادات النشر.
+- بيانات الـ backend في وضع التطوير بتتحفظ في `./Backend/data` المحلية (مش volume مجهول) عشان تتشارك مع التشغيل المحلي.
+
+## 5.1 نظام الأخطاء الموحّد
+
+- **الـ Backend** بيرجّع دايماً شكل `ErrorEnvelope` فيه `error.code` موحّد (زي `INVALID_CREDENTIALS` / `VALIDATION_ERROR`) — المصدر: `shared/app-error.ts` + `middleware/error-handler.ts`.
+- **الـ Frontend** بيترجم الكود لرسالة مفهومة عبر `Frontend/src/lib/resolve-api-error.ts`:
+  - وضع التطوير → عربي دايماً (تسهيلاً للـ debugging).
+  - وضع النشر → لغة الواجهة الحالية، واللغة الابتدائية بتتبع لغة النظام (افتراضي إنجليزي).
+  - كود غير معروف + رسالة من الخادم → تُعرض كما هي (مفيدة لرسائل CONFLICT التفصيلية).
+- مفاتيح الترجمة تحت `errors.codes.*` في `i18n/locales/{ar,en}.json`.
 
 ## 6. الأمان
 

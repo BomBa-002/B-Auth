@@ -20,7 +20,10 @@
     "test": "pnpm --filter @b-auth/backend test && pnpm --filter @b-auth/frontend test",
     "seed": "pnpm --filter @b-auth/backend seed",
     "docker:up": "docker compose up --build",
-    "docker:down": "docker compose down -v"
+    "docker:down": "docker compose down -v",
+    "docker:dev:up": "docker compose -f docker-compose.dev.yml up --build",
+    "docker:dev:down": "docker compose -f docker-compose.dev.yml down",
+    "docker:dev:logs": "docker compose -f docker-compose.dev.yml logs -f"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.3.3",
