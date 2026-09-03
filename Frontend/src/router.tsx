@@ -11,7 +11,8 @@ import { SigninScreen, SignupScreen } from '@screens/auth.screens'
 import { SplashScreen } from '@screens/splash.screen'
 import { useBootstrap } from '@features/auth/hooks/use-bootstrap'
 import { useLogout } from '@features/auth/hooks/use-logout'
-import { createRuntimeHealthMonitor, type RuntimeHealthMonitorHandle, type RuntimeHealthState } from '@features/health/runtime-health-monitor'
+import { useHealthStore, checkHealthNow } from '@features/health/health.store'
+import { RuntimeHealthProvider } from '@features/health/runtime-health-provider'
 
 const SUPPORTED_LANGUAGES = ['en', 'ar'] as const
 
@@ -47,8 +48,7 @@ export function resolveScreenPath(screen: string, hasUser: boolean, lang: AppLan
 function AppShell() {
   const { bootstrapStatus, retry } = useBootstrap()
   const user = useAuthStore((state) => state.user)
-  const [runtimeHealth, setRuntimeHealth] = React.useState<RuntimeHealthState>({ level: 'healthy', report: null, error: null })
-  const healthMonitorRef = React.useRef<RuntimeHealthMonitorHandle | null>(null)
+  const runtimeHealth = useHealthStore((state) => state.health)
   const pathname = useRouterState({ select: (state) => state.location.pathname })
   const router = useRouter()
   const theme = useSettingsStore((state) => state.theme)
@@ -90,13 +90,17 @@ function AppShell() {
     void router.navigate({ to: user ? '/$lang/home' : '/$lang/signin', params: { lang }, replace: true })
   }, [bootstrapStatus, router, user])
 
-  // مراقبة صحّة مستمرة بعد الإقلاع: انقطاع → حجب فوري، عودة → استرجاع تلقائي لنفس الشاشة.
+  // استرجاع تلقائي بعد حل المشكلة: لو الإقلاع كان فاشلاً والخدمة رجعت (انتقال من انقطاع لسليم) → إعادة إقلاع تلقائية.
+  const prevLevelRef = React.useRef(runtimeHealth.level)
   React.useEffect(() => {
-    if (bootstrapStatus !== 'ready' && bootstrapStatus !== 'degraded') return
-    const monitor = createRuntimeHealthMonitor(setRuntimeHealth)
-    healthMonitorRef.current = monitor
-    return monitor.dispose
-  }, [bootstrapStatus])
+    const prevLevel = prevLevelRef.current
+    prevLevelRef.current = runtimeHealth.level
+    if (bootstrapStatus === 'error' && prevLevel === 'critical' && runtimeHealth.level !== 'critical') {
+      splashGatePassed = false
+      setGatePassed(false)
+      retry()
+    }
+  }, [runtimeHealth.level, bootstrapStatus, retry])
 
   const navigate = (screen: string) => {
     void router.navigate({ to: resolveScreenPath(screen, Boolean(user), language) })
@@ -112,20 +116,20 @@ function AppShell() {
   }
 
   const screen = parseScreenFromPath(pathname)
-  // حجب الانقطاع بيغطي كل الشاشات (دخول/تسجيل/رئيسية) — وبيرفع نفسه تلقائياً لما الخدمة ترجع.
+  // حجب الانقطاع بيغطي كل الشاشات (حتى فوق شاشة الخطأ) — وبيرفع نفسه تلقائياً لما الخدمة ترجع.
   const healthBlocker = runtimeHealth.level === 'critical'
-    ? <HealthBlocker detail={runtimeHealth.error?.message} onRetry={() => healthMonitorRef.current?.checkNow()} />
+    ? <HealthBlocker detail={runtimeHealth.error?.message} onRetry={checkHealthNow} />
     : null
   let content: React.ReactNode
   if (bootstrapStatus === 'error') content = <ErrorScreen onRetry={retryFromError} />
   else if (!gatePassed) content = <SplashScreen status={bootstrapStatus} />
   else if (screen === 'error') content = <ErrorScreen onRetry={retryFromError} />
-  else if (screen === 'home') content = user ? <><HomeScreen onLogout={() => { void logout() }} />{healthBlocker}</> : <><SigninScreen onNavigate={navigate} />{healthBlocker}</>
-  else if (screen === 'signup') content = <>{features.ENABLE_SIGNUP ? <SignupScreen onNavigate={navigate} /> : <SigninScreen onNavigate={navigate} />}{healthBlocker}</>
-  else if (screen === 'signin') content = <><SigninScreen onNavigate={navigate} />{healthBlocker}</>
+  else if (screen === 'home') content = user ? <HomeScreen onLogout={() => { void logout() }} /> : <SigninScreen onNavigate={navigate} />
+  else if (screen === 'signup') content = features.ENABLE_SIGNUP ? <SignupScreen onNavigate={navigate} /> : <SigninScreen onNavigate={navigate} />
+  else if (screen === 'signin') content = <SigninScreen onNavigate={navigate} />
   else content = <SplashScreen status={bootstrapStatus} />
 
-  return <><AppBackground /><div className="relative z-10 app-content-layer">{content}</div></>
+  return <><AppBackground /><RuntimeHealthProvider /><div className="relative z-10 app-content-layer">{content}</div>{healthBlocker}</>
 }
 
 const rootRoute = createRootRoute({ component: AppShell })

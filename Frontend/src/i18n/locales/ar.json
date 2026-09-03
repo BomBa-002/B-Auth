@@ -111,7 +111,9 @@
     "theme_light": "فاتح",
     "theme_dark": "داكن",
     "loading": "جاري التحميل…",
-    "system_ready": "النظام جاهز"
+    "system_ready": "النظام جاهز",
+    "system_degraded": "أداء متدهور",
+    "system_down": "النظام متوقف"
   },
   "errors": {
     "not_found_title": "الصفحة غير موجودة",

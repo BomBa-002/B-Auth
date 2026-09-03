@@ -61,4 +61,6 @@ export type { ThemePreference, AppLanguage, BackgroundMotion, SettingsState } fr
 export { ThemeToggle } from '@components/layout/theme-toggle'
 export { LanguageToggle } from '@components/layout/language-toggle'
 export { AppBackground } from '@components/app-background'
+export { useHealthStore, checkHealthNow } from '@features/health/health.store'
+export { RuntimeHealthProvider } from '@features/health/runtime-health-provider'
 export { features } from '@app/features'
