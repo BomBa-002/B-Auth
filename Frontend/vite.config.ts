@@ -2,7 +2,7 @@ import path from "node:path"
 import { fileURLToPath } from "node:url"
 import { defineConfig } from "vite"
 import react from "@vitejs/plugin-react"
-import { aliasMap } from "@b-auth/aliases/alias.config"
+import { aliasMap } from "@b-auth/aliases/alias.config.mjs"
 
 const dirname = path.dirname(fileURLToPath(import.meta.url))
 
