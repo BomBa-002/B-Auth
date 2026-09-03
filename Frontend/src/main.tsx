@@ -4,7 +4,7 @@
  * @updated     : [{ "date": "02/09/2026", "version": "2.0.1", "by": ["v0"], "comment": "إعادة تشغيل بيئة المعاينة بعد تحرير المنافذ" }]
  */
 
-import { applySettingsToDocument, configureHttp, createRoot, useAuthStore, useSettingsStore } from '@a'
+import { applySettingsToDocument, configureHttp, createRoot, i18next, useAuthStore, useSettingsStore } from '@a'
 import { AppRouter } from './router'
 import '@styles/globals.css'
 
@@ -17,6 +17,12 @@ if (sentryDsn) {
 }
 
 configureHttp({ getAccessToken: () => useAuthStore.getState().accessToken, clearSession: () => useAuthStore.getState().clearSession(), setAccessToken: (token) => useAuthStore.getState().setAccessToken(token) })
+// لغة الـ URL هي المرجع الأعلى عند الإقلاع (مثل /ar/home) — بتُطبّق قبل أول رسم عشان مفيش وميض للغة الغلط.
+const pathLang = window.location.pathname.match(/^\/(en|ar)(?=\/|$)/)?.[1] as 'en' | 'ar' | undefined
+if (pathLang && pathLang !== useSettingsStore.getState().language) {
+  useSettingsStore.setState({ language: pathLang })
+  void i18next.changeLanguage(pathLang)
+}
 applySettingsToDocument(useSettingsStore.getState().theme, useSettingsStore.getState().language, useSettingsStore.getState().showFocusRing)
 
 const rootElement = document.getElementById('root')
