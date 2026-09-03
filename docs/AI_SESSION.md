@@ -1,3 +1,39 @@
+# AI Session — 03/09/2026 (Docker تطوير + ترجمة الأخطاء + توجيه اللغة + المراقبة المستمرة)
+
+## اتعمل
+- **وضع التطوير بـ Docker**: مراحل `dev` في `Backend/Dockerfile` (tsx watch) و`Frontend/Dockerfile` (vite dev) مع `docker-compose.dev.yml` (backend + frontend + minio) وأوامر `docker:dev:up / down / logs`. الـ vite proxy بقرأ `VITE_API_PROXY_TARGET`.
+- **نظام ترجمة أكواد الأخطاء الموحّد**: `Frontend/src/lib/resolve-api-error.ts` بيترجم `error.code` من الـ Backend — تطوير → عربي دايمًا، نشر → لغة الواجهة (افتراضي إنجليزي). مفاتيح `errors.codes.*` في `ar.json`/`en.json`. حُذف المترجم القديم `resolve-auth-error.ts`.
+- **اللغة الابتدائية تتبع لغة النظام**: `detectInitialLanguage()` في `settings.store.ts` — اختيار المستخدم المحفوظ بيفوق عليها.
+- **بادئة لغة إلزامية في الـ URL**: كل المسارات `/{lang}/...` مثل `/en/signin` و`/ar/home`. الـ URL هو المرجع الأعلى للغة (قرار مستخدم)، و`LanguageToggle` بيعدّل المسار نفسه، والمسارات القديمة بتتحوّل تلقائياً.
+- **بوابة افتتاحية إجبارية**: أي فتح مباشر أو تحديث صفحة بيمر بالـ splash ثم التوجيه حسب الصلاحيات (زائر → signin، مسجّل → home). التنقل الداخلي فوري.
+- **مراقبة صحة مستمرة كطبقة middleware**: `RuntimeHealthProvider` في جذر التطبيق + مخزن مركزي `health.store.ts` (zustand). فحص متكيّف: 15 ثانية طبيعي / 4 ثوانٍ أثناء الانقطاع. حجب `HealthBlocker` فوق كل الشاشات (حتى شاشة الخطأ) بعنوان الخطأ وتفاصيله وزر فحص فوري. عودة الخدمة → رفع الحجب تلقائياً، ولو الإقلاع فاشل → إعادة إقلاع تلقائية.
+- **شريط الحالة حي**: `ScreenLayout` بيقرأ من المخزن — متوقف (أحمر) / متدهور (كهرماني) / طبيعي.
+- **قرار معماري**: المراقبة بـ Polling مش WebSocket — لأن هدفنا كشف انقطاع السيرفر نفسه، والـ WebSocket بيفشل معاه أصلاً. WebSocket/SSE يتأجل لما نحتاج إشعارات لحظية فعلية.
+- تعديلات واجهة: أعمدة `auth-layout` (28.6em/1.3fr + 22em/0.7fr)، حذف خلفية `auth-aside`، ضبابية `terminal-logs`.
+
+## الملفات المتأثرة
+- `Backend/Dockerfile`، `Frontend/Dockerfile`، `docker-compose.dev.yml`، `package.json`
+- `Frontend/src/lib/resolve-api-error.ts` (+ test)، `Frontend/src/i18n/locales/{ar,en}.json`
+- `Frontend/src/features/settings/store/settings.store.ts`
+- `Frontend/src/router.tsx` (+ test)، `Frontend/src/main.tsx`
+- `Frontend/src/features/health/{health.store.ts, runtime-health-provider.tsx, runtime-health-monitor.ts}` (+ test)
+- `Frontend/src/components/layout/{screen-layout.tsx, language-toggle.tsx}`
+- `Frontend/src/screens/{system.screens.tsx, auth.screens.tsx}`، `Frontend/src/styles/globals.css`
+- `docs/ARCHITECTURE.md` (أقسام 1.1 التوجيه واللغة، 1.2 المراقبة المستمرة)
+
+## التحقق
+- `pnpm typecheck` و`pnpm lint` و`pnpm test` (Backend 16 + Frontend 11) و`pnpm build` — كلهم ناجحين.
+- اختبار متصفح فعلي للتوجيه: `/signin` → `/en/signin`، تبديل اللغة بيحدّث الـ URL، `/ar/home` كزائر → splash → `/ar/signin`.
+- سيرفر المعاينة كان غير متاح وقت اختبار سيناريو إيقاف الـ Backend بصرياً — السيناريو مغطى باختبارات الوحدة.
+
+## الخطوة الجاية (بداية الجلسة القادمة)
+- مراجعة `docs/ARCHITECTURE.md` (أقسام 1.1 و1.2) لفهم آخر حالة.
+- اختبار سيناريو إيقاف/تشغيل الـ Backend بصرياً في المعاينة لما تكون متاحة.
+- دمج الفرع `v0/docker-dev-mode-and-error-i18n` في `main` عبر PR بعد المراجعة.
+- بنود مؤجلة: WebSocket/SSE للإشعارات اللحظية، خط عربي bundled لو استمرت مشكلة الـ glyphs.
+
+---
+
 # AI Session — 02/09/2026 (توثيق خطة منظومة BombaSmart)
 
 ## اتعمل
