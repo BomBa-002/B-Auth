@@ -111,7 +111,9 @@
     "theme_light": "Light",
     "theme_dark": "Dark",
     "loading": "Loading…",
-    "system_ready": "SYSTEM READY"
+    "system_ready": "SYSTEM READY",
+    "system_degraded": "DEGRADED",
+    "system_down": "SYSTEM DOWN"
   },
   "errors": {
     "not_found_title": "Page not found",
