@@ -13,14 +13,7 @@
  * this dual-consumption creates.
  */
 
-export interface AliasEntry {
-  /** Alias prefix, e.g. "@app" (no trailing "/*"). */
-  alias: string
-  /** Path relative to `Frontend/`, e.g. "./src/app". */
-  target: string
-}
-
-export const aliasMap: AliasEntry[] = [
+export const aliasMap = [
   { alias: "@app", target: "./src/app" },
   { alias: "@components", target: "./src/components" },
   { alias: "@screens", target: "./src/screens" },

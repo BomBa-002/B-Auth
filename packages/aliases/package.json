@@ -4,11 +4,18 @@
   "private": true,
   "description": "Single source-of-truth path-alias map for the B-Auth monorepo (consumed by tsconfig + vite.config).",
   "type": "module",
-  "main": "./alias.config.ts",
-  "types": "./alias.config.ts",
+  "main": "./alias.config.mjs",
+  "types": "./alias.config.mjs",
   "exports": {
-    ".": "./alias.config.ts",
-    "./alias.config": "./alias.config.ts"
+    ".": {
+      "import": "./alias.config.mjs",
+      "default": "./alias.config.mjs"
+    },
+    "./alias.config": {
+      "import": "./alias.config.mjs",
+      "default": "./alias.config.mjs"
+    },
+    "./alias.config.mjs": "./alias.config.mjs"
   },
   "scripts": {
     "generate:ts-paths": "node scripts/generate-ts-paths.mjs"
