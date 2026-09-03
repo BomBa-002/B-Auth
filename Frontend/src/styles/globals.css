@@ -39,8 +39,8 @@ input, textarea, select, [contenteditable="true"] { user-select: text; -webkit-u
 .terminal-row[data-state="active"] { color: var(--color-surface-f); font-weight: var(--font-weight-bold); }
 .terminal-label { flex: 1; overflow-wrap: anywhere; }
 .screen-body { flex: 1; align-items: center; gap: var(--spacing-lg); padding: var(--spacing-lg) var(--spacing-sm) var(--spacing-2xl); text-align: center; }
-.auth-layout { display: grid; flex: 1; grid-template-columns: minmax(18em, 0.9fr) minmax(22em, 1.1fr); min-block-size: 0; }
-.auth-aside { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--spacing-sm); padding: var(--spacing-xl); border-inline-end: 0.0625em solid var(--color-py); background: hsla(from var(--color-py) h s l / 0.06); text-align: center; }
+.auth-layout { display: grid; flex: 1; grid-template-columns: minmax(28.6em, 1.3fr) minmax(22em, 0.7fr); min-block-size: 0; }
+.auth-aside { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--spacing-sm); padding: var(--spacing-xl); border-inline-end: 0.0625em solid var(--color-py); text-align: center; }
 .auth-aside-brand { display: grid; place-items: center; inline-size: 6em; block-size: 6em; color: var(--color-py); }
 .auth-aside-brand svg { inline-size: 100%; block-size: 100%; }
 .auth-aside h2 { margin: 0; color: var(--color-bg-f); font-size: var(--font-size-2xl); }
@@ -77,8 +77,6 @@ input, textarea, select, [contenteditable="true"] { user-select: text; -webkit-u
 .form-info-banner { border-color: var(--color-inf); background: hsla(from var(--color-inf) h s l / 0.1); color: var(--color-inf); }
 .success-banner { border-color: var(--color-ok); background: hsla(from var(--color-ok) h s l / 0.12); color: var(--color-ok); }
 .form-footer-links { display: flex; align-items: center; justify-content: center; gap: var(--spacing-xs); color: var(--color-md-f); font-size: var(--font-size-sm); }
-.screen-icon-badge { display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto; inline-size: 1.5em; block-size: 1.5em; border-radius: var(--border-radius-full); background: var(--color-ok); color: var(--color-ok-f); font-size: var(--font-size-sm); font-weight: var(--font-weight-bold); }
-.screen-icon-badge.tone-success { background: var(--color-ok); color: var(--color-ok-f); }
 .settings-row select { min-block-size: 2.75em; padding: var(--spacing-xs) var(--spacing-sm); border: 0.0625em solid var(--color-border); border-radius: var(--border-radius); background: var(--color-bg); backdrop-filter: blur(0.75em); -webkit-backdrop-filter: blur(0.75em); color: var(--color-surface-f); }
 .health-blocker { position: fixed; inset: 0; z-index: var(--z-modal); display: grid; place-items: center; padding: var(--spacing-md); background: var(--color-overlay); }
 .health-blocker-card { display: flex; flex-direction: column; align-items: center; gap: var(--spacing-md); inline-size: min(100%, 30em); padding: var(--spacing-xl); border: 0.0625em solid var(--color-err); border-radius: var(--border-radius-lg); background: var(--color-bg); backdrop-filter: blur(0.75em); -webkit-backdrop-filter: blur(0.75em); box-shadow: var(--shadow-xl); text-align: center; }

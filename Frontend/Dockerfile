@@ -2,14 +2,25 @@
 # @description : صورة الـ Frontend — بناء Vite ثم تقديم الملفات عبر nginx مع proxy للـ /api.
 # ملاحظة: الـ build context لازم يكون جذر المستودع (شوف docker-compose.yml).
 
-# ---------- مرحلة البناء ----------
-FROM node:22-alpine AS build
+# ---------- مرحلة الاعتماديات ----------
+FROM node:22-alpine AS deps
 RUN corepack enable
 WORKDIR /app
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY packages ./packages
 COPY Frontend/package.json ./Frontend/
 RUN pnpm install --frozen-lockfile --filter @b-auth/frontend...
+
+# ---------- مرحلة التطوير (تشغيل حي بـ vite dev) ----------
+# بتُستخدم من docker-compose.dev.yml — الكود بيتحمّل كـ volume فالتعديل الفوري شغال.
+FROM deps AS dev
+COPY Frontend ./Frontend
+ENV NODE_ENV=development
+EXPOSE 3000
+CMD ["pnpm", "--filter", "@b-auth/frontend", "dev"]
+
+# ---------- مرحلة البناء ----------
+FROM deps AS build
 COPY Frontend ./Frontend
 RUN pnpm --filter @b-auth/frontend build
 

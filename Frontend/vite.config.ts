@@ -25,7 +25,8 @@ export default defineConfig({
     strictPort: true,
     proxy: {
       "/api": {
-        target: "http://localhost:4000",
+        // محلياً بيوصل على 4000 مباشرة، وجوه Docker بيتحدد من docker-compose.dev.yml
+        target: process.env.VITE_API_PROXY_TARGET ?? "http://localhost:4000",
         changeOrigin: true,
       },
     },

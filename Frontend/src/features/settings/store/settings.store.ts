@@ -11,6 +11,15 @@ export type ThemePreference = 'light' | 'dark' | 'system'
 export type AppLanguage = 'en' | 'ar'
 export type BackgroundMotion = 'full' | 'calm' | 'off'
 
+/**
+ * اللغة الابتدائية بتتبع لغة النظام (عربي → عربي، غير كده → إنجليزي).
+ * اختيار المستخدم بيتحفظ في الـ persist فيتفوق على القيمة دي من أول تغيير.
+ */
+function detectInitialLanguage(): AppLanguage {
+  if (typeof navigator === 'undefined') return 'en'
+  return navigator.language?.toLowerCase().startsWith('ar') ? 'ar' : 'en'
+}
+
 export interface SettingsState {
   theme: ThemePreference
   language: AppLanguage
@@ -31,7 +40,7 @@ export const useSettingsStore = create<SettingsState>()(
   persist(
     (set) => ({
       theme: 'light',
-      language: 'en',
+      language: detectInitialLanguage(),
       timeFormat: '12',
       showBackground: true,
       backgroundMotion: 'full',
