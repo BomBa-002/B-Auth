@@ -126,6 +126,8 @@
     "exit": "Exit",
     "runtime_title": "Service interruption",
     "runtime_body": "The authentication service is temporarily unavailable. Retry to restore a secure connection.",
+    "runtime_detail_label": "Error details",
+    "runtime_auto_recovery": "Connection is re-checked automatically every few seconds — you'll be returned to your screen once the service recovers.",
     "codes": {
       "generic": "Something went wrong. Please try again.",
       "bad_request": "The request is invalid.",
