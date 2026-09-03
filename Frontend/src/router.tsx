@@ -11,7 +11,7 @@ import { SigninScreen, SignupScreen } from '@screens/auth.screens'
 import { SplashScreen } from '@screens/splash.screen'
 import { useBootstrap } from '@features/auth/hooks/use-bootstrap'
 import { useLogout } from '@features/auth/hooks/use-logout'
-import { createRuntimeHealthMonitor, type RuntimeHealthState } from '@features/health/runtime-health-monitor'
+import { createRuntimeHealthMonitor, type RuntimeHealthMonitorHandle, type RuntimeHealthState } from '@features/health/runtime-health-monitor'
 
 const SUPPORTED_LANGUAGES = ['en', 'ar'] as const
 
@@ -48,6 +48,7 @@ function AppShell() {
   const { bootstrapStatus, retry } = useBootstrap()
   const user = useAuthStore((state) => state.user)
   const [runtimeHealth, setRuntimeHealth] = React.useState<RuntimeHealthState>({ level: 'healthy', report: null, error: null })
+  const healthMonitorRef = React.useRef<RuntimeHealthMonitorHandle | null>(null)
   const pathname = useRouterState({ select: (state) => state.location.pathname })
   const router = useRouter()
   const theme = useSettingsStore((state) => state.theme)
@@ -89,9 +90,12 @@ function AppShell() {
     void router.navigate({ to: user ? '/$lang/home' : '/$lang/signin', params: { lang }, replace: true })
   }, [bootstrapStatus, router, user])
 
+  // مراقبة صحّة مستمرة بعد الإقلاع: انقطاع → حجب فوري، عودة → استرجاع تلقائي لنفس الشاشة.
   React.useEffect(() => {
     if (bootstrapStatus !== 'ready' && bootstrapStatus !== 'degraded') return
-    return createRuntimeHealthMonitor(setRuntimeHealth)
+    const monitor = createRuntimeHealthMonitor(setRuntimeHealth)
+    healthMonitorRef.current = monitor
+    return monitor.dispose
   }, [bootstrapStatus])
 
   const navigate = (screen: string) => {
@@ -108,13 +112,17 @@ function AppShell() {
   }
 
   const screen = parseScreenFromPath(pathname)
+  // حجب الانقطاع بيغطي كل الشاشات (دخول/تسجيل/رئيسية) — وبيرفع نفسه تلقائياً لما الخدمة ترجع.
+  const healthBlocker = runtimeHealth.level === 'critical'
+    ? <HealthBlocker detail={runtimeHealth.error?.message} onRetry={() => healthMonitorRef.current?.checkNow()} />
+    : null
   let content: React.ReactNode
   if (bootstrapStatus === 'error') content = <ErrorScreen onRetry={retryFromError} />
   else if (!gatePassed) content = <SplashScreen status={bootstrapStatus} />
   else if (screen === 'error') content = <ErrorScreen onRetry={retryFromError} />
-  else if (screen === 'home') content = user ? <><HomeScreen onLogout={() => { void logout() }} />{runtimeHealth.level === 'critical' ? <HealthBlocker onRetry={() => window.location.reload()} /> : null}</> : <SigninScreen onNavigate={navigate} />
-  else if (screen === 'signup') content = features.ENABLE_SIGNUP ? <SignupScreen onNavigate={navigate} /> : <SigninScreen onNavigate={navigate} />
-  else if (screen === 'signin') content = <SigninScreen onNavigate={navigate} />
+  else if (screen === 'home') content = user ? <><HomeScreen onLogout={() => { void logout() }} />{healthBlocker}</> : <><SigninScreen onNavigate={navigate} />{healthBlocker}</>
+  else if (screen === 'signup') content = <>{features.ENABLE_SIGNUP ? <SignupScreen onNavigate={navigate} /> : <SigninScreen onNavigate={navigate} />}{healthBlocker}</>
+  else if (screen === 'signin') content = <><SigninScreen onNavigate={navigate} />{healthBlocker}</>
   else content = <SplashScreen status={bootstrapStatus} />
 
   return <><AppBackground /><div className="relative z-10 app-content-layer">{content}</div></>
