@@ -4,7 +4,7 @@
  * @updated     : [{ "date": "02/09/2026", "version": "1.1.0", "by": ["v0"], "comment": "توحيد variants والأحجام والأشكال" }]
  */
 
-import { React, Slot, cva, cn, type VariantProps } from '@a'
+import { Slot, cva, cn, forwardRef, type ButtonHTMLAttributes, type ReactNode, type VariantProps } from '@a'
 
 const buttonVariants = cva(
   'inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium outline-none transition-colors focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:size-4 [&_svg]:shrink-0',
@@ -38,13 +38,13 @@ const buttonVariants = cva(
   },
 )
 
-export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
+export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
   asChild?: boolean
-  startIcon?: React.ReactNode
-  endIcon?: React.ReactNode
+  startIcon?: ReactNode
+  endIcon?: ReactNode
 }
 
-export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, shape, fullWidth, asChild = false, startIcon, endIcon, children, ...props }, ref) => {
     const Comp = asChild ? Slot : 'button'
     return <Comp ref={ref} className={cn(buttonVariants({ variant, size, shape, fullWidth, className }))} {...props}>{startIcon}{children}{endIcon}</Comp>

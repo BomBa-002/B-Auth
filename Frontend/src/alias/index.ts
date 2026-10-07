@@ -10,8 +10,8 @@
  * @updated     : [{ "date": "27/08/2026", "version": "1.2.0", "by": ["v0"], "comment": "إضافة التوجيه، النماذج، والمكوّنات المشتركة لتدفق splash/error/signin/signup/home" }]
  */
 
-export { default as React, createElement } from 'react'
-export type { SVGProps } from 'react'
+export { default as React, createElement, forwardRef } from 'react'
+export type { SVGProps, ButtonHTMLAttributes, ReactNode } from 'react'
 export { createRoot } from 'react-dom/client'
 export { QueryClient } from '@tanstack/react-query'
 export {
