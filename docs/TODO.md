@@ -6,7 +6,7 @@
 - [x] إصلاح dependencies وCSS اللازمة لنجاح build.
 - [x] إفراغ الجذر وإعادة بناء هيكل المشروع.
 - [x] نقل محتويات مشروع `b-auth-03.zip` كاملة إلى جذر بيئة v0.
-- [x] إزالة اعتماد TanStack Router غير المستخدم.
+- [x] اعتماد @tanstack/react-router للتنقل المركزي بين الصفحات.
 - [x] تثبيت قرار Zustand: persistence لاسم المستخدم فقط، والتوكن في الذاكرة.
 - [x] تثبيت قرار الترخيص: لا `eval` ولا منطق ترخيص ديناميكي حالياً.
 - [x] إنشاء توثيق الاستمرارية.
@@ -27,18 +27,28 @@
 - [x] 🟡 MED — إضافة ESLint للـ Frontend وتشغيل lint.
 - [x] 🟢 LOW — تشغيل preview واختبار المسار الأساسي.
 
-## 3. الخطة النشطة: إعادة تصميم Splash/Auth
+## 3. الخطة النشطة: تثبيت التنقل وجودة المنتج
 - [x] 🔴 HIGH — توحيد i18n وتطبيق `lang` و`dir` على مستوى المستند.
 - [x] 🔴 HIGH — إزالة النصوص الثابتة من Splash/Auth/System.
-- [ ] 🟡 MED — إعادة تصميم Splash/Auth مع الحفاظ على منطق المصادقة وStatusBar.
+- [x] 🟡 MED — اعتماد @tanstack/react-router وربط مسارات `/`, `/signin`, `/signup`, `/home`, `/error`.
+- [x] 🟡 MED — الحفاظ على تصميم Splash/Auth الحالي بدون إعادة تصميم.
 - [x] 🟡 MED — اختبار English/LTR وArabic/RTL في المتصفح.
-- [ ] 🟢 LOW — تحديث screenshots أو مراجع التصميم بعد اعتماد الشكل النهائي.
+- [x] 🟡 MED — إضافة اختبارات Frontend أساسية لـ Auth error mapping.
+- [x] 🟡 MED — إصلاح تحذير حجم bundle عبر manual chunks.
+- [x] 🟡 MED — إضافة اختبار Frontend للمسارات الأساسية وAuth error flow.
+- [x] 🟡 MED — إضافة اختبارات تفاعلية لـ SmartButton وActionLockManager.
+- [x] 🟡 MED — إضافة اختبارات تفاعلية كاملة لـ Router وAuth flow.
+- [x] 🟡 MED — تشغيل Frontend وBackend معاً والتحقق من Preview و`/api/health`.
+- [x] 🟡 MED — مراجعة Console وAccessibility وWeb Vitals على Preview.
+- [ ] 🟢 LOW — تثبيت خط عربي bundled لو ظل glyph fallback مؤثراً.
+- [ ] 🟡 MED — إصلاح/إعادة فحص Preview في جلسة متصفح جديدة؛ بعد restart ما زال `#root` فاضي و`hydration`/`FCP/LCP` بقوا `null` بدون Console errors.
 
 ## 4. نقطة الاستكمال القادمة
 - [x] مراجعة خطة SmartInput بعد التشتت وتحديد المنجز والمتبقي في `v0_plans/swift-build.md`.
 - [x] تشغيل التحقق الكامل: `pnpm typecheck` و`pnpm lint` و`pnpm test` و`pnpm build`.
 - [x] اختبار المسارات باللغتين English/LTR وArabic/RTL في Preview.
-- [ ] استكمال إعادة تصميم Splash/Auth من الخطة بعد اعتماد المرجع البصري النهائي.
+- [x] استكمال إعادة تصميم Auth طبقاً للمرجع البصري النهائي مع responsive fallback للموبايل.
+- [ ] تثبيت خط عربي bundled لو ظل glyph fallback مؤثراً؛ يحتاج asset خط معتمد.
 
 ## 5. آخر تعديلات معتمدة
 - [x] ضبط `.console-card` في `ScreenLayout` إلى `max-width: 48.0625em` و`min-width: 16em`.
@@ -68,7 +78,14 @@
 - [ ] 🟡 MED — إضافة Database خارجية فقط بعد اعتماد قرار معماري وتكامل مناسب.
 - [ ] 🟢 LOW — تفعيل S3 عند الحاجة الفعلية لتخزين الملفات.
 
-## 9. SmartInput — 01/09/2026
+## 9. منظومة BombaSmart — 02/09/2026
+- [x] تثبيت التعريف: `BombaSmart` منظومة كل المكونات الذكية، وليس اسم `SmartButton` فقط.
+- [x] توثيق المكونات الحالية: `SmartInput` و`SmartButton` و`ActionLockManager`.
+- [x] توثيق قواعد إضافة أي مكون ذكي جديد.
+- [ ] إعادة فحص Preview في جلسة متصفح جديدة.
+- [ ] تثبيت خط عربي bundled عند الحاجة.
+
+## 10. SmartInput — 01/09/2026
 - [x] استكمال ARIA والـ controlled state وحالات validation.
 - [x] إصلاح ظهور أزرار clear/password/search مع التركيز أو وجود قيمة.
 - [x] إضافة تمييز نتائج البحث، initials/avatar، والسهم للعنصر النشط.

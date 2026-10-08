@@ -44,6 +44,8 @@ export interface SmartInputProps extends Omit<React.InputHTMLAttributes<HTMLInpu
   clearable?: boolean
   searchable?: boolean
   suggestions?: SmartSuggestion[]
+  showOnFocus?: boolean
+  minChars?: number
   validation?: SmartValidationState
   validationLabel?: string
   validationMessage?: string
@@ -90,6 +92,8 @@ export const SmartInput = React.forwardRef<HTMLInputElement, SmartInputProps>(fu
     clearable,
     searchable,
     suggestions = [],
+    showOnFocus = false,
+    minChars = 1,
     validation = 'default',
     validationLabel,
     validationMessage,
@@ -128,7 +132,7 @@ export const SmartInput = React.forwardRef<HTMLInputElement, SmartInputProps>(fu
   const [hasFocus, setHasFocus] = React.useState(false)
   const [activeIndex, setActiveIndex] = React.useState(-1)
   const [showPassword, setShowPassword] = React.useState(false)
-  const [autofillGuard, setAutofillGuard] = React.useState(true)
+  const [autofillGuard, setAutofillGuard] = React.useState(() => !defaultValue && !props.autoFocus)
   const rootRef = React.useRef<HTMLDivElement>(null)
   const currentValue = value === undefined ? innerValue : String(value)
   const filtered = suggestions.filter((item) => item.label.toLocaleLowerCase().includes(currentValue.toLocaleLowerCase()))
@@ -144,6 +148,7 @@ export const SmartInput = React.forwardRef<HTMLInputElement, SmartInputProps>(fu
   const canClear = (clearable ?? true) && Boolean(currentValue) && actionVisible
   const canTogglePassword = type === 'password' && Boolean(currentValue) && actionVisible
   const canSearch = searchable && Boolean(currentValue) && actionVisible
+  const canShowSuggestions = suggestions.length > 0 && (showOnFocus || currentValue.length >= minChars)
 
   React.useEffect(() => {
     const timer = window.setTimeout(() => setAutofillGuard(false), 350)
@@ -159,7 +164,7 @@ export const SmartInput = React.forwardRef<HTMLInputElement, SmartInputProps>(fu
 
   function update(next: string) {
     setInnerValue(next)
-    setOpen(suggestions.length > 0)
+    setOpen(suggestions.length > 0 && (showOnFocus || next.length >= minChars))
     setActiveIndex(-1)
   }
 
@@ -191,7 +196,7 @@ export const SmartInput = React.forwardRef<HTMLInputElement, SmartInputProps>(fu
   }
 
   return (
-    <div ref={rootRef} className={`smart-input ${className ?? ''}`} data-validation={validation} data-disabled={disabled ? 'true' : 'false'}>
+    <div ref={rootRef} className={`smart-input ${className ?? ''}`} data-validation={validation} data-disabled={disabled ? 'true' : 'false'} data-prefix={prefixIcon ? 'true' : 'false'}>
       <div className="smart-input-control">
         {prefixIcon ? <span className="smart-input-prefix" aria-hidden="true">{prefixIcon}</span> : null}
         <input
@@ -222,7 +227,7 @@ export const SmartInput = React.forwardRef<HTMLInputElement, SmartInputProps>(fu
           role={suggestions.length ? 'combobox' : undefined}
           aria-controls={open && suggestions.length ? listId : undefined}
           aria-activedescendant={active ? `${listId}-${active.id}` : undefined}
-          onFocus={(event) => { setAutofillGuard(false); setHasFocus(true); onFocus?.(event); if (suggestions.length) setOpen(true) }}
+          onFocus={(event) => { setAutofillGuard(false); setHasFocus(true); onFocus?.(event); if (canShowSuggestions) setOpen(true) }}
           onBlur={(event) => { setHasFocus(false); onBlur?.(event) }}
           onChange={(event) => { update(event.target.value); onChange?.(event) }}
           onKeyDown={handleKeyDown}
@@ -239,7 +244,7 @@ export const SmartInput = React.forwardRef<HTMLInputElement, SmartInputProps>(fu
         {canTogglePassword ? <button type="button" className="smart-input-action" aria-label={showPassword ? hidePasswordLabel : showPasswordLabel} title={showPassword ? hidePasswordLabel : showPasswordLabel} aria-pressed={showPassword} tabIndex={-1} disabled={disabled} onClick={() => setShowPassword((state) => !state)}>{showPassword ? <IconEyeOff size={ICON_SIZE} aria-hidden="true" /> : <IconEye size={ICON_SIZE} aria-hidden="true" />}</button> : null}
         {canSearch ? <button type="button" className="smart-input-action" aria-label={`${searchLabel} ${label}`} title={`${searchLabel} ${label}`} tabIndex={-1} disabled={disabled} onClick={() => onSearch?.(currentValue)}><IconSearch size={ICON_SIZE} aria-hidden="true" /></button> : null}
       </div>
-      {open && suggestions.length ? (
+      {open && canShowSuggestions ? (
         <div id={listId} className="smart-input-list" role="listbox" aria-label={suggestionsLabel}>
           {Object.entries(groups).map(([group, items]) => (
             <React.Fragment key={group || 'ungrouped'}>

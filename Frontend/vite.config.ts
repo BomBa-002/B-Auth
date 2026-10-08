@@ -34,4 +34,15 @@ export default defineConfig({
     host: "0.0.0.0",
     port: 3000,
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          "vendor-react": ["react", "react-dom"],
+          "vendor-router": ["@tanstack/react-router"],
+          "vendor-ui": ["lucide-react", "framer-motion"],
+        },
+      },
+    },
+  },
 })

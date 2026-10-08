@@ -10,8 +10,8 @@
  * @updated     : [{ "date": "27/08/2026", "version": "1.2.0", "by": ["v0"], "comment": "إضافة التوجيه، النماذج، والمكوّنات المشتركة لتدفق splash/error/signin/signup/home" }]
  */
 
-export { default as React, createElement } from 'react'
-export type { SVGProps } from 'react'
+export { default as React, createElement, forwardRef } from 'react'
+export type { SVGProps, ButtonHTMLAttributes, ReactNode } from 'react'
 export { createRoot } from 'react-dom/client'
 export { QueryClient } from '@tanstack/react-query'
 export {
@@ -23,6 +23,7 @@ export {
   Link,
   useNavigate,
   useRouter,
+  useRouterState,
   redirect,
   notFound,
 } from '@tanstack/react-router'
@@ -43,6 +44,10 @@ export { cn } from '@b-auth/utils'
 export { OutlinedInput } from '@b-auth/design-system/components/outlined-input'
 export type { OutlinedInputProps } from '@b-auth/design-system/components/outlined-input'
 export { SmartInput } from '@b-auth/design-system/components/smart-input'
+export { Button } from '@components/ui/button'
+export type { ButtonProps } from '@components/ui/button'
+export { SmartButton } from '@components/ui/smart-button'
+export type { SmartButtonContext, SmartButtonProps } from '@components/ui/smart-button'
 export type { SmartInputProps, SmartSuggestion, SmartValidationState } from '@b-auth/design-system/components/smart-input'
 export { Logo } from '@components/ui/logo'
 export * from '@b-auth/design-system/icon-registry'
