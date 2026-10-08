@@ -1,385 +1,437 @@
-# SPECKIT — بروتوكول تنفيذ وتحديث BombaSmart
+# SPECKIT — بروتوكول تنفيذ BombaSmart و AppBackground
 
 ## 1. الغرض
 
-هذا الملف هو بروتوكول عملي يستخدمه الـ AI عند تطوير أو تحديث `BombaSmart` أو `AppBackground` أو أي مكون Frontend مرتبط بهما. لا يبدل قواعد المشروع، بل يحولها إلى خطوات تنفيذ قابلة للمراجعة.
+الملف ده بيشرح للـ AI والمطور **إزاي** يطبقوا `PRD.md` داخل أي مشروع، مع احترام معمارية المشروع المضيف، قواعد الكتابة، نظام الملفات، المهارات، الأدوات، والـ quality gates الموجودة فعلاً.
 
-القاعدة الأساسية: اقرأ، افهم، خطط، عدّل أقل نطاق ممكن، اختبر، راجع، ثم وثّق.
+`PRD.md` يحدد المطلوب من المنتج. الملف ده يحدد طريقة التنفيذ الآمن والقابل للمراجعة.
 
-## 2. بوابة البداية الإلزامية
+---
 
-قبل لمس أي ملف، نفذ الآتي:
+## 2. قاعدة الأولوية
 
-1. اقرأ `docs/AI_CONTEXT.md`.
-2. اقرأ `docs/AI_SESSION.md`.
-3. اقرأ `docs/TODO.md`.
-4. اقرأ `docs/SKILLS.md`.
-5. اقرأ `docs/BombaSmart.md`.
-6. اقرأ `PRD.md` و`SPECKIT.md`.
-7. افحص حالة Git والفرع الحالي.
-8. ابحث عن كل مستهلك للمكون أو الدالة التي ستتغير.
-9. افحص `Frontend/src/alias/index.ts` قبل إضافة أي import أو export.
-10. حدد معيار نجاح يمكن إثباته باختبار أو Browser check.
+عند أي تعارض، استخدم الترتيب التالي:
 
-لا تبدأ التنفيذ إذا كان هناك تعارض معماري واضح أو requirement لا يمكن اختياره بأمان. في هذه الحالة اذكر التعارض واسأل سؤالاً واحداً مركزاً مع default مقترح.
+1. تعليمات المستخدم الصريحة.
+2. قواعد النظام أو المنصة.
+3. وثائق المشروع المضيف: skills, architecture, design, agents, context.
+4. قرارات موثقة خاصة بالمشروع.
+5. `PRD.md`.
+6. `SPECKIT.md`.
+7. conventions المستنتجة من الكود.
+8. default عام معقول.
 
-## 3. قواعد اللغة والكود
+لو التعارض مؤثر ومفيش default آمن، توقف واسأل سؤال واحد مركز، مع اقتراح default.
 
-- التواصل والوثائق والتعليقات بالعربية المصرية الواضحة.
-- أسماء المتغيرات والدوال والأنواع والكود بالإنجليزية.
-- لا تستخدم Emoji داخل الملفات إلا إذا طلب المستخدم ذلك.
-- لا تستخدم `any`.
-- استخدم `unknown` مع narrowing عند الحاجة.
-- استخدم `export type` و`import type` للأنواع.
-- لا تكتب تعليقات تشرح ما يفعله السطر؛ اكتب تعليقاً فقط لشرح سبب غير واضح.
-- لا تكتب secrets أو Tokens أو بيانات إنتاج.
-- لا تستخدم `eval`.
+---
 
-## 4. قواعد الاستيراد والـ alias
+## 3. بوابة القراءة قبل التنفيذ
 
-داخل `Frontend/src`:
+قبل تعديل أي ملف:
 
-- الاستيراد من `@a` هو القاعدة.
-- ممنوع الاستيراد المباشر من `react` أو `react-redux` أو `lucide-react` أو UI modules داخل الصفحات والمكونات والـ hooks.
-- أي icon جديد يجب تصديره باسم `Icon...` في alias قبل استخدامه.
-- أي component أو hook جديد يجب تصديره من alias إذا كان سيُستخدم خارج ملفه.
-- لا تستخدم مسارات نسبية عميقة مثل `../../`.
-- لا تعدل alias بلا فحص circular dependency.
+- اقرأ active plan.
+- اقرأ source of truth للمشروع.
+- اقرأ آخر session وTODO وchangelog لو موجودين.
+- اقرأ PRD وSPECKIT.
+- افحص manifest وlockfile قبل dependencies.
+- افحص الفرع وحالة Git.
+- اقرأ الملف المستهدف بالكامل.
+- ابحث عن كل callers وexports والـ styles والاختبارات.
+- افحص الـ alias المركزي أو import convention.
 
-استثناءات مسموحة فقط في ملفات alias أو configuration أو store الرئيسي حسب قواعد المشروع.
+ممنوع تبدأ من اسم الملف فقط؛ لازم تتأكد إنه variant الحي والمستخدم فعلاً.
 
-## 5. بروتوكول تحليل المهمة
+---
 
-قبل التنفيذ اكتب داخلياً أو في work log:
+## 4. سجل التحليل الإلزامي
+
+قبل الكود، جهّز سجل بالشكل ده:
 
 ```text
-Current status: ما الموجود فعلاً
-Target: السلوك المطلوب
-Scope: الملفات المسموح تعديلها
-Dependencies: ما يعتمد على التغيير
-Risks: أخطر احتمال كسر
-Validation: كيف سأثبت النجاح
+Current status: الواقع الحالي بعد القراءة
+Task type: bug-fix | behavior | feature | performance | accessibility | architecture
+Target behavior: النتيجة المطلوبة
+Allowed scope: الملفات المسموح تعديلها
+Consumers: كل المستهلكين المتأثرين
+Dependencies: integrations أو packages أو tokens
+Risks: احتمالات الكسر
+Validation: الدليل اللي هيثبت النجاح
+Assumptions: الافتراضات القابلة للعكس
 ```
 
-صنف الطلب:
+لو السجل فيه assumption معماري كبير، لا تنفذه بصمت.
 
-- `bug-fix`: إصلاح بدون تغيير API إن أمكن.
-- `behavior`: سلوك عام في BombaSmart.
-- `feature-adapter`: ربط بشاشة أو feature محددة.
-- `performance`: تقليل render أو canvas work.
-- `accessibility`: ARIA أو keyboard أو focus.
-- `design-token`: تعديل في tokens أو theme.
-- `architecture`: dependency أو persistence أو routing أو state contract.
+---
 
-لو التصنيف `architecture`، لا تنفذ مباشرة قبل توثيق القرار في PRD وتحديد أثره.
+## 5. قواعد الكتابة والتسمية
 
-## 6. بروتوكول AppBackground
+- لغة التواصل والوثائق والتعليقات حسب قواعد المشروع المضيف.
+- الكود يتبع naming convention الخاص بالمشروع.
+- استخدم types صريحة.
+- تجنب `any`؛ استخدم `unknown` مع narrowing.
+- استخدم `export type` و`import type` لما يفرضه المشروع.
+- التعليق يشرح السبب، مش السطر الواضح.
+- لا secrets أو tokens داخل الملفات.
+- لا `eval` ولا dynamic code execution.
+- لا تنشئ documentation جديدة غير مطلوبة.
+- لا تعمل broad formatting أو refactor خارج scope.
 
-### 6.1 قبل التعديل
+لو المشروع المرفق يفرض العربية المصرية للتوثيق، التزم بها. لو مشروع تاني عنده convention مختلف، وثّق adaptation ولا تفرض قواعد BomBa بدون سبب.
 
-افحص:
+---
 
-- مصدر `showBackground` و`backgroundMotion`.
-- كل CSS variables المستخدمة في الرسم.
-- موضع تركيب `AppBackground` في layout.
-- قواعد `pointer-events`, `position`, `z-index`, وoverflow.
-- هل هناك أكثر من نسخة mounted؟
-- هل يوجد test أو screenshot قائم؟
+## 6. قواعد المعمارية
 
-### 6.2 قواعد lifecycle
+### طبقات عامة
 
-كل `useEffect` مسؤول عن مجموعة موارد واضحة:
+```text
+Tokens / Base UI
+  → Smart Primitive
+    → Feature Hook / Adapter
+      → Screen / Page / Workflow
+```
 
-- event listeners.
-- animation frame.
-- media query listener.
-- pointer listener.
+### ممنوعات
 
-لكل resource cleanup متناظر في return.
+- primitive يستدعي API.
+- primitive يعرف route أو business event خاص بشاشة.
+- feature adapter يعيد نسخ markup الأساسي.
+- UI component يصل مباشرة لdatabase.
+- AppBackground يدير business state.
+- background renderer يعتمد على DOM structure غير مضمون.
+- component يغير persistence contract من نفسه.
 
-لا تستخدم anonymous listener عند الحاجة لإزالته لاحقاً. احتفظ بمرجع الدالة.
+### الاستثناءات
 
-لا تسمح بأكثر من loop واحد. قبل تشغيل loop جديد:
+أي استثناء لازم يكتب السبب، النطاق، وخطة إزالته لو كان مؤقتاً.
 
-1. ألغِ القديم.
-2. صفّر frame id.
-3. أعد تهيئة context state إذا لزم.
-4. شغل loop الجديد مرة واحدة.
+---
 
-عند `document.visibilityState === 'hidden'`:
+## 7. بروتوكول imports والملفات
 
-- لا تستمر في requestAnimationFrame.
-- عند العودة، استأنف من نقطة واضحة بدون إنشاء listener جديد.
+اتبع convention المشروع المضيف حرفياً.
 
-عند unmount:
+لو عنده alias مركزي:
 
-- cancelAnimationFrame.
-- remove resize listener.
-- remove visibility listener.
-- remove pointer listener.
-- remove media listener.
-- لا تترك canvas context أو references تمنع garbage collection.
+- استخدمه داخل الصفحات والمكونات والـ hooks حسب القاعدة.
+- أضف export قبل أول استخدام.
+- افحص circular dependencies.
+- التزم بتسمية الأيقونات المقررة.
 
-### 6.3 سياسة motion
+لو مفيش alias:
 
-طبّق الأولوية التالية:
+- استخدم أقرب import convention رسمي.
+- لا تنقل مكونات لمجلدات جديدة لمجرد التنظيم.
+- لا تضف abstraction للـ imports من غير احتياج.
+
+عند حذف كود: احذف الاستخدام أولاً، ثم imports غير المستخدمة.
+
+---
+
+## 8. بروتوكول BombaSmart
+
+### 8.1 قبل إنشاء Smart Component
+
+جاوب:
+
+1. هل السلوك عام فعلاً؟
+2. هل component موجود يقدر يغطيه؟
+3. هل السلوك خاص بشاشة واحدة؟ لو آه، استخدم adapter.
+4. إيه أقل public props؟
+5. هل state controlled ولا uncontrolled؟
+6. إيه keyboard behavior؟
+7. إيه accessible name وrelationships؟
+8. إيه سلوك loading/disabled/error؟
+9. إزاي نختبره بدون network؟
+10. هل يحتاج export مركزي أو test fixture؟
+
+### 8.2 عقد props
+
+كل prop لازم يندرج تحت تصنيف واضح:
+
+- input data
+- visual option
+- controlled state
+- callback
+- accessibility override
+- injected behavior
+
+ممنوع prop يجمع أكتر من مسؤولية.
+
+### 8.3 controlled/uncontrolled
+
+- controlled value لا يتنافس مع internal value.
+- default value لا يتغير تلقائياً بعد mount إلا بعقد واضح.
+- callbacks تكون stable enough حسب حاجة المشروع.
+- derived values تتحسب من المصدر الحالي.
+- لا تستخدم effect لإصلاح state كان ممكن يتحسب مباشرة.
+
+### 8.4 keyboard وIME
+
+في inputs والـ forms:
+
+- لا submit أثناء `event.nativeEvent.isComposing`.
+- اعتبر `keyCode === 229` composition في Safari Desktop.
+- Enter/Space لازم يعملوا حسب native semantics.
+- Escape لا يمسح القيمة إلا لو العقد بيقول كده.
+- Tab يحافظ على focus order الطبيعي.
+
+### 8.5 validation وARIA
+
+- اربط error وdescription بـ ids.
+- `aria-invalid` للخطأ فقط.
+- `aria-describedby` للوصف أو الرسالة.
+- `aria-live` للتغيرات التي تحتاج إعلان فقط.
+- لا تعتمد على color-only state.
+- icon decorative لو النص كافي.
+
+### 8.6 Action locking
+
+لو component ينفذ async action:
+
+- استخدم lock manager مستقل، مش global state داخل component.
+- lock key واضح ومحدود.
+- سياسة التعارض الافتراضية `drop` إلا لو المشروع قرر غير ذلك.
+- ownership token يمنع release من caller غلط.
+- `finally` مسؤول عن cleanup.
+- لا تربط lock تلقائياً بـ Toast أو Router أو Query.
+- اختبر success وfailure وthrow وunmount وdouble click.
+
+---
+
+## 9. بروتوكول AppBackground
+
+### 9.1 فحص ما قبل التنفيذ
+
+حدد:
+
+- أين يتم mount؟
+- هل فيه أكثر من instance؟
+- مصدر enabled state وmotion policy.
+- CSS variables وtheme source.
+- z-index وpointer-events.
+- overflow behavior.
+- هل renderer Canvas أو CSS أو SVG أو WebGL؟
+- هل توجد اختبارات أو screenshots؟
+
+### 9.2 motion precedence
+
+استخدم الترتيب:
 
 ```text
 OS reduced motion
-  > user backgroundMotion = off
-  > user backgroundMotion = calm
-  > user backgroundMotion = full
+  > user disabled motion
+  > calm policy
+  > full policy
 ```
 
-- `off`: لا حركة ولا parallax ولا motes.
-- reduced motion: تعامل كـ off أو static آمن.
-- `calm`: الأجرام فقط، حركة منخفضة، بدون decorative motes.
-- `full`: كل المؤثرات المسموحة، لكن مع حدود الأداء.
+لو المشروع عنده ترتيب مختلف موثق، اتبعه.
 
-لا تعتبر CSS `prefers-reduced-motion` وحدها كافية؛ منطق Canvas يحتاج القرار نفسه.
+### 9.3 lifecycle
 
-### 6.4 سياسة Canvas
+كل resource لازم له owner وcleanup:
 
-- حد DPR إلى قيمة معقولة.
+- animation frame → cancelAnimationFrame
+- resize listener → removeEventListener
+- visibility listener → removeEventListener
+- media query listener → remove listener بالطريقة المدعومة
+- pointer listener → removeEventListener
+
+ممنوع تشغيل loop جديد قبل إلغاء القديم. ممنوع anonymous callbacks لو محتاج تشيلها.
+
+### 9.4 visibility
+
+عند hidden:
+
+- وقف الرسم.
+- لا تعمل busy loop.
+- حافظ على state الضروري فقط.
+
+عند visible:
+
+- استأنف loop واحد.
+- لا تضاعف listeners.
+- لو policy اتغيرت أثناء hidden، طبّق آخر policy فقط.
+
+### 9.5 Canvas
+
+- قِس CSS viewport.
+- اضبط backing store حسب DPR محدود.
 - استخدم `setTransform` بعد resize.
-- لا تعتمد على CSS width وحده لحساب الرسم.
-- امسح frame السابق قبل الرسم.
-- أعد `globalAlpha`, `globalCompositeOperation`, و`fillStyle` عند تغيير مراحل الرسم.
-- لا تقرأ computed style لكل Orb إذا يمكن قراءته مرة واحدة لكل frame أو عند تغير theme.
-- لا تنشئ gradients أو arrays غير ضرورية داخل loop.
-- لا تستخدم ألواناً ثابتة داخل TypeScript.
-- لا تجعل المشهد ضرورياً لفهم أي وظيفة.
+- اعمل clear قبل الرسم.
+- رجّع `globalAlpha` وcomposition state.
+- cache tokens خارج hot path مع invalidation عند theme change.
+- لا تعتمد على hex/rgb hardcoded لو المشروع يفرض tokens.
+- ما تخليش Canvas ضروري لفهم أو تنفيذ الوظيفة.
 
-### 6.5 سياسة parallax
+### 9.6 renderer بديل
 
-- يعمل فقط في `full`.
-- يتوقف مع reduced motion أو off أو calm.
-- يجب ألا يسبب layout shift.
-- يفضل تحديث الحالة بمعدل محدود إذا أظهر profiling renders كثيرة.
-- لا تربط pointermove بعناصر interactive بطريقة تمنع clicks.
+لو Canvas مش مناسب:
 
-## 7. بروتوكول BombaSmart
+1. أثبت السبب بالأداء أو التوافق.
+2. قارن CSS/SVG/WebGL.
+3. اختار أخف renderer يحقق المطلوب.
+4. حدّث PRD وقرار المعمارية.
+5. نفذ proof صغير قبل broad rewrite.
 
-### 7.1 قبل إنشاء مكون جديد
+---
 
-أجب عن الأسئلة التالية:
+## 10. التصميم والـ responsive
 
-1. لماذا لا يكفي component موجود؟
-2. هل السلوك عام أم خاص بشاشة؟
-3. ما الحالات الأساسية؟
-4. ما عقد controlled/uncontrolled؟
-5. ما public props الضرورية فقط؟
-6. ما keyboard model؟
-7. ما ARIA model؟
-8. كيف يعمل RTL/LTR؟
-9. ماذا يحدث أثناء loading أو error؟
-10. كيف يمكن اختباره بدون API؟
+اتبع design system الخاص بالمشروع:
 
-إذا كان السلوك خاصاً بشاشة واحدة، أنشئ adapter أو hook في feature بدلاً من تضخيم Smart primitive.
+- tokens بدل values عشوائية.
+- وحدات القياس المعتمدة.
+- HSL/HSLA أو النظام المحدد في المشروع.
+- logical properties لـ RTL/LTR.
+- لا تغيّر theme contract داخل component.
+- لا تستخدم animation للزخرفة فقط.
+- focus ring ظاهر.
+- background لا يقلل contrast.
 
-### 7.2 عقد Props
+اختبر على أضيق viewport مدعوم، مش desktop فقط.
 
-كل prop يجب أن يكون واحداً من:
+---
 
-- data input.
-- visual variant.
-- state control.
-- callback.
-- accessibility override.
-- integration injection.
+## 11. خطة التنفيذ القياسية
 
-تجنب props الغامضة مثل `magic`, `advanced`, `doEverything`.
+### المرحلة 1 — فهم
 
-الأسماء المنطقية تبدأ بـ `is`, `has`, `can`, أو `should` عند كونها Boolean.
+- قراءة docs والكود والمستهلكين.
+- تحديد scope وacceptance criteria.
+- إنشاء قائمة الملفات المسموح تعديلها.
 
-### 7.3 controlled وuncontrolled
+### المرحلة 2 — العقد
 
-- لو `value` موجود، لا تدير قيمة مستقلة تنافسه.
-- لو `defaultValue` موجود فقط، أدِر internal state.
-- callbacks يجب أن تعكس القيمة الفعلية.
-- لا تستخدم `useEffect` لتكرار derived state يمكن حسابه مباشرة.
-- أي sync بين controlled prop وinternal state يجب أن يكون موثقاً ومختبراً.
+- تحديث types أو interfaces.
+- تعريف behavior matrix.
+- تعريف errors وedge cases.
+- تحديث PRD لو العقد اتغير.
 
-### 7.4 validation وARIA
+### المرحلة 3 — logic
 
-عند إضافة حالة validation:
+- افصل pure helpers عن React effects.
+- نفذ lifecycle بأقل موارد.
+- حافظ على public API.
 
-- عرّف state values صراحة.
-- اربط message بعنصر input عبر id ثابت.
-- استخدم `aria-invalid` فقط عند الخطأ.
-- استخدم `aria-describedby` للوصف أو الرسالة.
-- استخدم `aria-live` للإعلان عن التغيرات غير المتوقعة فقط.
-- لا تعتمد على اللون وحده.
-- icon الحالة decorative إذا كانت الرسالة النصية موجودة، وإلا يجب أن تكون مفهومة.
+### المرحلة 4 — integration
 
-### 7.5 suggestions وkeyboard
+- اربط adapter أو screen فقط.
+- لا تعيد كتابة شاشات غير مطلوبة.
+- حدّث exports عند الحاجة.
 
-لـ combobox:
+### المرحلة 5 — التحقق الضيق
 
-- input يحمل role الصحيح.
-- القائمة `role="listbox"`.
-- كل نتيجة `role="option"`.
-- active option لها id ثابت.
-- استخدم suggestion id كمفتاح.
-- الأسهم تغير active item.
-- Enter يختار فقط عندما توجد نتيجة active.
-- Escape يغلق القائمة بدون مسح القيمة إلا لو العقد يقول ذلك.
-- Tab يغلق ويكمل focus flow.
-- راعِ CJK composition؛ لا تعتبر Enter submit أثناء composition أو عند `keyCode === 229`.
+- typecheck أو أقرب test.
+- إصلاح السبب الحقيقي.
+- فحص diff.
 
-### 7.6 SmartButton وActionLock
+### المرحلة 6 — التحقق المرئي
 
-- handler لا يعمل أثناء disabled أو loading.
-- lock يملك owner واضحاً.
-- لا تستخدم global lock بدون namespace.
-- حرر القفل في success وfailure وunmount حسب الحاجة.
-- لا تمنع keyboard activation الصحيحة.
-- زر icon-only يحتاج accessible name.
-- `aria-busy` عند loading إذا كان مناسباً.
-- لا تغير النص بطريقة تسبب layout shift كبيراً إن أمكن.
+لأي UI:
 
-## 8. قواعد التصميم
+- افتح preview/browser.
+- snapshot قبل interaction.
+- جرّب الفلو المتأثر.
+- راجع console/errors.
+- خذ screenshot لو layout أو responsive متأثر.
 
-- استخدم tokens الحالية، لا تضف لوناً داخل component.
-- HSL/HSLA فقط للألوان.
-- em/rem/% للقياسات.
-- logical properties للاتجاه.
-- لا تستخدم `dark:` إذا كان النظام يعتمد CSS variables.
-- الحركة قصيرة وذات غرض، واحترم reduced motion.
-- focus ring لا يُخفى بدون بديل واضح.
-- الخلفية decorative لا تزيد contrast noise خلف النص.
+### المرحلة 7 — التحقق الشامل
 
-## 9. قواعد تعديل الملفات
+شغل الأوامر المتاحة في المشروع:
 
-- عدّل أقل عدد ملفات يحقق المطلوب.
-- لا تعيد تنسيق ملفات غير مرتبطة.
-- لا تحذف import قبل حذف الاستخدام؛ احذف الاستخدام أولاً ثم import إذا صار غير مستخدم.
-- لا تنشئ duplicate component لأن الاسم مشابه.
-- لا تغيّر public API بدون تحديث كل callers والوثائق.
-- لا تنشئ README أو docs إضافية غير مطلوبة؛ هذه الوثيقة وPRD هما الوثيقتان المطلوبتان لهذا النطاق.
-- استخدم Edit للتعديلات الدقيقة وWrite فقط للملفات الجديدة أو إعادة البناء المقصودة.
+- typecheck
+- lint
+- unit/integration tests
+- build
+- browser check
+- `git diff --check`
 
-## 10. خطة تنفيذ قياسية
+### المرحلة 8 — التوثيق والتسليم
 
-### المرحلة 1: فهم
+- حدّث session/changelog/developments لو المشروع يطلب.
+- اذكر ما تم وما لم يتم.
+- نفذ Git sync بعد آخر تعديل.
 
-- اقرأ الوثائق.
-- اقرأ الملف المستهدف بالكامل.
-- ابحث عن callers وimports وstyles وtests.
-- سجل assumptions والمخاطر.
+---
 
-### المرحلة 2: عقد
+## 12. مصفوفة الاختبار
 
-- اكتب أو حدّث types.
-- حدد behavior matrix.
-- حدد acceptance criteria.
-- حدد الملفات المسموح تعديلها.
+### AppBackground
 
-### المرحلة 3: تنفيذ صغير
-
-- نفذ logic قبل polish.
-- حافظ على public API قدر الإمكان.
-- أضف alias exports عند الحاجة.
-- لا تدخل integration غير مطلوبة.
-
-### المرحلة 4: تحقق ضيق
-
-- شغل typecheck أو test الأقرب للتغيير.
-- اقرأ الأخطاء وعدّل السبب لا العرض.
-- افحص diff.
-
-### المرحلة 5: تحقق شامل
-
-- شغل lint وtest وbuild عند توفرها.
-- استخدم Browser verification لأي UI مرئي أو تفاعلي.
-- راجع console errors وARIA وresponsive.
-
-### المرحلة 6: توثيق وتسليم
-
-- حدّث ملفات الاستمرارية المطلوبة عند وجود تغيير فعلي.
-- اذكر الملفات، السلوك، الفحوص، وأي caveat.
-- نفذ SyncGit بعد آخر تعديل وقبل إنهاء المهمة.
-
-## 11. مصفوفة اختبار AppBackground
-
-| الحالة | expected |
+| الحالة | الدليل |
 |---|---|
-| showBackground=true, full | scene visible and animated |
-| showBackground=true, calm | orb motion only |
-| showBackground=true, off | static/no motion |
-| showBackground=false | hidden and no active loop |
-| reduced motion=true | no motion/parallax |
-| tab hidden | frame loop paused |
-| tab visible again | one loop resumed |
-| resize | canvas dimensions and transform updated |
-| theme change | token colors reflected |
-| unmount | listeners and frames cleaned |
-| narrow viewport | no horizontal overflow |
+| enabled/full | المشهد ظاهر والحركة شغالة |
+| calm | حركة منخفضة فقط |
+| off | لا loop فعال |
+| reduced motion | لا حركة/parallax |
+| hidden tab | loop متوقف |
+| visible again | loop واحد رجع |
+| resize | dimensions وtransform صح |
+| theme change | tokens اتعكست |
+| unmount | لا listeners أو frames |
+| small viewport | لا overflow |
 
-## 12. مصفوفة اختبار SmartInput وSmartButton
+### Smart components
 
-| الحالة | SmartInput | SmartButton |
-|---|---|---|
-| empty | label/placeholder صحيحان | النص أو aria-label موجود |
-| filled | clear/search rules صحيحة | icon/text لا يسببان كسر layout |
-| focus | focus ring وfloating label | focus ring واضح |
-| error | message + ARIA | لا يعرض error بصرياً فقط |
-| disabled | لا keyboard mutation | لا handler |
-| loading | غير مطبق إلا بعقد | لا double-submit |
-| password | visibility action | غير مطبق |
-| suggestions | combobox flow | غير مطبق |
-| RTL | ترتيب منطقي | icon placement منطقي |
-| reduced motion | transitions آمنة | لا animation مزعج |
+| الحالة | الدليل |
+|---|---|
+| empty | label/name واضح |
+| filled | القيمة سليمة |
+| focus | ring وkeyboard صحيحين |
+| error | message + ARIA |
+| disabled | لا mutation أو handler |
+| loading | state واضحة ولا double submit |
+| async failure | cleanup وerror callback |
+| RTL/LTR | placement وdirection صحيحين |
+| reduced motion | transitions آمنة |
+
+---
 
 ## 13. معايير رفض التغيير
 
-ارفض أو أوقف التغيير إذا وجد أحد الآتي:
+أوقف التنفيذ أو اطلب قراراً لو التغيير:
 
-- import مباشر مخالف بدون سبب مسموح.
-- `localStorage` للتوكن أو session.
-- `eval` أو تنفيذ string ككود.
-- لون أو قياس ثابت يخالف design system.
-- animation loop بلا cleanup.
-- component عام يحتوي API خاصاً بميزة واحدة.
-- double-submit محتمل.
-- ARIA غير متسق مع DOM behavior.
-- test/build يفشل وتم تجاهل الخطأ.
-- docs تعلن نجاحاً غير مثبت.
-- تغيير dependency أو architecture بدون قرار.
+- بيكسر import convention.
+- بيضيف dependency بدون manifest/lockfile review.
+- بيستخدم `any`, `eval`, أو secret.
+- بيشغل animation بلا cleanup.
+- بيخلط API مع primitive.
+- بيحفظ بيانات بطريقة غير معتمدة.
+- بيغير public API بدون migration.
+- بيعلن test ناجح بدون تشغيله.
+- بيحتاج إعادة كتابة واسعة عشان يصلح bug صغير.
 
-## 14. قالب خطة مهمة للـ AI
+---
 
-استخدم القالب التالي داخل work log أو خطة التنفيذ:
+## 14. قالب خطة AI
 
 ```markdown
 ## المهمة
-[وصف قصير]
 
 ## Current status
-[الحالة الواقعية بعد القراءة]
 
-## الهدف
-[السلوك الذي يجب أن يتحقق]
+## المطلوب
 
-## النطاق
-- [ملف مسموح]
-- [ملف مسموح]
+## نوع المهمة
 
-## خارج النطاق
-- [شيء لا يجب تغييره]
+## الملفات المسموح تعديلها
+
+## الملفات خارج النطاق
 
 ## العقد
-- Props:
+- Inputs:
 - State:
 - Events:
 - Accessibility:
+- Cleanup:
 
 ## المخاطر
-- [خطر]
 
-## التنفيذ
-1. [خطوة]
-2. [خطوة]
+## خطة التنفيذ
+1.
+2.
+3.
 
 ## التحقق
 - [ ] typecheck
@@ -387,25 +439,42 @@ OS reduced motion
 - [ ] test
 - [ ] build
 - [ ] browser
+- [ ] diff check
 
 ## Definition of Done
-- [ ] [معيار قابل للإثبات]
+
+## Caveats
 ```
 
-## 15. قالب مراجعة قبل التسليم
+---
+
+## 15. قالب مراجعة الكود
 
 ```markdown
-### Code review
-- [ ] التغيير أصغر نطاق ممكن
-- [ ] لا imports مخالفة
-- [ ] لا any أو eval
-- [ ] cleanup كامل للـ effects
-- [ ] state contract واضح
-- [ ] keyboard وARIA مراجعان
-- [ ] RTL/LTR مراجعان
-- [ ] Light/Dark مراجعان
-- [ ] reduced motion مراجع
-- [ ] no overflow
+### Architecture
+- [ ] الطبقة صحيحة
+- [ ] مفيش dependency عكسية
+- [ ] public API محدود
+
+### Code quality
+- [ ] types واضحة
+- [ ] مفيش any/eval
+- [ ] naming مطابق للمشروع
+- [ ] التعليقات للسبب فقط
+
+### UI
+- [ ] tokens مستخدمة
+- [ ] RTL/LTR
+- [ ] light/dark
+- [ ] responsive
+- [ ] focus/ARIA
+- [ ] reduced motion
+
+### Lifecycle
+- [ ] listeners cleanup
+- [ ] frames cleanup
+- [ ] لا duplicate loops
+- [ ] unmount آمن
 
 ### Verification
 - [ ] typecheck
@@ -416,65 +485,81 @@ OS reduced motion
 - [ ] screenshot عند الحاجة
 
 ### Documentation
-- [ ] PRD محدث لو العقد تغير
-- [ ] BombaSmart docs محدثة
-- [ ] AI_SESSION محدث
-- [ ] CHANGELOG محدث
-- [ ] DEVELOPMENTS محدث
+- [ ] PRD لو العقد تغير
+- [ ] SPECKIT لو الإجراء تغير
+- [ ] session/changelog حسب المشروع
 ```
-
-## 16. بروتوكول التعامل مع الفشل
-
-- لو فشل typecheck: أصلح النوع أو العقد، ولا تستخدم cast لإخفاء المشكلة.
-- لو فشل lint: أصلح السبب، ولا تعطل القاعدة بلا قرار.
-- لو فشل test: افحص هل الكود أم الاختبار أصبح قديماً، ثم حدّث الاختبار فقط إذا تغير العقد المقصود.
-- لو فشل build بسبب dependency: افحص manifest والlockfile، ولا تضف مكتبة بديلة عشوائياً.
-- لو فشل Browser بسبب preview: افحص logs والـ snapshot والـ console، ثم أبلغ عن routing blocker إن استمر.
-- لو كان sandbox غير متاح بعد محاولة استعادة واحدة: توقف وأبلغ عن التحقق غير المكتمل.
-
-## 17. بروتوكول Git
-
-- لا تعمل commit قبل آخر تعديل والتحقق.
-- استخدم branch الحالي المخصص للعمل، ولا تدفع مباشرة إلى base branch.
-- رسالة commit بالعربية المصرية وبالصيغة المعتمدة للمشروع.
-- نفذ `SyncGit` مرة واحدة بعد اكتمال كل تغييرات المهمة.
-- لا تدّعي أن التغيير pushed إذا فشلت المزامنة.
-
-## 18. النتيجة المطلوبة من أي AI agent
-
-في نهاية المهمة يجب أن يجيب باختصار:
-
-1. ماذا تغير؟
-2. ما الملفات التي تغيرت؟
-3. ما الاختبارات التي مرت؟
-4. ما الفحص الذي لم يمر أو لم يمكن تشغيله؟
-5. ما المخاطر أو الخطوة التالية؟
-
-ممنوع الرد بعبارة عامة مثل “تم الإصلاح” بدون ذكر دليل تحقق.
-
-## 19. العلاقة بين PRD وSPECKIT
-
-- `PRD.md` يشرح لماذا نبني النظام، وما المطلوب، وما حدود المنتج.
-- `SPECKIT.md` يشرح كيف ينفذ AI التغيير بأمان داخل هذا المشروع.
-- `docs/BombaSmart.md` يسجل الحالة التشغيلية المختصرة للمكونات الحالية.
-- `docs/SKILLS.md` هو مرجع القواعد الفعلي للمشروع.
-
-عند تغيير السلوك العام أو العقد: حدّث `PRD.md`.
-عند تغيير طريقة التنفيذ أو بوابات المراجعة: حدّث `SPECKIT.md`.
-عند تنفيذ milestone فعلي: حدّث ملفات الاستمرارية وسجل الحالة الواقعية في `docs/BombaSmart.md` عند الحاجة.
-
-## 20. أولويات التطوير المقترحة
-
-1. تثبيت اختبارات lifecycle لـ AppBackground.
-2. فصل دوال حساب المشهد عن React effects إن لم يكسر ذلك العقد.
-3. تحسين caching لـ CSS variables عند الحاجة بعد profiling.
-4. إضافة اختبارات keyboard وARIA لـ SmartInput.
-5. إضافة اختبار double-submit وActionLock لـ SmartButton.
-6. إضافة SmartField بعد تثبيت contracts الحالية.
-7. إضافة SmartForm فقط بعد وجود use case فعلي.
-
-لا تُنفذ الأولويات تلقائياً لمجرد وجودها هنا؛ كل milestone يحتاج scope وacceptance criteria وتحقق مستقل.
 
 ---
 
-**قاعدة النهاية:** لا تجعل AI يكتب أكثر مما يفهم. الفهم يبدأ من الوثائق، والصحة تثبتها الاختبارات، والاستمرارية يحفظها التوثيق.
+## 16. بروتوكول الفشل
+
+- typecheck فشل: أصلح النوع أو العقد؛ ما تستخدمش cast لإخفاء المشكلة.
+- lint فشل: أصلح القاعدة أو وثّق exception مبرر؛ ما تعطلش lint عشوائياً.
+- test فشل: حدد هل المشكلة في الكود أو test قديم.
+- build فشل: افحص dependency والـ config مرة واحدة قبل أي إعادة تثبيت.
+- browser فشل: snapshot ثم console ثم logs؛ ما تعيدش نفس interaction عميان.
+- sandbox unavailable: محاولة recovery واحدة، وبعدها أبلغ إن التحقق غير مكتمل.
+- timed-out mutation: افحص الحالة قبل تكرار التعديل.
+
+---
+
+## 17. Git والتسليم
+
+- اشتغل على branch المخصص، مش base branch.
+- commit واحد لغرض منطقي واحد.
+- رسالة commit حسب قواعد المشروع.
+- راجع status وdiff قبل sync.
+- نفذ `SyncGit` مرة واحدة بعد آخر تعديل.
+- لا تعمل force push أو reset/rebase خطير بدون موافقة.
+- لا تقول إن التغيير اتدفع لو sync فشل.
+
+---
+
+## 18. قواعد التوثيق المستمر
+
+بعد milestone فعلي، حدّث ملفات الاستمرارية التي يطلبها المشروع:
+
+- session: إيه اللي اتعمل ونتيجة الفحوص.
+- changelog: التغيير المنطقي للمستخدم أو المطور.
+- developments: رقم/مرحلة التنفيذ حسب convention.
+- context: فقط عند قرار معماري ثابت.
+- TODO: الأولويات المتبقية.
+
+ما تحدثش ملفات لمجرد ملء شكل؛ التوثيق لازم يعكس الواقع.
+
+---
+
+## 19. Adaptation Checklist لأي مشروع
+
+قبل التطبيق، املأ:
+
+```markdown
+- [ ] قرأت قواعد المشروع المضيف
+- [ ] عرفت source of truth للتصميم
+- [ ] عرفت import strategy
+- [ ] عرفت state وpersistence policy
+- [ ] عرفت test commands
+- [ ] عرفت browser/preview strategy
+- [ ] عرفت naming convention
+- [ ] عرفت ملفات الاستمرارية المطلوبة
+- [ ] حددت هل Canvas مناسب
+- [ ] حددت motion وaccessibility policy
+- [ ] سجلت أي تعارض أو assumption
+```
+
+---
+
+## 20. إجابة الـ AI النهائية
+
+أي تسليم لازم يجاوب باختصار:
+
+1. إيه اللي اتغير؟
+2. إيه الملفات اللي اتعدلت؟
+3. إيه الفحوص اللي عدت؟
+4. إيه اللي ما اتشغلش وليه؟
+5. إيه المخاطر أو الخطوة التالية؟
+
+ممنوع استخدام جملة عامة زي «تم» من غير دليل.
+
+> القاعدة الأخيرة: افهم المشروع الأول، نفذ أقل تغيير كامل، اختبر السلوك الحقيقي، ووثّق اللي حصل فعلاً.
