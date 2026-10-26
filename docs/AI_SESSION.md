@@ -1,3 +1,22 @@
+# AI Session — 26/10/2026 (توثيق خطة نظام الافتتاحي والأخطاء)
+
+## اتعمل
+- إنشاء خطة تنفيذية مستقلة لإعادة إنشاء نظام Splash/Bootstrap ونظام الأخطاء والاستعادة في مشروع آخر.
+- توثيق أهداف الشاشات، state machine، عقود المكونات، قواعد التصميم، RTL/LTR، Accessibility، الأداء، الاختبارات، ومعايير القبول.
+- ربط الخطة بالبنية الفعلية الحالية: `SplashScreen` و`ErrorScreen` و`HealthBlocker` و`ScreenLayout` و`AppBackground` و`bootstrap orchestrator`.
+
+## الملفات المتأثرة
+- `docs/SCREENS_COMPONENTS_PLAN.md`
+- `docs/AI_SESSION.md`
+- `docs/CHANGELOG.md`
+- `docs/DEVELOPMENTS.md`
+
+## التحقق
+- تمت مراجعة ملفات الشاشات والتخطيط والخلفية وBootstrap والاختبارات الحالية قبل كتابة الخطة.
+- التغيير توثيقي فقط، ولم يتم تعديل منطق التطبيق أو الاعتماديات.
+
+---
+
 # AI Session — 03/09/2026 (Docker تطوير + ترجمة الأخطاء + توجيه اللغة + المراقبة المستمرة)
 
 ## اتعمل

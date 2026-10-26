@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.23.0 — 26/10/2026
+
+### Documentation
+- إضافة `docs/SCREENS_COMPONENTS_PLAN.md` كخطة احترافية قابلة للنقل لإعادة إنشاء نظام Splash/Bootstrap ونظام الأخطاء والاستعادة.
+- توثيق state machine، عقود المكونات، تدفق Runtime Health، Design Tokens، RTL/LTR، Accessibility، الأداء، الاختبارات، ومعايير Definition of Done.
+
+### Scope
+- التغيير توثيقي فقط، بدون تعديل كود التشغيل أو الاعتماديات.
+
 ## 1.22.0 — 02/09/2026
 
 ### Added
